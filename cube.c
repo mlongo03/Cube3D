@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/15 12:04:14 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/15 12:09:01 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,9 @@ int	main()
 
 	double time = 0; //time of current frame
 	double oldTime = 0; //time of previous frame
+
+
+
+
 
 }
