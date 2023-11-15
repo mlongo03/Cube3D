@@ -6,22 +6,28 @@
 #    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/01 14:36:32 by fcarlucc          #+#    #+#              #
-#    Updated: 2023/11/15 11:54:37 by mlongo           ###   ########.fr        #
+#    Updated: 2023/11/15 13:55:44 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = cube3d
 
 SRC = $(wildcard *.c) \
 		# $(wildcard executor/*.c) \
 
 OBJS = $(SRC:.c=.o)
 
-FLAGS := -Wall -Wextra -Werror -g
+FLAGS :=-g
 
 LIBFT_PATH = ./libft
 
+MINILIBX_PATH = ./mlx_linux
+
 LIBFT = ${LIBFT_PATH}/libft.a
+
+MINILIBX =${MINILIBX_PATH}/libmlx.a
+
+MINILIBX_LINUX =${MINILIBX_PATH}/libmlx_Linux.a
 
 #COLORS
 RED = \033[1;31m
@@ -35,16 +41,18 @@ DEFAULT = \033[0m
 all: $(NAME)
 
 %.o : %.c
-	@cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -I/usr/includesude -Imlx_linux -c $< -o $@
 
 $(NAME): $(OBJS)
 	@make -C libft
 	@make bonus -C libft
-	@cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	@make -C mlx_linux
+	@cc $(FLAGS) $(OBJS) $(LIBFT) ${MINILIBX} ${MINILIBX_LINUX} -Lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -D LIN=1 -o $(NAME)
 	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
 
 clean:
 	@make clean -C libft
+	@make clean -C mlx_linux
 	@rm -f $(OBJS)
 	@echo "$(YELLOW)object files deleted!$(DEFAULT)"
 

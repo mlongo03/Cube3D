@@ -6,13 +6,14 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/15 11:53:23 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/15 13:56:37 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-#include "minilibx-linux/mlx.h"
+#include "libft/libt.h"
+#include "mlx_linux/mlx.h"
 
 #endif

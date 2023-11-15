@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/15 12:09:01 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/15 13:57:23 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ int	main()
 	double time = 0; //time of current frame
 	double oldTime = 0; //time of previous frame
 
+	void	*mlx;
+	void	*mlx_win;
 
-
-
-
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	mlx_loop(mlx);
 }
