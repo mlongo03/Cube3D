@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube.h                                             :+:      :+:    :+:   */
+/*   ft_strcasecmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/15 11:53:23 by mlongo           ###   ########.fr       */
+/*   Created: 2023/11/08 17:15:53 by abuonomo          #+#    #+#             */
+/*   Updated: 2023/11/08 17:48:51 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE_H
-#define CUBE_H
+#include "libft.h"
 
-#include "minilibx-linux/mlx.h"
-
-#endif
+int	ft_strcasecmp(const char *str1, const char *str2)
+{
+	while (*str1 && *str2)
+	{
+		if (ft_tolower(*str1) != ft_tolower(*str2))
+		{
+			return (ft_tolower(*str1) - ft_tolower(*str2));
+		}
+		str1++;
+		str2++;
+	}
+	return (ft_tolower(*str1) - ft_tolower(*str2));
+}
