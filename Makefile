@@ -1,64 +1,26 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/01 14:36:32 by fcarlucc          #+#    #+#              #
-#    Updated: 2023/11/15 13:55:44 by mlongo           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME := Cube3D
 
-NAME = cube3d
+CC := gcc
 
-SRC = $(wildcard *.c) \
-		# $(wildcard executor/*.c) \
+FILES = $(wildcard *.c) \
 
-OBJS = $(SRC:.c=.o)
 
-FLAGS :=-g
+CFLAGS := -g #-Wall -Werror -Wextra
 
-LIBFT_PATH = ./libft
+LIBFT := libft
+LIBRARY := -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MINILIBX := mlx_linux/
 
-MINILIBX_PATH = ./mlx_linux
+all:
+	make -C $(LIBFT)
+	make -C $(MINILIBX)
+	$(CC) $(FILES) $(CFLAGS) $(LIBFT)/libft.a -L/$(LIBFT) $(LIBRARY) -o $(NAME)
 
-LIBFT = ${LIBFT_PATH}/libft.a
-
-MINILIBX =${MINILIBX_PATH}/libmlx.a
-
-MINILIBX_LINUX =${MINILIBX_PATH}/libmlx_Linux.a
-
-#COLORS
-RED = \033[1;31m
-
-GREEN = \033[1;32m
-
-YELLOW = \033[1;33m
-
-DEFAULT = \033[0m
-
-all: $(NAME)
-
-%.o : %.c
-	@cc $(FLAGS) -I/usr/includesude -Imlx_linux -c $< -o $@
-
-$(NAME): $(OBJS)
-	@make -C libft
-	@make bonus -C libft
-	@make -C mlx_linux
-	@cc $(FLAGS) $(OBJS) $(LIBFT) ${MINILIBX} ${MINILIBX_LINUX} -Lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -D LIN=1 -o $(NAME)
-	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
-
-clean:
-	@make clean -C libft
-	@make clean -C mlx_linux
-	@rm -f $(OBJS)
-	@echo "$(YELLOW)object files deleted!$(DEFAULT)"
+clean: fclean
 
 fclean: clean
-	@make fclean -C libft
-	@rm -f $(NAME)
-	@echo "$(RED)all deleted!$(DEFAULT)"
+		make re -C $(MINILIBX)
+		make fclean -C $(LIBFT)
+		rm -rf $(NAME)
 
-re: clean fclean all
+re: fclean all

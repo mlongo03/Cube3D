@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 15:51:07 by mlongo            #+#    #+#             */
-/*   Updated: 2023/04/05 17:20:57 by mlongo           ###   ########.fr       */
+/*   Created: 2023/01/27 00:54:54 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/01/27 13:30:12 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*list;
-	t_list	*node;
+	t_list	*new_list;
+	t_list	*new_list_start;
+	t_list	*temp;
 
 	if (!lst || !f || !del)
 		return (NULL);
-	list = NULL;
-	while (lst)
+	temp = lst;
+	new_list = ft_lstnew(f(temp->content));
+	if (!new_list)
+		return (NULL);
+	new_list_start = new_list;
+	temp = temp->next;
+	while (temp)
 	{
-		node = ft_lstnew(f(lst->content));
-		if (node == NULL)
+		new_list->next = ft_lstnew(f(temp->content));
+		if (!new_list->next)
 		{
-			ft_lstclear(&list, del);
+			ft_lstclear(&new_list_start, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&list, node);
-		lst = lst->next;
+		new_list = new_list->next;
+		temp = temp->next;
 	}
-	ft_lstclear(&lst, del);
-	return (list);
+	return (new_list_start);
 }

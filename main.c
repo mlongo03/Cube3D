@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abuonomo <abuonomo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:37:52 by abuonomo          #+#    #+#             */
-/*   Updated: 2023/11/09 15:13:21 by abuonomo         ###   ########.fr       */
+/*   Created: 2023/10/26 23:04:18 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/15 00:05:05 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
+#include "cube.h"
 
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+int	main(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	t_cube	*game;
+
+	game = malloc(1 * sizeof(t_cube));
+	struct_init(game);
+	read_and_build(game);
+	free_struct(game);
+	(void)game;
+	return (0);
 }

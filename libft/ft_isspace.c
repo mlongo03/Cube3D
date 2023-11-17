@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp_env.c                                    :+:      :+:    :+:   */
+/*   ft_is_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:36:48 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/08 16:37:11 by mlongo           ###   ########.fr       */
+/*   Created: 2023/11/17 10:24:02 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/17 10:24:10 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp_env(const char *input, const char *env)
+int	ft_isspace(char c)
 {
-	while (*env != '=' && (*input != ' ' || *input != '$'))
-	{
-		if (*input != *env)
-			return (1);
-		input++;
-		env++;
-	}
-	return (*env != '=' || *input != '\0');
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r');
 }

@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   cube_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:38:30 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/08 16:39:03 by mlongo           ###   ########.fr       */
+/*   Created: 2023/11/17 11:08:12 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/17 11:09:31 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cube.h"
 
-char	*ft_strcat(char *dest, char *src)
+void	free_matrix(char **mat)
 {
 	int	i;
-	int	j;
 
-	i = 0;
-	while (dest[i] != '\0')
-		i++;
-	j = 0;
-	while (src[j] != '\0')
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	return (dest);
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
 }

@@ -3,27 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 14:58:53 by mlongo            #+#    #+#             */
-/*   Updated: 2023/09/05 12:47:48 by mlongo           ###   ########.fr       */
+/*   Created: 2023/01/27 01:03:06 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/01/27 01:03:09 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+t_list	*ft_lstsecondlast(t_list *lst)
 {
-	t_list	*tmp;
-
-	if (!lst || !del)
-		return ;
-	while (*lst)
+	if (!lst || !(lst->next))
+		return (NULL);
+	while (lst->next->next != NULL)
 	{
-		tmp = (*lst)->next;
-		free((*lst)->content);
-		free(*lst);
-		*lst = tmp;
+		lst = lst->next;
 	}
+	return (lst);
+}
+
+void	ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list	*second_last;
+
+	if (!lst || !*lst || !del)
+		return ;
+	while ((*lst)->next)
+	{
+		second_last = ft_lstsecondlast(*lst);
+		ft_lstdelone(second_last->next, del);
+		second_last->next = NULL;
+	}
+	ft_lstdelone(*lst, del);
 	*lst = NULL;
 }
