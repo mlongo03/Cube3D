@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:43:06 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 11:42:30 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:30:45 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ static char	*convert_to_hex(int decimal)
 
 void	save_colors_in_str(t_cube *game)
 {
-	game->f_hex_color = convert_to_hex(game->f_color_num);
-	game->c_hex_color = convert_to_hex(game->c_color_num);
+	game->colors->f_hex_color = convert_to_hex(game->colors->f_color_num);
+	game->colors->c_hex_color = convert_to_hex(game->colors->c_color_num);
 }

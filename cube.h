@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 12:04:46 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:28:33 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,25 @@ typedef	struct s_cardinals
 	void	*west_wall;
 }	t_cardinals;
 
-//snellire la struct principale per non averci troppa roba dentro
-typedef	struct s_cube
+typedef	struct s_colors
 {
-	void			*mlx;
-	char			**all_map; //la mappa con letteralmente tutto
-	char			**real_map; //la mappa base
-	t_cardinals		*card;
-	int	f_color_num;
-	int	c_color_num;
+	int				f_color_num;
+	int				c_color_num;
 	char			**floor_colors; //temporanei per la conersione puoi liberarli subito dopo
 	char			**ceiling_colors;
 	char			*f_hex_color;
 	char			*c_hex_color;
+}	t_colors;
+
+//snellire la struct principale per non averci troppa roba dentro
+typedef	struct s_cube
+{
+	void			*mlx;
+	void			*mlx_win;
+	char			**all_map; //la mappa con letteralmente tutto
+	char			**real_map; //la mappa base
+	t_cardinals		*card;
+	t_colors		*colors;
 	int				check_card[4];
 }	t_cube;
 
