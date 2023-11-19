@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:28:33 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:27:22 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef	struct s_cardinals
 	void	*west_wall;
 }	t_cardinals;
 
+typedef	struct s_player
+{
+	int	posx;
+	int	posy;
+}	t_player;
+
 typedef	struct s_colors
 {
 	int				f_color_num;
@@ -49,6 +55,7 @@ typedef	struct s_cube
 	t_cardinals		*card;
 	t_colors		*colors;
 	int				check_card[4];
+	t_player		*player;
 }	t_cube;
 
 void	struct_init(t_cube *game);
@@ -66,5 +73,7 @@ void	color_convertion_int(t_cube *game);
 void	save_colors_in_str(t_cube *game);
 void	free_matrix(char **mat);
 void	check_existence(t_cube *game, int i);
+void	main_check(t_cube *game);
+int		count_rows(char **mat);
 
 #endif

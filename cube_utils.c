@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:29:53 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:10:38 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 void	struct_init(t_cube *game)
 {
 	//non serve per ora
+	game->colors = malloc(1 * sizeof(t_colors));
+	game->player = malloc(1 * sizeof(t_player));
 	game->colors->c_color_num = 0;
 	game->colors->f_color_num = 0;
+	game->player->posx = 0;
+	game->player->posy = 0;
 }
 
 void	print_mat(char **mat)
@@ -46,6 +50,8 @@ void	free_struct(t_cube *game)
 		free(game->colors->f_hex_color);
 	if (game->colors->c_hex_color)
 		free(game->colors->c_hex_color);
+	free(game->colors);
+	free(game->player);
 	free(game);
 	exit(0);
 }

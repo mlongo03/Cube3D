@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:07:42 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:53:04 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,9 @@ int		check_cardinals(t_cube *game)
 		&& game->check_card[2] && game->check_card[3])
 	{
 		i = -1;
-		printf("checking\n");
 		while (++i < 4)
-		{
-			printf("Value %d\n", game->check_card[i]);
 			if (game->check_card[i] > 1)
 				ft_error("Error double cardinal detected", game);
-		}
 		return (1);
 	}
 	return (0);
@@ -88,4 +84,5 @@ void	read_and_build(t_cube *game)
 		ft_error("There are not enough cardinal point", game);
 	take_real_map(game);
 	take_colors(game);
+	main_check(game);
 }
