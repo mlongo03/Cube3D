@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:55:07 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 10:22:13 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:37:32 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,7 @@ void	take_real_map(t_cube *game)
 	if (!game->real_map)
 		free_struct(game);
 	take_real_map_phase_2(game);
+	game->map_len = malloc(sizeof(int) * count_rows(game->real_map));
+	if (!game->map_len)
+		ft_error("Malloc Error\n", game);
 }

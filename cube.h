@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 08:12:30 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:35:47 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef	struct s_cube
 	t_colors		*colors;
 	int				check_card[4];
 	t_player		*player;
+	int				*map_len; //può diventare permanente (per ora provvisiorio)
 }	t_cube;
 
 void	struct_init(t_cube *game);

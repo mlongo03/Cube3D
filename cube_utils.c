@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 17:10:38 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:38:14 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	free_struct(t_cube *game)
 		free(game->colors->f_hex_color);
 	if (game->colors->c_hex_color)
 		free(game->colors->c_hex_color);
+	if (game->map_len)
+		free(game->map_len);
 	free(game->colors);
 	free(game->player);
 	free(game);
