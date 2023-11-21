@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/19 10:32:35 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 08:51:29 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,51 @@ static int	check_columns(t_cube *game)
 	return (1);
 }
 
+int	final_map_check(t_cube *game, int *map_len)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (game->real_map[++i])
+	{
+		j = -1;
+		while (game->real_map[i][++j])
+		{
+			if (inmap(game->real_map[i][j]) && !(j && ismap(game->real_map[i][j - 1])
+			&& game->real_map[i][j + 1] && ismap(game->real_map[i][j + 1])
+			&& i && map_len[i - 1] >= j + 1 && ismap(game->real_map[i - 1][j - 1])
+			&& ismap(game->real_map[i - 1][j]) && ismap(game->real_map[i - 1][j + 1])
+			&& game->real_map[i + 1] && map_len[i + 1] >= j
+			&& ismap(game->real_map[i + 1][j - 1])
+			&& ismap(game->real_map[i + 1][j]) && ismap(game->real_map[i + 1][j + 1])))
+				return (0);
+			// if (isplayer(game->real_map[i][j]))
+			// 	return (0);
+		}
+	}
+	return (1);
+}
+
 void	main_check(t_cube *game)
 {
+	int	*map_len;
+
+	map_len = malloc(sizeof(int) * count_rows(game->real_map));
+	if (!map_len)
+		ft_error("Malloc Error\n", game);
+	if (!fix_lenght_rows(game->real_map, &map_len))
+	{
+		free(map_len);
+		ft_error("Error the map has an unknown tile\n",game);
+	}
 	if (!player_existence(game))
 		ft_error("Error player not found\n", game);
 	if (!check_walls(game))
 		ft_error("Error the map is not valid\n", game);
 	if (!check_columns(game))
 		ft_error("Error the map is not valid 2\n", game);
+	if (!final_map_check(game, map_len))
+		ft_error("Error the map is not closed\n", game);
+	free(map_len);
 }

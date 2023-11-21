@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 17:27:22 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 08:12:30 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,10 @@ void	free_matrix(char **mat);
 void	check_existence(t_cube *game, int i);
 void	main_check(t_cube *game);
 int		count_rows(char **mat);
+int		isplayer(char c);
+int		inmap(char c);
+int		ismap(char c);
+int		final_map_check(t_cube *game, int *map_len);
+int		fix_lenght_rows(char **map, int **map_len);
 
 #endif
