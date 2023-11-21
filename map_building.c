@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 12:12:33 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:35:59 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	read_and_build(t_cube *game)
 	game->all_map = ft_split(line, '\n');
 	close(fd);
 	free(line);
+	is_map_last(game);
 	if (!check_cardinals(game))
 		ft_error("There are not enough cardinal point", game);
 	take_real_map(game);

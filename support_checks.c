@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 08:46:45 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:23:49 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,30 @@ int	fix_lenght_rows(char **map, int **map_len)
 		(*map_len)[i] = j;
 	}
 	return (1);
+}
+
+void	is_map_last(t_cube *game)
+{
+	int	card;
+	int	flo_cei;
+	int	i;
+
+	i = -1;
+	card = 0;
+	flo_cei = 0;
+	while (game->all_map[++i])
+	{
+		if (!ft_strncmp(game->all_map[i], "NO", 2)
+			|| !ft_strncmp(game->all_map[i], "SO", 2)
+			|| !ft_strncmp(game->all_map[i], "EA", 2)
+			|| !ft_strncmp(game->all_map[i], "WE", 2))
+			card++;
+		else if (!ft_strncmp(game->all_map[i], "F", 1)
+				|| !ft_strncmp(game->all_map[i], "C", 1))
+			flo_cei++;
+		else if (card == 4 && flo_cei == 2)
+			break ;
+		else
+			ft_error("The map should be the last argument\n",game);
+	}
 }
