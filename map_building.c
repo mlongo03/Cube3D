@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 16:53:04 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:12:33 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	read_and_build(t_cube *game)
 
 	fd = open("./maps/map1.cub", O_RDONLY);
 	line = get_next_line(fd);
+	if (line == NULL)
+		ft_error("The map is empty\n", game);
 	game->all_map = ft_split(line, '\n');
 	close(fd);
 	free(line);
