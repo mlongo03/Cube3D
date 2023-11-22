@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 16:42:25 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:23:26 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,19 +142,19 @@ void	render_map(t_cube *cube)
 		// give x and y sides different brightness
 		if (side == 1)
 		{
-			//nord
+			//est
 			if (rayDirY > 0)
 				color = 0x00808000;
-			//sud
+			//ovest
 			else
 				color = 0x00065535;
 		}
 		else
 		{
-			//est
+			//sud
 			if (rayDirX > 0)
 				color = 0x00A9E37C;
-			//ovest
+			//nord
 			else
 				color = 0x007BD34E;
 		}
