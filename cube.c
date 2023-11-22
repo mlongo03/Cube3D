@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 15:11:17 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:42:25 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,18 +120,12 @@ void	render_map(t_cube *cube)
 			if (worldMap[mapX][mapY] > 0)
 				hit = 1;
 		}
-		// Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
-		// hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-		// This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
-		// for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
-		// because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-		// steps, but we subtract deltaDist once because one step more into the wall was taken above.
+
 		if (side == 0)
 			perpWallDist = (sideDistX - deltaDistX);
 		else
 			perpWallDist = (sideDistY - deltaDistY);
 
-		// Calculate height of line to draw on screen
 		int lineHeight = (int)(screenHeight / perpWallDist);
 
 		// calculate lowest and highest pixel to fill in current stripe
@@ -143,43 +137,41 @@ void	render_map(t_cube *cube)
 			drawEnd = screenHeight - 1;
 
 		int i = 0;
+		int color;
 
 		// give x and y sides different brightness
 		if (side == 1)
 		{
-			while (i < drawStart)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-				i++;
-			}
-			while (i < drawEnd)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x00808000);
-				i++;
-			}
-			while (i < screenHeight)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-				i++;
-			}
+			//nord
+			if (rayDirY > 0)
+				color = 0x00808000;
+			//sud
+			else
+				color = 0x00065535;
 		}
 		else
 		{
-			while (i < drawStart)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-				i++;
-			}
-			while (i < drawEnd)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x0000FF00);
-				i++;
-			}
-			while (i < screenHeight)
-			{
-				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-				i++;
-			}
+			//est
+			if (rayDirX > 0)
+				color = 0x00A9E37C;
+			//ovest
+			else
+				color = 0x007BD34E;
+		}
+		while (i < drawStart)
+		{
+			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+			i++;
+		}
+		while (i < drawEnd)
+		{
+			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, color);
+			i++;
+		}
+		while (i < screenHeight)
+		{
+			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+			i++;
 		}
 	}
 }
@@ -258,7 +250,6 @@ void	calculate_fps(t_cube *cube)
 		cube->fps = (int)(1.0 / cube->frameTime);
 	}
 	number = ft_itoa(cube->fps);
-	// printf("FPS = %s\n", number);
 	mlx_string_put(cube->mlx, cube->mlx_win,
 		screenWidth - 50, 20, -1, number);
 }
@@ -287,17 +278,17 @@ void	update_movement(t_cube *cube)
 	// move to left
 	if (cube->player->mov_dirX == -1)
 	{
-		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posX] == false)
-			cube->player->posX -= (cube->player->dirY) * moveSpeed;
-		if (worldMap[(int)(cube->player->posY)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == false)
+		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
+			cube->player->posX -= cube->player->dirY * moveSpeed;
+		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == false)
 			cube->player->posY += (cube->player->dirX) * moveSpeed;
 	}
 	// move to right
 	if (cube->player->mov_dirX == 1)
 	{
-		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posX] == false)
-			cube->player->posX += (cube->player->dirY) * moveSpeed;
-		if (worldMap[(int)cube->player->posY][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == false)
+		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
+			cube->player->posX += cube->player->dirY * moveSpeed;
+		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == false)
 			cube->player->posY -= (cube->player->dirX) * moveSpeed;
 	}
 }
@@ -331,9 +322,9 @@ void	update_rotation(t_cube *cube)
 
 int	game_loop(t_cube *cube)
 {
-	// mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img, 0, 0);
-	calculate_fps(cube);
 	render_map(cube);
+	calculate_fps(cube);
+	// mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img, 0, 0);
 	update_movement(cube);
 	update_rotation(cube);
 }
