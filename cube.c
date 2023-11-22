@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 17:23:26 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:48:11 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	render_map(t_cube *cube)
 				side = 1;
 			}
 			// Check if ray has hit a wall
-			if (worldMap[mapX][mapY] > 0)
+			if (worldMap[mapX][mapY] == 1)
 				hit = 1;
 		}
 
@@ -142,19 +142,19 @@ void	render_map(t_cube *cube)
 		// give x and y sides different brightness
 		if (side == 1)
 		{
-			//est
+			//nord
 			if (rayDirY > 0)
 				color = 0x00808000;
-			//ovest
+			//sud
 			else
 				color = 0x00065535;
 		}
 		else
 		{
-			//sud
+			//est
 			if (rayDirX > 0)
 				color = 0x00A9E37C;
-			//nord
+			//ovest
 			else
 				color = 0x007BD34E;
 		}
