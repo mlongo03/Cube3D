@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/21 19:05:22 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 13:20:04 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,22 +265,21 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirY * moveSpeed)] == false)
 			cube->player->posY -= cube->player->dirY * moveSpeed;
 	}
-	// move to right
-	if (cube->player->mov_dirX == 1)
-	{
-		printf("dirX = %f, ((dirY = %f\n", cube->player->dirX, cube->player->dirY);
-		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
-			cube->player->posX += fabs(cube->player->dirY) * moveSpeed;
-		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == false)
-			cube->player->posY += fabs(cube->player->dirX) * moveSpeed;
-	}
 	// move to left
 	if (cube->player->mov_dirX == -1)
 	{
-		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
-			cube->player->posX -= fabs(cube->player->dirY) * moveSpeed;
-		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == false)
-			cube->player->posY -= fabs(cube->player->dirX) * moveSpeed;
+		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posX] == false)
+			cube->player->posX -= (cube->player->dirY) * moveSpeed;
+		if (worldMap[(int)(cube->player->posY)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == false)
+			cube->player->posY += (cube->player->dirX) * moveSpeed;
+	}
+	// move to right
+	if (cube->player->mov_dirX == 1)
+	{
+		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posX] == false)
+			cube->player->posX += (cube->player->dirY) * moveSpeed;
+		if (worldMap[(int)cube->player->posY][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == false)
+			cube->player->posY -= (cube->player->dirX) * moveSpeed;
 	}
 }
 
