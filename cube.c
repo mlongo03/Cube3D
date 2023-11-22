@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 13:20:04 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:11:17 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,116 +53,135 @@ u_int64_t	get_time(void)
 
 void	render_map(t_cube *cube)
 {
-		for (int x = 0; x < screenWidth; x++)
+	for (int x = 0; x < screenWidth; x++)
+	{
+		// calculate ray position and direction
+		double cameraX = 2 * x / (double)screenWidth - 1; // x-coordinate in camera space
+		double rayDirX = cube->player->dirX + cube->player->planeX * cameraX;
+		double rayDirY = cube->player->dirY + cube->player->planeY * cameraX;
+		// which box of the map we're in
+		int mapX = (int)cube->player->posX;
+		int mapY = (int)cube->player->posY;
+
+		// length of ray from current position to next x or y-side
+		double sideDistX;
+		double sideDistY;
+
+		// length of ray from one x or y-side to next x or y-side
+		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX);
+		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY);
+
+		double perpWallDist;
+
+		// what direction to step in x or y-direction (either +1 or -1)
+		int stepX;
+		int stepY;
+
+		int hit = 0; // was there a wall hit?
+		int side;	 // was a NS or a EW wall hit?
+		// calculate step and initial sideDist
+		if (rayDirX < 0)
 		{
-			// calculate ray position and direction
-			double cameraX = 2 * x / (double)screenWidth - 1; // x-coordinate in camera space
-			double rayDirX = cube->player->dirX + cube->player->planeX * cameraX;
-			double rayDirY = cube->player->dirY + cube->player->planeY * cameraX;
-			// which box of the map we're in
-			int mapX = (int)cube->player->posX;
-			int mapY = (int)cube->player->posY;
-
-			// length of ray from current position to next x or y-side
-			double sideDistX;
-			double sideDistY;
-
-			// length of ray from one x or y-side to next x or y-side
-			double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX);
-			double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY);
-
-			double perpWallDist;
-
-			// what direction to step in x or y-direction (either +1 or -1)
-			int stepX;
-			int stepY;
-
-			int hit = 0; // was there a wall hit?
-			int side;	 // was a NS or a EW wall hit?
-			// calculate step and initial sideDist
-			if (rayDirX < 0)
+			stepX = -1;
+			sideDistX = (cube->player->posX - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - cube->player->posX) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (cube->player->posY - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - cube->player->posY) * deltaDistY;
+		}
+		// perform DDA
+		while (hit == 0)
+		{
+			// jump to next map square, either in x-direction, or in y-direction
+			if (sideDistX < sideDistY)
 			{
-				stepX = -1;
-				sideDistX = (cube->player->posX - mapX) * deltaDistX;
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				side = 0;
 			}
 			else
 			{
-				stepX = 1;
-				sideDistX = (mapX + 1.0 - cube->player->posX) * deltaDistX;
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				side = 1;
 			}
-			if (rayDirY < 0)
-			{
-				stepY = -1;
-				sideDistY = (cube->player->posY - mapY) * deltaDistY;
-			}
-			else
-			{
-				stepY = 1;
-				sideDistY = (mapY + 1.0 - cube->player->posY) * deltaDistY;
-			}
-			// perform DDA
-			while (hit == 0)
-			{
-				// jump to next map square, either in x-direction, or in y-direction
-				if (sideDistX < sideDistY)
-				{
-					sideDistX += deltaDistX;
-					mapX += stepX;
-					side = 0;
-				}
-				else
-				{
-					sideDistY += deltaDistY;
-					mapY += stepY;
-					side = 1;
-				}
-				// Check if ray has hit a wall
-				if (worldMap[mapX][mapY] > 0)
-					hit = 1;
-			}
-			// Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
-			// hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-			// This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
-			// for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
-			// because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-			// steps, but we subtract deltaDist once because one step more into the wall was taken above.
-			if (side == 0)
-				perpWallDist = (sideDistX - deltaDistX);
-			else
-				perpWallDist = (sideDistY - deltaDistY);
+			// Check if ray has hit a wall
+			if (worldMap[mapX][mapY] > 0)
+				hit = 1;
+		}
+		// Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
+		// hit to the camera plane. Euclidean to center camera point would give fisheye effect!
+		// This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
+		// for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
+		// because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
+		// steps, but we subtract deltaDist once because one step more into the wall was taken above.
+		if (side == 0)
+			perpWallDist = (sideDistX - deltaDistX);
+		else
+			perpWallDist = (sideDistY - deltaDistY);
 
-			// Calculate height of line to draw on screen
-			int lineHeight = (int)(screenHeight / perpWallDist);
+		// Calculate height of line to draw on screen
+		int lineHeight = (int)(screenHeight / perpWallDist);
 
-			// calculate lowest and highest pixel to fill in current stripe
-			int drawStart = -lineHeight / 2 + screenHeight / 2;
-			if (drawStart < 0)
-				drawStart = 0;
-			int drawEnd = lineHeight / 2 + screenHeight / 2;
-			if (drawEnd >= screenHeight)
-				drawEnd = screenHeight - 1;
+		// calculate lowest and highest pixel to fill in current stripe
+		int drawStart = -lineHeight / 2 + screenHeight / 2;
+		if (drawStart < 0)
+			drawStart = 0;
+		int drawEnd = lineHeight / 2 + screenHeight / 2;
+		if (drawEnd >= screenHeight)
+			drawEnd = screenHeight - 1;
 
-			int i = drawStart;
+		int i = 0;
 
-			// give x and y sides different brightness
-			if (side == 1)
+		// give x and y sides different brightness
+		if (side == 1)
+		{
+			while (i < drawStart)
 			{
-				while (i < drawEnd)
-				{
-					mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x00808000);
-					i++;
-				}
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+				i++;
 			}
-			else
+			while (i < drawEnd)
 			{
-				while (i < drawEnd)
-				{
-					mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x0000FF00);
-					i++;
-				}
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x00808000);
+				i++;
+			}
+			while (i < screenHeight)
+			{
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+				i++;
 			}
 		}
-
+		else
+		{
+			while (i < drawStart)
+			{
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+				i++;
+			}
+			while (i < drawEnd)
+			{
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0x0000FF00);
+				i++;
+			}
+			while (i < screenHeight)
+			{
+				mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
+				i++;
+			}
+		}
+	}
 }
 
 int	close_window(t_cube *cube)
@@ -312,7 +331,7 @@ void	update_rotation(t_cube *cube)
 
 int	game_loop(t_cube *cube)
 {
-	mlx_clear_window(cube->mlx, cube->mlx_win);
+	// mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img, 0, 0);
 	calculate_fps(cube);
 	render_map(cube);
 	update_movement(cube);
@@ -333,6 +352,7 @@ int main()
 	cube.oldTime = 0;
 	cube.mlx = mlx_init();
 	cube.mlx_win = mlx_new_window(cube.mlx, screenWidth, screenHeight, "Hello world!");
+	cube.img = mlx_new_image(cube.mlx, screenWidth, screenHeight);
 	cube.player = &player;
 	mlx_hooks(&cube);
 	mlx_loop_hook(cube.mlx, game_loop, &cube);
