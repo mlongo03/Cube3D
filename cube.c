@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 17:48:11 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/23 00:15:21 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,128 +51,132 @@ u_int64_t	get_time(void)
 	return ((tv.tv_sec * (u_int64_t)1000) + (tv.tv_usec / 1000));
 }
 
+void	init_step_direction(t_render_data *data, t_cube *cube)
+{
+	if (data->rayDirX < 0)
+	{
+		data->stepX = -1;
+		data->sideDistX = (cube->player->posX - data->mapX) * data->deltaDistX;
+	}
+	else
+	{
+		data->stepX = 1;
+		data->sideDistX = (data->mapX + 1.0 - cube->player->posX) * data->deltaDistX;
+	}
+	if (data->rayDirY < 0)
+	{
+		data->stepY = -1;
+		data->sideDistY = (cube->player->posY - data->mapY) * data->deltaDistY;
+	}
+	else
+	{
+		data->stepY = 1;
+		data->sideDistY = (data->mapY + 1.0 - cube->player->posY) * data->deltaDistY;
+	}
+}
+
+void	init_render_data(t_render_data *data, t_cube *cube, int x)
+{
+	data->cameraX = 2 * x / (double)screenWidth - 1;
+	data->rayDirX = cube->player->dirX + cube->player->planeX * data->cameraX;
+	data->rayDirY = cube->player->dirY + cube->player->planeY * data->cameraX;
+	data->mapX = (int)cube->player->posX;
+	data->mapY = (int)cube->player->posY;
+	if (data->rayDirX == 0)
+		data->deltaDistX = 1e30;
+	else
+		data->deltaDistX = fabs(1.0 / data->rayDirX);
+	if (data->rayDirY == 0)
+		data->deltaDistY = 1e30;
+	else
+		data->deltaDistY = fabs(1.0 / data->rayDirY);
+	data->hit = 0;
+	init_step_direction(data, cube);
+}
+
+void	perform_dda(t_render_data *data)
+{
+	while (data->hit == 0)
+	{
+		if (data->sideDistX < data->sideDistY)
+		{
+			data->sideDistX += data->deltaDistX;
+			data->mapX += data->stepX;
+			data->side = 0;
+		}
+		else
+		{
+			data->sideDistY += data->deltaDistY;
+			data->mapY += data->stepY;
+			data->side = 1;
+		}
+		if (worldMap[data->mapX][data->mapY] == 1)
+			data->hit = 1;
+	}
+}
+
+void	set_color(t_render_data *data)
+{
+	if (data->side == 1)
+	{
+		//nord
+		if (data->rayDirY > 0)
+			data->color = 0x00808000;
+		//sud
+		else
+			data->color = 0x00065535;
+	}
+	else
+	{
+		//est
+		if (data->rayDirX > 0)
+			data->color = 0x00A9E37C;
+		//ovest
+		else
+			data->color = 0x007BD34E;
+	}
+
+}
+
+void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
+{
+	int i;
+
+	i = 0;
+	if (data->side == 0)
+		data->perpWallDist = (data->sideDistX - data->deltaDistX);
+	else
+		data->perpWallDist = (data->sideDistY - data->deltaDistY);
+
+	data->lineHeight = (int)(screenHeight / data->perpWallDist);
+
+	data->drawStart = -data->lineHeight / 2 + screenHeight / 2;
+	if (data->drawStart < 0)
+		data->drawStart = 0;
+	data->drawEnd = data->lineHeight / 2 + screenHeight / 2;
+	if (data->drawEnd >= screenHeight)
+		data->drawEnd = screenHeight - 1;
+	set_color(data);
+	while (i < data->drawStart)
+		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, 0xFFFFFFFF);
+	while (i < data->drawEnd)
+		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, data->color);
+	while (i < screenHeight)
+		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, 0xFFFFFFFF);
+}
+
 void	render_map(t_cube *cube)
 {
-	for (int x = 0; x < screenWidth; x++)
+	t_render_data	data;
+	int				x;
+
+	x = 0;
+	while (x < screenWidth)
 	{
-		// calculate ray position and direction
-		double cameraX = 2 * x / (double)screenWidth - 1; // x-coordinate in camera space
-		double rayDirX = cube->player->dirX + cube->player->planeX * cameraX;
-		double rayDirY = cube->player->dirY + cube->player->planeY * cameraX;
-		// which box of the map we're in
-		int mapX = (int)cube->player->posX;
-		int mapY = (int)cube->player->posY;
-
-		// length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-
-		// length of ray from one x or y-side to next x or y-side
-		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX);
-		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY);
-
-		double perpWallDist;
-
-		// what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-
-		int hit = 0; // was there a wall hit?
-		int side;	 // was a NS or a EW wall hit?
-		// calculate step and initial sideDist
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (cube->player->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - cube->player->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (cube->player->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - cube->player->posY) * deltaDistY;
-		}
-		// perform DDA
-		while (hit == 0)
-		{
-			// jump to next map square, either in x-direction, or in y-direction
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			// Check if ray has hit a wall
-			if (worldMap[mapX][mapY] == 1)
-				hit = 1;
-		}
-
-		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
-
-		int lineHeight = (int)(screenHeight / perpWallDist);
-
-		// calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + screenHeight / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + screenHeight / 2;
-		if (drawEnd >= screenHeight)
-			drawEnd = screenHeight - 1;
-
-		int i = 0;
-		int color;
-
-		// give x and y sides different brightness
-		if (side == 1)
-		{
-			//nord
-			if (rayDirY > 0)
-				color = 0x00808000;
-			//sud
-			else
-				color = 0x00065535;
-		}
-		else
-		{
-			//est
-			if (rayDirX > 0)
-				color = 0x00A9E37C;
-			//ovest
-			else
-				color = 0x007BD34E;
-		}
-		while (i < drawStart)
-		{
-			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-			i++;
-		}
-		while (i < drawEnd)
-		{
-			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, color);
-			i++;
-		}
-		while (i < screenHeight)
-		{
-			mlx_pixel_put(cube->mlx, cube->mlx_win, x, i, 0xFFFFFFFF);
-			i++;
-		}
+		init_render_data(&data, cube, x);
+		perform_dda(&data);
+		draw_vertical_line(&data, cube, x);
+		x++;
 	}
 }
 
@@ -240,7 +244,7 @@ void	calculate_fps(t_cube *cube)
 
 	cube->oldTime = cube->time;
 	cube->time = get_time();
-	cube->frameTime = (cube->time - cube->oldTime) / 1000.0; // frameTime is the time this frame has taken, in seconds
+	cube->frameTime = (cube->time - cube->oldTime) / 1000.0;
 	cube->fps = (int)(1.0 / cube->frameTime);
 	if (cube->fps > 60)
 	{
@@ -256,10 +260,9 @@ void	calculate_fps(t_cube *cube)
 
 void	update_movement(t_cube *cube)
 {
-	// speed modifiers
-	double moveSpeed = cube->frameTime * 5.0; // the constant value is in squares/second
+	double moveSpeed;
 
-	// move forward if no wall in front of you
+	moveSpeed = cube->frameTime * 5.0;
 	if (cube->player->mov_dirY == 1)
 	{
 		if (worldMap[(int)(cube->player->posX + cube->player->dirX * moveSpeed)][(int)cube->player->posY] == false)
@@ -267,7 +270,6 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirY * moveSpeed)] == false)
 			cube->player->posY += cube->player->dirY * moveSpeed;
 	}
-	// move backwards if no wall behind you
 	if (cube->player->mov_dirY == -1)
 	{
 		if (worldMap[(int)(cube->player->posX - cube->player->dirX * moveSpeed)][(int)cube->player->posY] == false)
@@ -275,7 +277,6 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirY * moveSpeed)] == false)
 			cube->player->posY -= cube->player->dirY * moveSpeed;
 	}
-	// move to left
 	if (cube->player->mov_dirX == -1)
 	{
 		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
@@ -283,7 +284,6 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == false)
 			cube->player->posY += (cube->player->dirX) * moveSpeed;
 	}
-	// move to right
 	if (cube->player->mov_dirX == 1)
 	{
 		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
@@ -295,26 +295,26 @@ void	update_movement(t_cube *cube)
 
 void	update_rotation(t_cube *cube)
 {
-	double rotSpeed = cube->frameTime * 3.0;	// the constant value is in radians/second
-	// rotate to the right
+	double rotSpeed;
+	double oldDirX;
+	double oldPlaneX;
+
+	rotSpeed = cube->frameTime * 3.0;
 	if (cube->player->cam_dir == 1)
 	{
-		// both camera direction and camera plane must be rotated
-		double oldDirX = cube->player->dirX;
+		oldDirX = cube->player->dirX;
 		cube->player->dirX = cube->player->dirX * cos(-rotSpeed) - cube->player->dirY * sin(-rotSpeed);
 		cube->player->dirY = oldDirX * sin(-rotSpeed) + cube->player->dirY * cos(-rotSpeed);
-		double oldPlaneX = cube->player->planeX;
+		oldPlaneX = cube->player->planeX;
 		cube->player->planeX = cube->player->planeX * cos(-rotSpeed) - cube->player->planeY * sin(-rotSpeed);
 		cube->player->planeY = oldPlaneX * sin(-rotSpeed) + cube->player->planeY * cos(-rotSpeed);
 	}
-	// rotate to the left
 	if (cube->player->cam_dir == -1)
 	{
-		// both camera direction and camera plane must be rotated
-		double oldDirX = cube->player->dirX;
+		oldDirX = cube->player->dirX;
 		cube->player->dirX = cube->player->dirX * cos(rotSpeed) - cube->player->dirY * sin(rotSpeed);
 		cube->player->dirY = oldDirX * sin(rotSpeed) + cube->player->dirY * cos(rotSpeed);
-		double oldPlaneX = cube->player->planeX;
+		oldPlaneX = cube->player->planeX;
 		cube->player->planeX = cube->player->planeX * cos(rotSpeed) - cube->player->planeY * sin(rotSpeed);
 		cube->player->planeY = oldPlaneX * sin(rotSpeed) + cube->player->planeY * cos(rotSpeed);
 	}

@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 13:24:41 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/22 23:34:42 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,45 @@ typedef	struct s_colors
 	char			*c_hex_color;
 }	t_colors;
 
+typedef struct s_render_data
+{
+	int		mapX;
+	int		mapY;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		i;
+	int		color;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+}	t_render_data;
+
 typedef	struct s_cube
 {
-	void			*mlx;
-	void			*mlx_win;
-	char			**all_map; //la mappa con letteralmente tutto
-	char			**real_map; //la mappa base
-	t_cardinals		*card;
-	t_colors		*colors;
-	int				check_card[4];
-	t_player		*player;
-	int				*map_len; //può diventare permanente (per ora provvisiorio)
-	double			time;
-	double			oldTime;
-	int				fps;
-	double			frameTime;
-	void			*img;
+	void		*mlx;
+	void		*mlx_win;
+	char		**all_map; //la mappa con letteralmente tutto
+	char		**real_map; //la mappa base
+	t_cardinals	*card;
+	t_colors	*colors;
+	int			check_card[4];
+	t_player	*player;
+	int			*map_len; //può diventare permanente (per ora provvisiorio)
+	double		time;
+	double		oldTime;
+	int			fps;
+	double		frameTime;
+	void		*img;
 }	t_cube;
 
 # include "libft/libft.h"
