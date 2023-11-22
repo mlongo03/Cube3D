@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/23 00:15:21 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/23 00:26:20 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,11 +258,8 @@ void	calculate_fps(t_cube *cube)
 		screenWidth - 50, 20, -1, number);
 }
 
-void	update_movement(t_cube *cube)
+void	forward_backward(t_cube *cube, double moveSpeed)
 {
-	double moveSpeed;
-
-	moveSpeed = cube->frameTime * 5.0;
 	if (cube->player->mov_dirY == 1)
 	{
 		if (worldMap[(int)(cube->player->posX + cube->player->dirX * moveSpeed)][(int)cube->player->posY] == false)
@@ -277,6 +274,10 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirY * moveSpeed)] == false)
 			cube->player->posY -= cube->player->dirY * moveSpeed;
 	}
+}
+
+void	left_right(t_cube *cube, double moveSpeed)
+{
 	if (cube->player->mov_dirX == -1)
 	{
 		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == false)
@@ -291,6 +292,15 @@ void	update_movement(t_cube *cube)
 		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == false)
 			cube->player->posY -= (cube->player->dirX) * moveSpeed;
 	}
+}
+
+void	update_movement(t_cube *cube)
+{
+	double moveSpeed;
+
+	moveSpeed = cube->frameTime * 5.0;
+	forward_backward(cube, moveSpeed);
+	left_right(cube, moveSpeed);
 }
 
 void	update_rotation(t_cube *cube)
