@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 12:35:33 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 01:29:47 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef	struct s_cube
 }	t_cube;
 
 void	struct_init(t_cube *game);
-void	read_and_build(t_cube *game);
+void	read_and_build(t_cube *game, char **av);
 void	print_mat(char **mat);
 void	free_struct(t_cube *game);
 int		check_cardinals(t_cube *game);
@@ -69,7 +69,7 @@ void	ft_error(char *str_err, t_cube *game);
 void	save_floor_colors(t_cube *game, char *f_color_str);
 void	save_ceiling_colors(t_cube *game, char *c_color_str);
 void	set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag);
-void	ft_rgb(int	*color, unsigned int rgb[3], int i);
+void	ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game);
 void	color_convertion_int(t_cube *game);
 void	save_colors_in_str(t_cube *game);
 void	free_matrix(char **mat);
@@ -82,5 +82,6 @@ int		ismap(char c);
 int		final_map_check(t_cube *game, int *map_len);
 int		fix_lenght_rows(char **map, int **map_len);
 void	is_map_last(t_cube *game);
+void	is_cub(char **av, t_cube *game);
 
 #endif

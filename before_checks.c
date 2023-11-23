@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   before_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 23:04:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/23 01:21:56 by lnicoter         ###   ########.fr       */
+/*   Created: 2023/11/23 01:19:29 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/23 01:25:14 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int	main(int ac, char **av)
+void	is_cub(char **av, t_cube *game)
 {
-
-	t_cube	*game;
-
-	if (ac != 2)
-	{
-		printf("Too few/many arguments\n");
-		exit(1);
-	}
-	game = ft_calloc(1, sizeof(t_cube));
-//	game->mlx = mlx_init();
-	struct_init(game);
-	is_cub(av, game);
-	read_and_build(game, av);
-	free_struct(game);
-	//mlx_loop(game->mlx);
+	if (av[1][ft_strlen(av[1]) - 3] == 'c'
+		&& av[1][ft_strlen(av[1]) - 2] == 'u'
+		&& av[1][ft_strlen(av[1]) - 1] == 'b'
+		&& av[1][ft_strlen(av[1])] == '\0')
+		;
+	else
+		ft_error("The map must be of .cub type\n", game);
 }

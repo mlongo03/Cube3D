@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:32:22 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 01:38:13 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ void	set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag)
 		}
 }
 
-void	ft_rgb(int	*color, unsigned int rgb[3], int i)
+void	ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game)
 {
+	if (rgb[i] < 0)
+		ft_error("The color number should not be under 0\n", game);
 	if (rgb[i] > 255)
-		exit(1);
-
+		ft_error("The color number should not be over 255\n", game);
 	// Shifting bits e combinazione dei componenti di colore in un unico valore
 	*color += (rgb[i] << (((i + 2) - (i * 2)) * 8));
 }
@@ -78,7 +79,7 @@ void	color_convertion_int(t_cube *game)
 	i = -1;
 	while (++i < 3)
 	{
-		ft_rgb(&game->colors->c_color_num, rgb_c, i);
-		ft_rgb(&game->colors->f_color_num, rgb_f, i);
+		ft_rgb(&game->colors->c_color_num, rgb_c, i, game);
+		ft_rgb(&game->colors->f_color_num, rgb_f, i, game);
 	}
 }

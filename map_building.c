@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 12:35:59 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 01:19:05 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	save_cardinals(t_cube *game)
 }
 */
 
-void	read_and_build(t_cube *game)
+void	read_and_build(t_cube *game, char **av)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("./maps/map1.cub", O_RDONLY);
+	fd = open(av[1], O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		ft_error("The map is empty\n", game);
+		ft_error("The map is empty or doesn't exist\n", game);
 	game->all_map = ft_split(line, '\n');
 	close(fd);
 	free(line);
