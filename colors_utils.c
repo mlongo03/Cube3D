@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/23 01:38:13 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:17:26 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	save_floor_colors(t_cube *game, char *f_color_str)
 	test_str = ft_strdup(f_color_str);
 	game->colors->floor_colors = ft_split(test_str, ',');
 	free(test_str);
+	if (count_rows(game->colors->floor_colors) < 3)
+		ft_error ("Error dome problem with the colors numbers occurred", game);
 }
 
 void	save_ceiling_colors(t_cube *game, char *c_color_str)
@@ -34,6 +36,8 @@ void	save_ceiling_colors(t_cube *game, char *c_color_str)
 	test_str = ft_strdup(c_color_str);
 	game->colors->ceiling_colors = ft_split(test_str, ',');
 	free(test_str);
+	if (count_rows(game->colors->ceiling_colors) < 3)
+		ft_error ("Error dome problem with the colors numbers occurred", game);
 }
 
 void	set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag)
@@ -72,13 +76,15 @@ void	color_convertion_int(t_cube *game)
 	i = -1;
 	//modificare per controllare se valore negativo
 	while (game->colors->ceiling_colors[++i] && i < 3)
-		rgb_c[i] = ft_atoi(game->colors->ceiling_colors[i]);
+		rgb_c[i] = ft_atoi_colors(game->colors->ceiling_colors[i]);
 	i = -1;
 	while (game->colors->floor_colors[++i] && i < 3)
-		rgb_f[i] = ft_atoi(game->colors->floor_colors[i]);
+		rgb_f[i] = ft_atoi_colors(game->colors->floor_colors[i]);
 	i = -1;
 	while (++i < 3)
 	{
+		if (rgb_f[i] == -1 || rgb_c[i] == -1)
+			ft_error("Error the colors are not setted correctly\n", game);
 		ft_rgb(&game->colors->c_color_num, rgb_c, i, game);
 		ft_rgb(&game->colors->f_color_num, rgb_f, i, game);
 	}

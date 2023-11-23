@@ -1,9 +1,9 @@
 NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
 WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+EA ./path_to_the_easfloor_colorst_texture
 
-F 220,100,66
+F 100,66, 77
 C 153,0,21
 
 

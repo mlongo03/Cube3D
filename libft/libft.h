@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:48:59 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:13:36 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:56:44 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ int		ft_isspace(char c);
 int		ft_atoi_base(const char *str, char *base);
 int		ft_checkbase(char *base);
 void	*ft_realloc(void *p, size_t size, int dim, int new_dim);
+int		ft_atoi_colors(const char *str);
 
 #endif
