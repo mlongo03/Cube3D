@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/23 12:08:36 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/23 14:05:46 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	render_map(t_cube *cube)
 int	close_window(t_cube *cube)
 {
 	mlx_destroy_window(cube->mlx, cube->mlx_win);
+	mlx_destroy_image(cube->mlx, cube->img->img);
 	free(cube->mlx);
 	exit (1);
 }
@@ -264,6 +265,7 @@ void	calculate_fps(t_cube *cube)
 	number = ft_itoa(cube->fps);
 	mlx_string_put(cube->mlx, cube->mlx_win,
 		screenWidth - 50, 20, -1, number);
+	free(number);
 }
 
 void	forward_backward(t_cube *cube, double moveSpeed)
@@ -358,6 +360,9 @@ int main()
 	player.dirY = 0;
 	player.planeX = 0;
 	player.planeY = 0.66;
+	player.mov_dirX = 0;
+	player.mov_dirY = 0;
+	player.cam_dir = 0;
 	cube.time = 0;
 	cube.oldTime = 0;
 	cube.mlx = mlx_init();
