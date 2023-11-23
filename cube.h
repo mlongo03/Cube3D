@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/22 23:34:42 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/23 11:46:47 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ typedef	struct s_colors
 	char			*c_hex_color;
 }	t_colors;
 
+typedef struct s_img
+{
+	void	*img;
+	void	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_img;
+
 typedef struct s_render_data
 {
 	int		mapX;
@@ -55,7 +64,6 @@ typedef struct s_render_data
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
-	int		i;
 	int		color;
 	double	cameraX;
 	double	rayDirX;
@@ -82,7 +90,7 @@ typedef	struct s_cube
 	double		oldTime;
 	int			fps;
 	double		frameTime;
-	void		*img;
+	t_img		*img;
 }	t_cube;
 
 # include "libft/libft.h"

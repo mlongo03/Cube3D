@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/23 00:26:20 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/23 12:08:36 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 #define mapWidth 24
 #define mapHeight 24
-#define screenWidth 640
-#define screenHeight 480
+#define screenWidth 1920
+#define screenHeight 1080
+// #define screenWidth 640
+// #define screenHeight 480
 
 int worldMap[mapWidth][mapHeight] =
 	{
@@ -85,11 +87,11 @@ void	init_render_data(t_render_data *data, t_cube *cube, int x)
 	if (data->rayDirX == 0)
 		data->deltaDistX = 1e30;
 	else
-		data->deltaDistX = fabs(1.0 / data->rayDirX);
+		data->deltaDistX = fabs(1.0f / data->rayDirX);
 	if (data->rayDirY == 0)
 		data->deltaDistY = 1e30;
 	else
-		data->deltaDistY = fabs(1.0 / data->rayDirY);
+		data->deltaDistY = fabs(1.0f / data->rayDirY);
 	data->hit = 0;
 	init_step_direction(data, cube);
 }
@@ -138,6 +140,14 @@ void	set_color(t_render_data *data)
 
 }
 
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr	+ (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
 void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 {
 	int i;
@@ -147,9 +157,7 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 		data->perpWallDist = (data->sideDistX - data->deltaDistX);
 	else
 		data->perpWallDist = (data->sideDistY - data->deltaDistY);
-
 	data->lineHeight = (int)(screenHeight / data->perpWallDist);
-
 	data->drawStart = -data->lineHeight / 2 + screenHeight / 2;
 	if (data->drawStart < 0)
 		data->drawStart = 0;
@@ -158,11 +166,11 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 		data->drawEnd = screenHeight - 1;
 	set_color(data);
 	while (i < data->drawStart)
-		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, 0xFFFFFFFF);
+		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
 	while (i < data->drawEnd)
-		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, data->color);
+		my_mlx_pixel_put(cube->img, x, i++, data->color);
 	while (i < screenHeight)
-		mlx_pixel_put(cube->mlx, cube->mlx_win, x, i++, 0xFFFFFFFF);
+		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
 }
 
 void	render_map(t_cube *cube)
@@ -333,16 +341,17 @@ void	update_rotation(t_cube *cube)
 int	game_loop(t_cube *cube)
 {
 	render_map(cube);
+	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img->img, 0, 0);
 	calculate_fps(cube);
-	// mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img, 0, 0);
 	update_movement(cube);
 	update_rotation(cube);
 }
 
 int main()
 {
-	t_cube cube;
-	t_player player;
+	t_cube		cube;
+	t_player	player;
+	t_img		main_img;
 	player.posX = 22;
 	player.posY = 12;
 	player.dirX = -1;
@@ -353,7 +362,11 @@ int main()
 	cube.oldTime = 0;
 	cube.mlx = mlx_init();
 	cube.mlx_win = mlx_new_window(cube.mlx, screenWidth, screenHeight, "Hello world!");
-	cube.img = mlx_new_image(cube.mlx, screenWidth, screenHeight);
+	main_img.img = mlx_new_image(cube.mlx, screenWidth, screenHeight);
+	main_img.addr = mlx_get_data_addr(main_img.img,
+		&main_img.bits_per_pixel, &main_img.line_length,
+		&main_img.endian);
+	cube.img = &main_img;
 	cube.player = &player;
 	mlx_hooks(&cube);
 	mlx_loop_hook(cube.mlx, game_loop, &cube);
