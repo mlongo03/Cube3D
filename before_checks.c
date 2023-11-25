@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 01:19:29 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/25 15:54:00 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:22:32 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	fix_map(t_cube *game) //funzione per sostituire gli spazi
 		j = -1;
 		while (game->real_map[i][++j] )
 		{
-			if (game->real_map[i][j] == ' ')
+			if (game->real_map[i][j] == ' '
+				&& (game->real_map[i][j - 1]
+				&& (game->real_map[i][j - 1] == '0')
+				|| game->real_map[i][j - 1] == '1'))
 				game->real_map[i][j] = '1';
 		}
 	}

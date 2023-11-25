@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/25 15:16:28 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:14:15 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	struct_init(t_cube *game)
 {
-	//non serve per ora
 	game->colors = ft_calloc(1, sizeof(t_colors));
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->colors->c_color_num = 0;

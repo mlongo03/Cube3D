@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 19:23:49 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:26:36 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ int	fix_lenght_rows(char **map, int **map_len)
 	int	j;
 
 	i = -1;
+	//qui legge il \t e giustamente da errore
 	while (map[++i])
 	{
 		j = -1;
 		while (map[i][++j])
 		{
 			if (!(ismap(map[i][j]) || map[i][j] == 32 || map[i][j] == '\n'))
+			{
+				printf("Qui cade la magia\n");
 				return (0);
+			}
 		}
 		(*map_len)[i] = j;
 	}
