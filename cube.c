@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/23 14:05:46 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/25 19:09:40 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 #define mapWidth 24
 #define mapHeight 24
-#define screenWidth 1920
-#define screenHeight 1080
-// #define screenWidth 640
-// #define screenHeight 480
 
 int worldMap[mapWidth][mapHeight] =
 	{
@@ -117,25 +113,25 @@ void	perform_dda(t_render_data *data)
 	}
 }
 
-void	set_color(t_render_data *data)
+void	set_color(t_render_data *data, t_cube *cube, int shift)
 {
 	if (data->side == 1)
 	{
 		//nord
 		if (data->rayDirY > 0)
-			data->color = 0x00808000;
+			data->color = *(unsigned int *)(cube->card->north_wall.addr + shift);
 		//sud
 		else
-			data->color = 0x00065535;
+			data->color = *(unsigned int *)(cube->card->south_wall.addr + shift);
 	}
 	else
 	{
 		//est
 		if (data->rayDirX > 0)
-			data->color = 0x00A9E37C;
+			data->color = *(unsigned int *)(cube->card->east_wall.addr + shift);
 		//ovest
 		else
-			data->color = 0x007BD34E;
+			data->color = *(unsigned int *)(cube->card->west_wall.addr + shift);
 	}
 
 }
@@ -164,13 +160,96 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 	data->drawEnd = data->lineHeight / 2 + screenHeight / 2;
 	if (data->drawEnd >= screenHeight)
 		data->drawEnd = screenHeight - 1;
-	set_color(data);
+	double	wallX;
+	if (data->side == 0)
+		wallX = cube->player->posY + data->perpWallDist * data->rayDirY;
+	else
+		wallX = cube->player->posX + data->perpWallDist * data->rayDirX;
+	wallX -= (int)(wallX);
+	int texWidth;
+	int texHeight;
+	if (data->side == 1)
+	{
+		//nord
+		if (data->rayDirY > 0)
+		{
+			texWidth = cube->card->north_wall.width;
+			texHeight = cube->card->north_wall.height;
+		}
+		//sud
+		else
+		{
+			texWidth = cube->card->south_wall.width;
+			texHeight = cube->card->south_wall.height;
+		}
+
+	}
+	else
+	{
+		//est
+		if (data->rayDirX > 0)
+		{
+			texWidth = cube->card->east_wall.width;
+			texHeight = cube->card->east_wall.height;
+		}
+		//ovest
+		else
+		{
+			texWidth = cube->card->west_wall.width;
+			texHeight = cube->card->west_wall.height;
+		}
+	}
+	//x coordinate on the texture
+	int texX = (int)(wallX * (double)texWidth);
+	if(data->side == 0 && data->rayDirX > 0)
+		texX = texWidth - texX - 1;
+	if(data->side == 1 && data->rayDirY < 0)
+		texX = texWidth - texX - 1;
 	while (i < data->drawStart)
 		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
-	while (i < data->drawEnd)
-		my_mlx_pixel_put(cube->img, x, i++, data->color);
+
+	double step = 1.0 * texHeight / data->lineHeight;
+	double texPos = (data->drawStart - screenHeight / 2 + data->lineHeight / 2) * step;
+	for(int y = data->drawStart; y < data->drawEnd; y++)
+	{
+		int texY = (int)texPos % texHeight;
+		texPos += step;
+		set_color(data, cube, 4 * (int)(texHeight * texY + texX));
+		my_mlx_pixel_put(cube->img, x, y, data->color);
+	}
+
+	i = data->drawEnd;
 	while (i < screenHeight)
 		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
+}
+
+void	load_textures(t_cube *cube)
+{
+	cube->card = ft_calloc(1, sizeof(t_cardinals));
+	cube->card->north_wall.img = mlx_xpm_file_to_image(cube->mlx,
+			"/home/manuele/Scrivania/darioCube/maps/bluestone.xpm",
+			&cube->card->north_wall.width, &cube->card->north_wall.height);
+	cube->card->north_wall.addr = mlx_get_data_addr(cube->card->north_wall.img,
+		&cube->card->east_wall.bits_per_pixel, &cube->card->north_wall.line_length,
+		&cube->card->north_wall.endian);
+	cube->card->south_wall.img = mlx_xpm_file_to_image(cube->mlx,
+			"/home/manuele/Scrivania/darioCube/maps/colorstone.xpm",
+			&cube->card->south_wall.width, &cube->card->south_wall.height);
+	cube->card->south_wall.addr = mlx_get_data_addr(cube->card->south_wall.img,
+		&cube->card->south_wall.bits_per_pixel, &cube->card->south_wall.line_length,
+		&cube->card->south_wall.endian);
+	cube->card->east_wall.img = mlx_xpm_file_to_image(cube->mlx,
+			"/home/manuele/Scrivania/darioCube/maps/pupone.xpm",
+			&cube->card->east_wall.width, &cube->card->east_wall.height);
+	cube->card->east_wall.addr = mlx_get_data_addr(cube->card->east_wall.img,
+		&cube->card->east_wall.bits_per_pixel, &cube->card->east_wall.line_length,
+		&cube->card->east_wall.endian);
+	cube->card->west_wall.img = mlx_xpm_file_to_image(cube->mlx,
+			"/home/manuele/Scrivania/darioCube/maps/colorstone.xpm",
+			&cube->card->west_wall.width, &cube->card->west_wall.height);
+	cube->card->west_wall.addr = mlx_get_data_addr(cube->card->west_wall.img,
+		&cube->card->west_wall.bits_per_pixel, &cube->card->west_wall.line_length,
+		&cube->card->west_wall.endian);
 }
 
 void	render_map(t_cube *cube)
@@ -179,6 +258,7 @@ void	render_map(t_cube *cube)
 	int				x;
 
 	x = 0;
+	load_textures(cube);
 	while (x < screenWidth)
 	{
 		init_render_data(&data, cube, x);
@@ -192,6 +272,7 @@ int	close_window(t_cube *cube)
 {
 	mlx_destroy_window(cube->mlx, cube->mlx_win);
 	mlx_destroy_image(cube->mlx, cube->img->img);
+	// free_struct(cube);
 	free(cube->mlx);
 	exit (1);
 }
@@ -349,31 +430,26 @@ int	game_loop(t_cube *cube)
 	update_rotation(cube);
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	t_cube		cube;
-	t_player	player;
-	t_img		main_img;
-	player.posX = 22;
-	player.posY = 12;
-	player.dirX = -1;
-	player.dirY = 0;
-	player.planeX = 0;
-	player.planeY = 0.66;
-	player.mov_dirX = 0;
-	player.mov_dirY = 0;
-	player.cam_dir = 0;
-	cube.time = 0;
-	cube.oldTime = 0;
-	cube.mlx = mlx_init();
-	cube.mlx_win = mlx_new_window(cube.mlx, screenWidth, screenHeight, "Hello world!");
-	main_img.img = mlx_new_image(cube.mlx, screenWidth, screenHeight);
-	main_img.addr = mlx_get_data_addr(main_img.img,
-		&main_img.bits_per_pixel, &main_img.line_length,
-		&main_img.endian);
-	cube.img = &main_img;
-	cube.player = &player;
-	mlx_hooks(&cube);
-	mlx_loop_hook(cube.mlx, game_loop, &cube);
-	mlx_loop(cube.mlx);
+	t_cube	*game;
+
+	if (argc != 2)
+	{
+		printf("Too few/many arguments\n");
+		exit(1);
+	}
+	game = ft_calloc(1, sizeof(t_cube));
+	struct_init(game);
+	// is_cub(argv, game);
+	// read_and_build(game, argv);
+	game->mlx = mlx_init();
+	game->mlx_win = mlx_new_window(game->mlx, screenWidth, screenHeight, "Hello world!");
+	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
+	game->img->addr = mlx_get_data_addr(game->img->img,
+		&game->img->bits_per_pixel, &game->img->line_length,
+		&game->img->endian);
+	mlx_hooks(game);
+	mlx_loop_hook(game->mlx, game_loop, game);
+	mlx_loop(game->mlx);
 }

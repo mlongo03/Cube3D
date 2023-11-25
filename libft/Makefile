@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
+#    By: manuele <manuele@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 19:18:35 by mlongo            #+#    #+#              #
-#    Updated: 2023/11/15 11:56:54 by mlongo           ###   ########.fr        #
+#    Updated: 2023/11/24 18:01:55 by manuele          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ OBJS := ft_strlcpy.o ft_calloc.o ft_putnbr_fd.o ft_strdup.o ft_tolower.o \
 	ft_strjoin.o ft_memmove.o ft_isascii.o ft_strlen.o ft_strrchr.o \
 	ft_toupper.o ft_isalnum.o ft_strmapi.o ft_strtrim.o ft_itoa.o ft_strchr.o \
 	ft_memcpy.o ft_putstr_fd.o ft_realloc.o ft_strcpy.o ft_strncpy.o ft_strcmp_env.o ft_strcat.o ft_strcasecmp.o\
+	get_next_line_utils.o get_next_line.o
 
 FLAGS := -Wall -Werror -Wextra
 

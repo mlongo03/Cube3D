@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:12:16 by mlongo            #+#    #+#             */
-/*   Updated: 2023/08/07 14:52:46 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/24 17:56:32 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,29 @@ int	ft_atoi(const char *nptr)
 		r += *(p++) - 48;
 	}
 	return (r * s);
+}
+
+int	ft_atoi_colors(const char *str)
+{
+	int		i;
+	int		res;
+	int		sign;
+
+	res = 0;
+	sign = 1;
+	i = 0;
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == 32)
+	{
+		i++;
+	}
+	if (str[i] == '-' || str[i] == '+')
+		return (-1);
+	if (str[i] < '0' || str[i] > '9')
+		return (-1);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (str[i] - 48) + (res * 10);
+		i++;
+	}
+	return (res * sign);
 }

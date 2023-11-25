@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:18:28 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/16 11:17:07 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/24 18:00:49 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,14 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n);
 int		ft_strcmp_env(const char *input, const char *env);
 char	*ft_strcat(char *dest, char *src);
 int		ft_strcasecmp(const char *str1, const char *str2);
+int		ft_atoi_colors(const char *str);
+char	*ft_strjoin_get(char *back, char *buff);
+char	*get_next_line(int fd);
+char	*ft_readrest(int fd, char *res, int size);
+char	*ft_writing(char *res);
+char	*ft_new_static(char *res);
+void	*ft_realloc(void *p, size_t size, int dim, int new_dim);
+int		ft_atoi_colors(const char *str);
+
 
 #endif

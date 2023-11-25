@@ -6,14 +6,14 @@
 #    By: manuele <manuele@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/01 14:36:32 by fcarlucc          #+#    #+#              #
-#    Updated: 2023/11/21 13:00:35 by manuele          ###   ########.fr        #
+#    Updated: 2023/11/24 17:39:25 by manuele          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cube3d
 
 SRC = $(wildcard *.c) \
-		# $(wildcard executor/*.c) \
+		$(wildcard checks/*.c) \
 
 OBJS = $(SRC:.c=.o)
 
