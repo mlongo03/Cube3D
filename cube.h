@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/23 01:29:47 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:10:00 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int		final_map_check(t_cube *game, int *map_len);
 int		fix_lenght_rows(char **map, int **map_len);
 void	is_map_last(t_cube *game);
 void	is_cub(char **av, t_cube *game);
-
+void	fix_map(t_cube *game);
 #endif

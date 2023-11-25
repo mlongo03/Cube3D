@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 10:44:35 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 15:16:28 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_mat(char **mat)
 	i = 0;
 	while (mat[i])
 	{
-		printf("mat value %s\n\n", mat[i]);
+		printf("%s\n", mat[i]);
 		i++;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 01:19:29 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/23 01:25:14 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 15:54:00 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,23 @@ void	is_cub(char **av, t_cube *game)
 		;
 	else
 		ft_error("The map must be of .cub type\n", game);
+}
+
+void	fix_map(t_cube *game) //funzione per sostituire gli spazi
+{
+	int		i;
+	int		j;
+	// char	**second_map;
+	i = -1;
+	// second_map = ft_calloc(count_rows(game->real_map), sizeof(char *));
+	while (game->real_map[++i])
+	{
+		j = -1;
+		while (game->real_map[i][++j] )
+		{
+			if (game->real_map[i][j] == ' ')
+				game->real_map[i][j] = '1';
+		}
+	}
+	print_mat(game->real_map);
 }

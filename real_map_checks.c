@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/21 10:40:00 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/25 15:53:34 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,16 @@ int	final_map_check(t_cube *game, int *map_len)
 
 void	main_check(t_cube *game)
 {
+	printf("before fixmap\n");
+	print_mat(game->real_map);
+	printf("\n\n");
+	fix_map(game);
 	if (!fix_lenght_rows(game->real_map, &game->map_len))
 		ft_error("Error the map has an unknown tile\n",game);
 	if (!player_existence(game))
 		ft_error("Error player not found\n", game);
-	if (!check_walls(game))
-		ft_error("Error the map is not valid\n", game);
+	// if (!check_walls(game))
+	// 	ft_error("Error the map is not valid\n", game);
 	if (!check_columns(game))
 		ft_error("Error the map is not valid 2\n", game);
 	if (!final_map_check(game, game->map_len))
