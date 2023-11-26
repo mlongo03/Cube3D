@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/25 18:03:08 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/26 16:57:04 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ typedef struct s_render_data
 	int					lineHeight;
 	int					drawStart;
 	int					drawEnd;
+	int					texWidth;
+	int					texHeight;
+	int					texX;
+	int					texY;
 	unsigned int		color;
 	double				cameraX;
 	double				rayDirX;
@@ -95,6 +99,9 @@ typedef struct s_render_data
 	double				deltaDistX;
 	double				deltaDistY;
 	double				perpWallDist;
+	double				wallX;
+	double				step;
+	double				texPos;
 }	t_render_data;
 
 typedef	struct s_cardinals

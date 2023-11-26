@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/25 19:09:40 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/26 17:14:47 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,49 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
+void	set_tex_width_height(t_render_data *data, t_cube *cube)
 {
-	int i;
+	if (data->side == 1)
+	{
+		if (data->rayDirY > 0)
+		{
+			data->texWidth = cube->card->north_wall.width;
+			data->texHeight = cube->card->north_wall.height;
+			return ;
+		}
+		data->texWidth = cube->card->south_wall.width;
+		data->texHeight = cube->card->south_wall.height;
+	}
+	else
+	{
+		if (data->rayDirX > 0)
+		{
+			data->texWidth = cube->card->east_wall.width;
+			data->texHeight = cube->card->east_wall.height;
+			return ;
+		}
+		data->texWidth = cube->card->west_wall.width;
+		data->texHeight = cube->card->west_wall.height;
+	}
+}
 
-	i = 0;
+void	draw_tex_wall(t_render_data *data, t_cube *cube, int x)
+{
+	int	y;
+	data->step = 1.0 * data->texHeight / data->lineHeight;
+	data->texPos = (data->drawStart - screenHeight / 2 + data->lineHeight / 2) * data->step;
+	y = data->drawStart;
+	while(y < data->drawEnd)
+	{
+		data->texY = (int)data->texPos % data->texHeight;
+		data->texPos += data->step;
+		set_color(data, cube, 4 * (int)(data->texHeight * data->texY + data->texX));
+		my_mlx_pixel_put(cube->img, x, y++, data->color);
+	}
+}
+
+void	wallPos_rayPosOnWall(t_render_data *data, t_cube *cube)
+{
 	if (data->side == 0)
 		data->perpWallDist = (data->sideDistX - data->deltaDistX);
 	else
@@ -160,64 +198,28 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 	data->drawEnd = data->lineHeight / 2 + screenHeight / 2;
 	if (data->drawEnd >= screenHeight)
 		data->drawEnd = screenHeight - 1;
-	double	wallX;
 	if (data->side == 0)
-		wallX = cube->player->posY + data->perpWallDist * data->rayDirY;
+		data->wallX = cube->player->posY + data->perpWallDist * data->rayDirY;
 	else
-		wallX = cube->player->posX + data->perpWallDist * data->rayDirX;
-	wallX -= (int)(wallX);
-	int texWidth;
-	int texHeight;
-	if (data->side == 1)
-	{
-		//nord
-		if (data->rayDirY > 0)
-		{
-			texWidth = cube->card->north_wall.width;
-			texHeight = cube->card->north_wall.height;
-		}
-		//sud
-		else
-		{
-			texWidth = cube->card->south_wall.width;
-			texHeight = cube->card->south_wall.height;
-		}
-
-	}
-	else
-	{
-		//est
-		if (data->rayDirX > 0)
-		{
-			texWidth = cube->card->east_wall.width;
-			texHeight = cube->card->east_wall.height;
-		}
-		//ovest
-		else
-		{
-			texWidth = cube->card->west_wall.width;
-			texHeight = cube->card->west_wall.height;
-		}
-	}
-	//x coordinate on the texture
-	int texX = (int)(wallX * (double)texWidth);
+		data->wallX = cube->player->posX + data->perpWallDist * data->rayDirX;
+	data->wallX -= (int)(data->wallX);
+	set_tex_width_height(data, cube);
+	data->texX = (int)(data->wallX * (double)data->texWidth);
 	if(data->side == 0 && data->rayDirX > 0)
-		texX = texWidth - texX - 1;
+		data->texX = data->texWidth - data->texX - 1;
 	if(data->side == 1 && data->rayDirY < 0)
-		texX = texWidth - texX - 1;
+		data->texX = data->texWidth - data->texX - 1;
+}
+
+void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
+{
+	int	i;
+
+	i = 0;
+	wallPos_rayPosOnWall(data, cube);
 	while (i < data->drawStart)
 		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
-
-	double step = 1.0 * texHeight / data->lineHeight;
-	double texPos = (data->drawStart - screenHeight / 2 + data->lineHeight / 2) * step;
-	for(int y = data->drawStart; y < data->drawEnd; y++)
-	{
-		int texY = (int)texPos % texHeight;
-		texPos += step;
-		set_color(data, cube, 4 * (int)(texHeight * texY + texX));
-		my_mlx_pixel_put(cube->img, x, y, data->color);
-	}
-
+	draw_tex_wall(data, cube, x);
 	i = data->drawEnd;
 	while (i < screenHeight)
 		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
