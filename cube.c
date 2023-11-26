@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/26 17:14:47 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/26 18:45:12 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ void	render_map(t_cube *cube)
 	int				x;
 
 	x = 0;
-	load_textures(cube);
 	while (x < screenWidth)
 	{
 		init_render_data(&data, cube, x);
@@ -274,8 +273,17 @@ int	close_window(t_cube *cube)
 {
 	mlx_destroy_window(cube->mlx, cube->mlx_win);
 	mlx_destroy_image(cube->mlx, cube->img->img);
+	mlx_destroy_image(cube->mlx, cube->card->east_wall.img);
+	mlx_destroy_image(cube->mlx, cube->card->west_wall.img);
+	mlx_destroy_image(cube->mlx, cube->card->north_wall.img);
+	mlx_destroy_image(cube->mlx, cube->card->south_wall.img);
+	free(cube->card);
+	free(cube->player);
+	free(cube->img);
+	free(cube->colors);
 	// free_struct(cube);
 	free(cube->mlx);
+	free(cube);
 	exit (1);
 }
 
@@ -452,6 +460,7 @@ int main(int argc, char **argv)
 		&game->img->bits_per_pixel, &game->img->line_length,
 		&game->img->endian);
 	mlx_hooks(game);
+	load_textures(game);
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 }
