@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/23 19:10:00 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:50:52 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ typedef	struct s_cardinals
 	void	*south_wall;
 	void	*east_wall;
 	void	*west_wall;
+	char	*north_path;
+	char	*south_path;
+	char	*east_path;
+	char	*west_path;
 }	t_cardinals;
 
 typedef	struct s_player
@@ -84,4 +88,7 @@ int		fix_lenght_rows(char **map, int **map_len);
 void	is_map_last(t_cube *game);
 void	is_cub(char **av, t_cube *game);
 void	fix_map(t_cube *game);
+void	save_cardinals_path(t_cube *game);
+void	save_player_pos(t_cube *game);
+void	free_cardinals(t_cube *game);
 #endif

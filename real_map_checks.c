@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/25 15:53:34 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:50:53 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	final_map_check(t_cube *game, int *map_len)
 
 void	main_check(t_cube *game)
 {
-	printf("before fixmap\n");
 	print_mat(game->real_map);
 	printf("\n\n");
+	save_player_pos(game);
 	fix_map(game);
 	if (!fix_lenght_rows(game->real_map, &game->map_len))
 		ft_error("Error the map has an unknown tile\n",game);

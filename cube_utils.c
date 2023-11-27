@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/25 16:14:15 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:49:08 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	struct_init(t_cube *game)
 {
 	game->colors = ft_calloc(1, sizeof(t_colors));
 	game->player = ft_calloc(1, sizeof(t_player));
+	game->card = ft_calloc(1, sizeof(t_cardinals));
 	game->colors->c_color_num = 0;
 	game->colors->f_color_num = 0;
 	game->player->posx = 0;
@@ -51,6 +52,9 @@ void	free_struct(t_cube *game)
 		free(game->colors->c_hex_color);
 	if (game->map_len)
 		free(game->map_len);
+	if (game->card)
+		free_cardinals(game);
+		//ognuno di loro ha bisgno di un check per il proprio free
 	free(game->colors);
 	free(game->player);
 	free(game);
