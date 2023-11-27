@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/26 18:45:12 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/27 18:18:05 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,19 +117,15 @@ void	set_color(t_render_data *data, t_cube *cube, int shift)
 {
 	if (data->side == 1)
 	{
-		//nord
 		if (data->rayDirY > 0)
 			data->color = *(unsigned int *)(cube->card->north_wall.addr + shift);
-		//sud
 		else
 			data->color = *(unsigned int *)(cube->card->south_wall.addr + shift);
 	}
 	else
 	{
-		//est
 		if (data->rayDirX > 0)
 			data->color = *(unsigned int *)(cube->card->east_wall.addr + shift);
-		//ovest
 		else
 			data->color = *(unsigned int *)(cube->card->west_wall.addr + shift);
 	}
@@ -254,6 +250,15 @@ void	load_textures(t_cube *cube)
 		&cube->card->west_wall.endian);
 }
 
+void	render_minimap()
+{
+	//calculate the sensibilty of the squares, meaning decide how big squares will be in scale
+	//like if you decide that they will be 1x1 in a screen of 150 width then the scale will be
+	//screenWidth / 150, then to calculate the widht and the height of the minimap-> widht = maxnumberofblockwidth * scale
+	//height = maxnumberofblockheight * scale -> fare questi calcoli per la creazione dell'oggetto immagine minimappa
+	//draw squares of widht and height size of the scale and then draw the player where its width and height is 1/2 of the scale
+}
+
 void	render_map(t_cube *cube)
 {
 	t_render_data	data;
@@ -267,6 +272,7 @@ void	render_map(t_cube *cube)
 		draw_vertical_line(&data, cube, x);
 		x++;
 	}
+	render_minimap(cube);
 }
 
 int	close_window(t_cube *cube)
@@ -281,6 +287,7 @@ int	close_window(t_cube *cube)
 	free(cube->player);
 	free(cube->img);
 	free(cube->colors);
+	free(cube->mini);
 	// free_struct(cube);
 	free(cube->mlx);
 	free(cube);
@@ -435,9 +442,30 @@ int	game_loop(t_cube *cube)
 {
 	render_map(cube);
 	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img->img, 0, 0);
+	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->mini->imgmini.img, 0, 0);
 	calculate_fps(cube);
 	update_movement(cube);
 	update_rotation(cube);
+}
+
+void	load_imgs(t_cube *game)
+{
+	game->mlx_win = mlx_new_window(game->mlx, screenWidth, screenHeight, "Hello world!");
+	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
+	game->img->addr = mlx_get_data_addr(game->img->img,
+		&game->img->bits_per_pixel, &game->img->line_length,
+		&game->img->endian);
+	game->mini = ft_calloc(1, sizeof(t_mini));
+	game->mini->maxHeight = mapHeight; //da calcolare nel parser
+	game->mini->maxWidth = mapWidth; //da calcolare nel parser
+//scale = screenWidht /150
+//widht = maxWidht * scale
+//heigth = maxHeight * scale
+//then you have to use these datas for the minimap dimension instead
+	game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->maxWidth, game->mini->maxHeight);
+	game->mini->imgmini.addr = mlx_get_data_addr(game->mini->imgmini.img,
+		&game->mini->imgmini.bits_per_pixel, &game->mini->imgmini.line_length,
+		&game->mini->imgmini.endian);
 }
 
 int main(int argc, char **argv)
@@ -454,13 +482,9 @@ int main(int argc, char **argv)
 	// is_cub(argv, game);
 	// read_and_build(game, argv);
 	game->mlx = mlx_init();
-	game->mlx_win = mlx_new_window(game->mlx, screenWidth, screenHeight, "Hello world!");
-	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
-	game->img->addr = mlx_get_data_addr(game->img->img,
-		&game->img->bits_per_pixel, &game->img->line_length,
-		&game->img->endian);
-	mlx_hooks(game);
+	load_imgs(game);
 	load_textures(game);
+	mlx_hooks(game);
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 }

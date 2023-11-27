@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/26 16:57:04 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/27 17:57:12 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,13 @@ typedef	struct s_cardinals
 	t_xpm_img	west_wall;
 }	t_cardinals;
 
+typedef struct s_mini
+{
+	int		maxWidth;
+	int		maxHeight;
+	t_img	imgmini;
+}	t_mini;
+
 typedef	struct s_cube
 {
 	void		*mlx;
@@ -120,6 +127,7 @@ typedef	struct s_cube
 	char		**real_map;
 	t_cardinals	*card;
 	t_colors	*colors;
+	t_mini		*mini;
 	int			check_card[4];
 	t_player	*player;
 	int			*map_len;
