@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/27 18:18:05 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/28 18:29:16 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 	i = 0;
 	wallPos_rayPosOnWall(data, cube);
 	while (i < data->drawStart)
-		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
+		my_mlx_pixel_put(cube->img, x, i++, 0x000000FF);
 	draw_tex_wall(data, cube, x);
 	i = data->drawEnd;
 	while (i < screenHeight)
@@ -223,40 +223,166 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 
 void	load_textures(t_cube *cube)
 {
-	cube->card = ft_calloc(1, sizeof(t_cardinals));
+	cube->card = (t_cardinals *)malloc(sizeof(t_cardinals));
 	cube->card->north_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"/home/manuele/Scrivania/darioCube/maps/bluestone.xpm",
+			"./textures/magma.xpm",
 			&cube->card->north_wall.width, &cube->card->north_wall.height);
 	cube->card->north_wall.addr = mlx_get_data_addr(cube->card->north_wall.img,
-		&cube->card->east_wall.bits_per_pixel, &cube->card->north_wall.line_length,
+		&cube->card->north_wall.bits_per_pixel, &cube->card->north_wall.line_length,
 		&cube->card->north_wall.endian);
 	cube->card->south_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"/home/manuele/Scrivania/darioCube/maps/colorstone.xpm",
+			"./textures/wood.xpm",
 			&cube->card->south_wall.width, &cube->card->south_wall.height);
 	cube->card->south_wall.addr = mlx_get_data_addr(cube->card->south_wall.img,
 		&cube->card->south_wall.bits_per_pixel, &cube->card->south_wall.line_length,
 		&cube->card->south_wall.endian);
 	cube->card->east_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"/home/manuele/Scrivania/darioCube/maps/pupone.xpm",
+			"./textures/magma.xpm",
 			&cube->card->east_wall.width, &cube->card->east_wall.height);
 	cube->card->east_wall.addr = mlx_get_data_addr(cube->card->east_wall.img,
 		&cube->card->east_wall.bits_per_pixel, &cube->card->east_wall.line_length,
 		&cube->card->east_wall.endian);
 	cube->card->west_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"/home/manuele/Scrivania/darioCube/maps/colorstone.xpm",
+			"./textures/wood.xpm",
 			&cube->card->west_wall.width, &cube->card->west_wall.height);
 	cube->card->west_wall.addr = mlx_get_data_addr(cube->card->west_wall.img,
 		&cube->card->west_wall.bits_per_pixel, &cube->card->west_wall.line_length,
 		&cube->card->west_wall.endian);
 }
 
-void	render_minimap()
+void	init_draw_vars(t_cube *cube)
 {
-	//calculate the sensibilty of the squares, meaning decide how big squares will be in scale
-	//like if you decide that they will be 1x1 in a screen of 150 width then the scale will be
-	//screenWidth / 150, then to calculate the widht and the height of the minimap-> widht = maxnumberofblockwidth * scale
-	//height = maxnumberofblockheight * scale -> fare questi calcoli per la creazione dell'oggetto immagine minimappa
+	//here we have to use our maxblocks variables
+	int	offset;
+	int	distWidth;
+	int	distHeight;
+	int	evenFixY;
+	int	evenFixX;
+
+	evenFixY = 0;
+	evenFixX = 0;
+	offset = 0;
+	distWidth = 15;
+	distHeight = 8;
+	if (mapWidth < 30)
+		distWidth = mapWidth / 2;
+	if (mapHeight < 16)
+		distHeight = mapHeight / 2;
+	while ((cube->mini->y + offset) < (mapHeight - 1) && offset < distHeight)
+		offset++;
+	cube->mini->drawEndHeight = cube->mini->y + offset;
+	offset = 0;
+	while ((cube->mini->y - offset) > 0 && offset < distHeight)
+		offset++;
+	cube->mini->drawStartHeight = cube->mini->y - offset;
+	offset = 0;
+	while ((cube->mini->x + offset) < (mapWidth - 1) && offset < distWidth)
+		offset++;
+	// printf("offset = %d\n", offset);
+	cube->mini->drawEndWidth = cube->mini->x + offset;
+	offset = 0;
+	while (cube->mini->x - offset > 0 && offset < distWidth)
+		offset++;
+	cube->mini->drawStartWidth = cube->mini->x - offset;
+	// printf("Pre adjustment : \n");
+	// printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
+	// printf("Post adjustment : \n");
+	if (cube->mini->drawEndHeight - cube->mini->y < distHeight)
+	{
+		// printf("entered\n\n\n\n\n\n");
+		cube->mini->drawStartHeight -= (distHeight - (cube->mini->drawEndHeight - cube->mini->y));
+	}
+	else if ((distHeight * 2) % 2 != 0 && !evenFixY && cube->mini->drawEndHeight + 1 < mapHeight)
+	{
+		evenFixY++;
+		cube->mini->drawEndHeight++;
+	}
+	if (cube->mini->y - cube->mini->drawStartHeight < distHeight)
+		cube->mini->drawEndHeight += (distHeight - (cube->mini->y - cube->mini->drawStartHeight));
+	else if ((distHeight * 2) % 2 != 0 && !evenFixY && cube->mini->drawStartHeight - 1 >= 0)
+	{
+		evenFixY++;
+		cube->mini->drawStartHeight--;
+	}
+	if (cube->mini->drawEndWidth - cube->mini->x < distWidth)
+		cube->mini->drawStartWidth -= (distWidth - (cube->mini->drawEndWidth - cube->mini->x));
+	else if ((distWidth * 2) % 2 != 0 && !evenFixX && cube->mini->drawEndWidth + 1 < mapWidth)
+	{
+		evenFixX++;
+		cube->mini->drawEndWidth++;
+	}
+	if (cube->mini->x - cube->mini->drawStartWidth < distHeight)
+		cube->mini->drawEndWidth += (distWidth - (cube->mini->x - cube->mini->drawStartWidth));
+	else if ((distWidth * 2) % 2 != 0 && !evenFixX && cube->mini->drawStartWidth - 1 >= 0)
+	{
+		evenFixX++;
+		cube->mini->drawStartWidth--;
+	}
+	if (cube->mini->drawEndHeight >= mapHeight)
+		cube->mini->drawEndHeight = mapHeight - 1;
+	if (cube->mini->drawEndWidth >= mapWidth)
+		cube->mini->drawEndWidth = mapWidth - 1;
+	if (cube->mini->drawStartHeight < 0)
+		cube->mini->drawStartHeight = 0;
+	if (cube->mini->drawStartWidth < 0)
+		cube->mini->drawStartWidth =  0;
+}
+
+void	draw_square(int startX, int startY, t_cube *cube, int color)
+{
+	int	x;
+	int	y;
+	int	scale;
+
+	scale = cube->mini->scale;
+	if (color == 0x00FF0000)
+		scale = scale / 2;
+	y = -1;
+	while (++y < scale)
+	{
+		x = -1;
+		while (++x < scale)
+			my_mlx_pixel_put(&cube->mini->imgmini, x + startX, y + startY, color);
+	}
+}
+
+void	render_minimap(t_cube *cube)
+{
 	//draw squares of widht and height size of the scale and then draw the player where its width and height is 1/2 of the scale
+	int	x;
+	int	y;
+
+	cube->mini->x = (int)cube->player->posX;
+	cube->mini->y = (int)cube->player->posY;
+	init_draw_vars(cube);
+	x = cube->mini->drawStartWidth;
+	y = cube->mini->drawStartHeight;
+	printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
+	while (y <= cube->mini->drawEndHeight)
+	{
+		x = cube->mini->drawStartWidth;
+		while (x <= cube->mini->drawEndWidth)
+		{
+			// if (cube->mini->drawStartHeight == 9)
+				// printf("x = %d, y = %d\n", x, y);
+			if (worldMap[x][y] == 1)
+				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
+			else if (worldMap[x][y] == 0)
+				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x00000000);
+			x++;
+		}
+		y++;
+	}
+	double scaleX = (cube->mini->drawEndWidth - cube->mini->drawStartWidth) / (double)mapWidth;
+	double scaleY = (cube->mini->drawEndHeight - cube->mini->drawStartHeight) / (double)mapHeight;
+
+	// printf("%f, %f\n", scaleX, scaleY);
+
+	double miniX = cube->player->posX * scaleX;
+	double miniY = cube->player->posY * scaleY;
+
+	// my_mlx_pixel_put(&cube->mini->imgmini, miniX * cube->mini->scale, miniY * cube->mini->scale - 2, 0x00FF0000);
+	draw_square(miniX * cube->mini->scale, miniY * cube->mini->scale, cube, 0x00FF0000);
 }
 
 void	render_map(t_cube *cube)
@@ -446,6 +572,7 @@ int	game_loop(t_cube *cube)
 	calculate_fps(cube);
 	update_movement(cube);
 	update_rotation(cube);
+	return (0);
 }
 
 void	load_imgs(t_cube *game)
@@ -456,13 +583,15 @@ void	load_imgs(t_cube *game)
 		&game->img->bits_per_pixel, &game->img->line_length,
 		&game->img->endian);
 	game->mini = ft_calloc(1, sizeof(t_mini));
-	game->mini->maxHeight = mapHeight; //da calcolare nel parser
-	game->mini->maxWidth = mapWidth; //da calcolare nel parser
-//scale = screenWidht /150
-//widht = maxWidht * scale
-//heigth = maxHeight * scale
-//then you have to use these datas for the minimap dimension instead
-	game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->maxWidth, game->mini->maxHeight);
+	game->mini->scale = screenWidth / 150;
+	//da calcolare maxwidht e maxheight, per ora si utilizza una costante
+	game->mini->height = 16 * game->mini->scale;
+	game->mini->width = 30 * game->mini->scale;
+	if (mapHeight < 16)
+		game->mini->height = mapHeight * game->mini->scale;
+	if (mapHeight < 30)
+		game->mini->width = mapWidth * game->mini->scale;
+	game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->width, game->mini->height);
 	game->mini->imgmini.addr = mlx_get_data_addr(game->mini->imgmini.img,
 		&game->mini->imgmini.bits_per_pixel, &game->mini->imgmini.line_length,
 		&game->mini->imgmini.endian);

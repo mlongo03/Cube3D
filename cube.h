@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/27 17:57:12 by manuele          ###   ########.fr       */
+/*   Updated: 2023/11/28 11:24:15 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-# define screenWidth 640
-# define screenHeight 480
+# define screenWidth 1940
+# define screenHeight 1080
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 # include <math.h>
@@ -114,8 +114,15 @@ typedef	struct s_cardinals
 
 typedef struct s_mini
 {
-	int		maxWidth;
-	int		maxHeight;
+	int		width;
+	int		height;
+	int		drawStartHeight;
+	int		drawStartWidth;
+	int		drawEndHeight;
+	int		drawEndWidth;
+	int		x;
+	int		y;
+	int		scale; //square sensibility
 	t_img	imgmini;
 }	t_mini;
 
