@@ -6,12 +6,12 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/28 18:29:16 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/29 18:47:40 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-#define mapWidth 24
+#define mapWidth 12
 #define mapHeight 24
 
 int worldMap[mapWidth][mapHeight] =
@@ -27,18 +27,6 @@ int worldMap[mapWidth][mapHeight] =
 		{1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 u_int64_t	get_time(void)
@@ -355,9 +343,9 @@ void	render_minimap(t_cube *cube)
 	cube->mini->x = (int)cube->player->posX;
 	cube->mini->y = (int)cube->player->posY;
 	init_draw_vars(cube);
+	// printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
 	x = cube->mini->drawStartWidth;
 	y = cube->mini->drawStartHeight;
-	printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
 	while (y <= cube->mini->drawEndHeight)
 	{
 		x = cube->mini->drawStartWidth;
@@ -366,9 +354,20 @@ void	render_minimap(t_cube *cube)
 			// if (cube->mini->drawStartHeight == 9)
 				// printf("x = %d, y = %d\n", x, y);
 			if (worldMap[x][y] == 1)
+			{
+				// printf("y = %d\n", y);
+				// if (y == 23)
+					// draw_square(144, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
+				// else
+					// printf("PixelX = %d, PixelY = %d\n", (x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale);
+					// printf("PixelX = %d, PixelY = %d\n", (x - cube->mini->drawStartWidth), (y - cube->mini->drawStartHeight));
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
+			}
 			else if (worldMap[x][y] == 0)
+			{
+				// printf("y = %d\n", y);
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x00000000);
+			}
 			x++;
 		}
 		y++;
@@ -585,12 +584,14 @@ void	load_imgs(t_cube *game)
 	game->mini = ft_calloc(1, sizeof(t_mini));
 	game->mini->scale = screenWidth / 150;
 	//da calcolare maxwidht e maxheight, per ora si utilizza una costante
-	game->mini->height = 16 * game->mini->scale;
+	game->mini->height = 17 * game->mini->scale;
 	game->mini->width = 30 * game->mini->scale;
+	printf("mapWidth = %d, mapHeight = %d\n", game->mini->width , game->mini->height);
 	if (mapHeight < 16)
-		game->mini->height = mapHeight * game->mini->scale;
-	if (mapHeight < 30)
+		game->mini->height = (mapHeight + 1) * game->mini->scale;
+	if (mapWidth < 30)
 		game->mini->width = mapWidth * game->mini->scale;
+	printf("mapWidth = %d, mapHeight = %d\n", game->mini->width, game->mini->height);
 	game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->width, game->mini->height);
 	game->mini->imgmini.addr = mlx_get_data_addr(game->mini->imgmini.img,
 		&game->mini->imgmini.bits_per_pixel, &game->mini->imgmini.line_length,
