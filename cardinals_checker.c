@@ -6,23 +6,11 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:44:09 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 16:44:46 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:37:33 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-/*
-	implementerò delle funzioni
-	per controllare se la sezione dei punti cardinali è ok
-	come se ci sono doppioni o se non ci sono valori
-	insomma per snellire il codice da 26 righe
-	oltre al controllo generico devo controllare che non c'è ne
-	sia più di uno penso che lo farò dopo pranzo :)
-	piccola nota per dopo:
-		se non c'è il primo cardinals va in segfault
-*/
-
 
 void	check_existence(t_cube *game, int i)
 {

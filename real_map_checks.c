@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 15:50:53 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:32:07 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ int	final_map_check(t_cube *game, int *map_len)
 		while (game->real_map[i][++j])
 		{
 			if (inmap(game->real_map[i][j]) && !(j && ismap(game->real_map[i][j - 1])
-			&& game->real_map[i][j + 1] && ismap(game->real_map[i][j + 1])
-			&& i && map_len[i - 1] >= j + 1 && ismap(game->real_map[i - 1][j - 1])
-			&& ismap(game->real_map[i - 1][j]) && ismap(game->real_map[i - 1][j + 1])
-			&& game->real_map[i + 1] && map_len[i + 1] >= j
-			&& ismap(game->real_map[i + 1][j - 1])
-			&& ismap(game->real_map[i + 1][j]) && ismap(game->real_map[i + 1][j + 1])))
+				&& game->real_map[i][j + 1] && ismap(game->real_map[i][j + 1])
+				&& i && map_len[i - 1] >= j + 1 && ismap(game->real_map[i - 1][j - 1])
+				&& ismap(game->real_map[i - 1][j]) && ismap(game->real_map[i - 1][j + 1])
+				&& game->real_map[i + 1] && map_len[i + 1] >= j
+				&& ismap(game->real_map[i + 1][j - 1])
+				&& ismap(game->real_map[i + 1][j]) && ismap(game->real_map[i + 1][j + 1])))
 				return (0);
 			// if (isplayer(game->real_map[i][j]))
 			// 	return (0);
@@ -102,15 +102,12 @@ void	main_check(t_cube *game)
 	print_mat(game->real_map);
 	printf("\n\n");
 	save_player_pos(game);
-	fix_map(game);
-	if (!fix_lenght_rows(game->real_map, &game->map_len))
+	if (!fix_lenght_rows(game->real_map, &game->map_len, game))
 		ft_error("Error the map has an unknown tile\n",game);
 	if (!player_existence(game))
 		ft_error("Error player not found\n", game);
-	// if (!check_walls(game))
-	// 	ft_error("Error the map is not valid\n", game);
-	if (!check_columns(game))
-		ft_error("Error the map is not valid 2\n", game);
 	if (!final_map_check(game, game->map_len))
 		ft_error("Error the map is not closed\n", game);
+	game->map_max_height = count_rows(game->real_map);
+	printf("MaxHeight %d, MaxWidth %d\n", game->map_max_height, game->map_max_width);
 }

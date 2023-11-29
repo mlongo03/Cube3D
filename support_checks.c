@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 15:18:34 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:30:55 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ismap(char c)
 	return (0);
 }
 
-int	fix_lenght_rows(char **map, int **map_len)
+int	fix_lenght_rows(char **map, int **map_len, t_cube *game)
 {
 	int	i;
 	int	j;
@@ -49,6 +49,8 @@ int	fix_lenght_rows(char **map, int **map_len)
 				return (0);
 		}
 		(*map_len)[i] = j;
+		if (game->map_max_width < j)
+			game->map_max_width = j;
 	}
 	return (1);
 }

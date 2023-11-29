@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 16:50:52 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:32:30 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct s_colors
 {
 	int				f_color_num;
 	int				c_color_num;
-	char			**floor_colors; //temporanei per la conersione puoi liberarli subito dopo
+	char			**floor_colors; //temporanei per la conversione puoi liberarli subito dopo
 	char			**ceiling_colors;
 	char			*f_hex_color;
 	char			*c_hex_color;
@@ -61,6 +61,8 @@ typedef	struct s_cube
 	int				check_card[4];
 	t_player		*player;
 	int				*map_len; //può diventare permanente (per ora provvisiorio)
+	int				map_max_width;
+	int				map_max_height;
 }	t_cube;
 
 void	struct_init(t_cube *game);
@@ -84,10 +86,10 @@ int		isplayer(char c);
 int		inmap(char c);
 int		ismap(char c);
 int		final_map_check(t_cube *game, int *map_len);
-int		fix_lenght_rows(char **map, int **map_len);
+int		fix_lenght_rows(char **map, int **map_len, t_cube *cube);
 void	is_map_last(t_cube *game);
 void	is_cub(char **av, t_cube *game);
-void	fix_map(t_cube *game);
+// void	fix_map(t_cube *game);
 void	save_cardinals_path(t_cube *game);
 void	save_player_pos(t_cube *game);
 void	free_cardinals(t_cube *game);

@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/26 19:29:29 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:32:42 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	read_and_build(t_cube *game, char **av)
 	save_cardinals_path(game);
 	take_real_map(game);
 	take_colors(game);
-	main_check(game);
+	main_check(game);	
 }

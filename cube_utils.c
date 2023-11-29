@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 16:49:08 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:28:28 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	struct_init(t_cube *game)
 	game->colors->f_color_num = 0;
 	game->player->posx = 0;
 	game->player->posy = 0;
+	game->map_max_width = 0;
+	game->map_max_height = 0;
 }
 
 void	print_mat(char **mat)
