@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/29 11:32:07 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:44:01 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,6 @@ static int	player_existence(t_cube *game)
 		}
 	}
 	return (0);
-}
-
-static int	check_walls(t_cube *game)
-{
-	int	i;
-	int	is_zero;
-
-	is_zero = 0;
-	i = -1;
-
-	if (!ft_strncmp(game->real_map[0], "0",
-		ft_strlen(game->real_map[0])))
-		return (0);
-	if (ft_strchr(game->real_map[count_rows(game->real_map) - 1], '0'))
-		return (0);
-	while (game->real_map[++i])
-		if (ft_strchr(game->real_map[i], '0'))
-			is_zero = 1;
-	if (!is_zero)
-		return (0);
-	return (1);
-}
-
-static int	check_columns(t_cube *game)
-{
-	int	i;
-
-	i = -1;
-	while (game->real_map[++i])
-	{
-		if (game->real_map[i][0] != '1'
-			|| game->real_map[i][ft_strlen(game->real_map[i]) - 1] != '1')
-			return (0);
-	}
-	return (1);
 }
 
 int	final_map_check(t_cube *game, int *map_len)
