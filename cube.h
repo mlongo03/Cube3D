@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/28 11:24:15 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:26:04 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-# define screenWidth 1940
-# define screenHeight 1080
+# define screenWidth 1500
+# define screenHeight 1200
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 # include <math.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/29 16:19:26 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/30 16:11:26 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	struct_init(t_cube *game)
 	game->colors = ft_calloc(1, sizeof(t_colors));
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->img = ft_calloc(1, sizeof(t_img));
-	game->player->posX = 3;
-	game->player->posY = 3;
+	game->player->posX = 10;
+	game->player->posY = 10;
 	game->player->dirX = -1;
 	game->player->dirY = 0;
 	game->player->planeX = 0;

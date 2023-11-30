@@ -3,30 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/29 18:47:40 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/11/30 17:35:18 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-#define mapWidth 12
+#define mapWidth 24
 #define mapHeight 24
 
 int worldMap[mapWidth][mapHeight] =
 	{
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+		{1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
+		{1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 u_int64_t	get_time(void)
@@ -244,18 +256,30 @@ void	init_draw_vars(t_cube *cube)
 	int	offset;
 	int	distWidth;
 	int	distHeight;
-	int	evenFixY;
-	int	evenFixX;
+	int	fixY;
+	int	fixX;
+	int	isWidthEven;
+	int	isHeightEven;
 
-	evenFixY = 0;
-	evenFixX = 0;
+	fixY = 0;
+	fixX = 0;
 	offset = 0;
 	distWidth = 15;
 	distHeight = 8;
+	isWidthEven = 0;
+	isHeightEven = 1;
 	if (mapWidth < 30)
+	{
+		if (mapWidth % 2 != 0)
+			isWidthEven++;
 		distWidth = mapWidth / 2;
-	if (mapHeight < 16)
+	}
+	if (mapHeight < 17)
+	{
+		if (mapHeight % 2 == 0)
+			isHeightEven--;
 		distHeight = mapHeight / 2;
+	}
 	while ((cube->mini->y + offset) < (mapHeight - 1) && offset < distHeight)
 		offset++;
 	cube->mini->drawEndHeight = cube->mini->y + offset;
@@ -272,48 +296,44 @@ void	init_draw_vars(t_cube *cube)
 	while (cube->mini->x - offset > 0 && offset < distWidth)
 		offset++;
 	cube->mini->drawStartWidth = cube->mini->x - offset;
+
 	// printf("Pre adjustment : \n");
-	// printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
+	// printf("posX = %d, posY = %d, drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->x, cube->mini->y, cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
 	// printf("Post adjustment : \n");
-	if (cube->mini->drawEndHeight - cube->mini->y < distHeight)
+
+	if (!fixY && cube->mini->drawEndHeight - cube->mini->y < distHeight)
 	{
-		// printf("entered\n\n\n\n\n\n");
+		fixY++;
 		cube->mini->drawStartHeight -= (distHeight - (cube->mini->drawEndHeight - cube->mini->y));
+		if (!isHeightEven)
+			cube->mini->drawStartHeight++;
 	}
-	else if ((distHeight * 2) % 2 != 0 && !evenFixY && cube->mini->drawEndHeight + 1 < mapHeight)
+
+
+	if (!fixY && cube->mini->y - cube->mini->drawStartHeight < distHeight)
 	{
-		evenFixY++;
-		cube->mini->drawEndHeight++;
-	}
-	if (cube->mini->y - cube->mini->drawStartHeight < distHeight)
+		fixY++;
 		cube->mini->drawEndHeight += (distHeight - (cube->mini->y - cube->mini->drawStartHeight));
-	else if ((distHeight * 2) % 2 != 0 && !evenFixY && cube->mini->drawStartHeight - 1 >= 0)
-	{
-		evenFixY++;
-		cube->mini->drawStartHeight--;
+		if (!isHeightEven)
+			cube->mini->drawEndHeight--;
 	}
-	if (cube->mini->drawEndWidth - cube->mini->x < distWidth)
+
+
+	if (!fixX && cube->mini->drawEndWidth - cube->mini->x < distWidth)
+	{
+		fixX++;
 		cube->mini->drawStartWidth -= (distWidth - (cube->mini->drawEndWidth - cube->mini->x));
-	else if ((distWidth * 2) % 2 != 0 && !evenFixX && cube->mini->drawEndWidth + 1 < mapWidth)
-	{
-		evenFixX++;
-		cube->mini->drawEndWidth++;
+		if (!isWidthEven)
+			cube->mini->drawStartWidth++;
 	}
-	if (cube->mini->x - cube->mini->drawStartWidth < distHeight)
+
+	if (!fixX && cube->mini->x - cube->mini->drawStartWidth < distWidth)
+	{
+		fixX++;
 		cube->mini->drawEndWidth += (distWidth - (cube->mini->x - cube->mini->drawStartWidth));
-	else if ((distWidth * 2) % 2 != 0 && !evenFixX && cube->mini->drawStartWidth - 1 >= 0)
-	{
-		evenFixX++;
-		cube->mini->drawStartWidth--;
+		if (!isWidthEven)
+			cube->mini->drawEndWidth--;
 	}
-	if (cube->mini->drawEndHeight >= mapHeight)
-		cube->mini->drawEndHeight = mapHeight - 1;
-	if (cube->mini->drawEndWidth >= mapWidth)
-		cube->mini->drawEndWidth = mapWidth - 1;
-	if (cube->mini->drawStartHeight < 0)
-		cube->mini->drawStartHeight = 0;
-	if (cube->mini->drawStartWidth < 0)
-		cube->mini->drawStartWidth =  0;
 }
 
 void	draw_square(int startX, int startY, t_cube *cube, int color)
@@ -323,8 +343,8 @@ void	draw_square(int startX, int startY, t_cube *cube, int color)
 	int	scale;
 
 	scale = cube->mini->scale;
-	if (color == 0x00FF0000)
-		scale = scale / 2;
+	// if (color == 0x00FF0000)
+	// 	scale = scale / 2;
 	y = -1;
 	while (++y < scale)
 	{
@@ -372,16 +392,17 @@ void	render_minimap(t_cube *cube)
 		}
 		y++;
 	}
-	double scaleX = (cube->mini->drawEndWidth - cube->mini->drawStartWidth) / (double)mapWidth;
-	double scaleY = (cube->mini->drawEndHeight - cube->mini->drawStartHeight) / (double)mapHeight;
+	double scaleX = (cube->mini->drawEndWidth - cube->mini->drawStartWidth + 1) / (double)mapWidth;
+	double scaleY = (cube->mini->drawEndHeight - cube->mini->drawStartHeight + 1) / (double)mapHeight;
 
 	// printf("%f, %f\n", scaleX, scaleY);
 
 	double miniX = cube->player->posX * scaleX;
 	double miniY = cube->player->posY * scaleY;
 
-	// my_mlx_pixel_put(&cube->mini->imgmini, miniX * cube->mini->scale, miniY * cube->mini->scale - 2, 0x00FF0000);
-	draw_square(miniX * cube->mini->scale, miniY * cube->mini->scale, cube, 0x00FF0000);
+	printf("pixelX = %f * %d, pixelY = %f + %d\n", miniX, cube->mini->scale, miniY, cube->mini->scale);
+	my_mlx_pixel_put(&cube->mini->imgmini, miniX * cube->mini->scale, miniY * cube->mini->scale - 2, 0x00FF0000);
+	// draw_square(miniX * cube->mini->scale, miniY * cube->mini->scale, cube, 0x00FF0000);
 }
 
 void	render_map(t_cube *cube)
