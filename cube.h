@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/01 14:47:21 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 16:04:47 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,14 @@ typedef	struct s_cardinals
 	t_xpm_img	south_wall;
 	t_xpm_img	east_wall;
 	t_xpm_img	west_wall;
+	char	*north_path;
+	char	*south_path;
+	char	*east_path;
+	char	*west_path;
 }	t_cardinals;
 
 typedef struct s_mini
 {
-	int		width;
-	int		height;
 	int		drawStartHeight;
 	int		drawStartWidth;
 	int		drawEndHeight;
@@ -123,7 +125,6 @@ typedef struct s_mini
 	int		x;
 	int		y;
 	int		scale; //square sensibility
-	t_img	imgmini;
 }	t_mini;
 
 typedef	struct s_cube
@@ -143,8 +144,9 @@ typedef	struct s_cube
 	int			fps;
 	double		frameTime;
 	t_img		*img;
+	int			map_max_width;
+	int			map_max_height;
 }	t_cube;
-
 
 int		close_window(t_cube *cube);
 void	struct_init(t_cube *game);
@@ -168,8 +170,11 @@ int		isplayer(char c);
 int		inmap(char c);
 int		ismap(char c);
 int		final_map_check(t_cube *game, int *map_len);
-int		fix_lenght_rows(char **map, int **map_len);
+int		fix_lenght_rows(char **map, int **map_len, t_cube *cube);
 void	is_map_last(t_cube *game);
 void	is_cub(char **av, t_cube *game);
+void	save_cardinals_path(t_cube *game);
+void	save_player_pos(t_cube *game);
+void	free_cardinals(t_cube *game);
 
 #endif

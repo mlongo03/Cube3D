@@ -3,49 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:12:16 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/24 17:56:32 by manuele          ###   ########.fr       */
+/*   Created: 2023/01/19 15:08:28 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/23 18:17:12 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_sign(char c)
+int	ft_atoi(const char *str)
 {
-	return (c == '-' || c == '+');
-}
+	int		i;
+	int		res;
+	int		sign;
 
-static int	ft_spaces(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\r'
-		|| c == '\v' || c == '\f');
-}
-
-int	ft_atoi(const char *nptr)
-{
-	char	*p;
-	int		s;
-	int		r;
-
-	p = (char *) nptr;
-	s = 1;
-	r = 0;
-	while (ft_spaces(*p))
-		p++;
-	if (ft_sign(*p))
+	res = 0;
+	sign = 1;
+	i = 0;
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == 32)
 	{
-		if (*p == '-')
-			s = -1;
-		p++;
+		i++;
 	}
-	while (ft_isdigit((int) *p))
+	if (str[i] == '-' || str[i] == '+')
 	{
-		r *= 10;
-		r += *(p++) - 48;
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	return (r * s);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (str[i] - 48) + (res * 10);
+		i++;
+	}
+	return (res * sign);
 }
 
 int	ft_atoi_colors(const char *str)

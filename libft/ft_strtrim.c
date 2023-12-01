@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:18:00 by mlongo            #+#    #+#             */
-/*   Updated: 2023/09/05 11:01:45 by mlongo           ###   ########.fr       */
+/*   Created: 2023/01/23 10:17:29 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/01/23 17:21:20 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,23 @@ char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		start;
 	int		end;
-	char	*str;
+	int		i;
+	char	*result;
 
 	if (!s1 || !set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1) - 1;
-	while (ft_strchr(set, s1[start]) && start <= end)
+	while (start <= end && ft_strchr(set, s1[start]) != NULL)
 		start++;
-	if (start > end)
-		return (ft_strdup(s1 + end + 1));
-	while (ft_strchr(set, s1[end]) && end >= 0)
+	while (end >= start && ft_strchr(set, s1[end]) != NULL)
 		end--;
-	str = malloc(end - start + 2);
-	if (!str)
+	result = (char *) malloc (sizeof(*s1) * (end - start + 2));
+	if (!result)
 		return (NULL);
-	ft_strlcpy(str, &s1[start], end - start + 2);
-	free((void *)s1);
-	return (str);
+	i = 0;
+	while (start <= end)
+		result[i++] = s1[start++];
+	result[i] = 0;
+	return ((char *)result);
 }

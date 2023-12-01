@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/01 14:58:09 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 16:27:41 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 
 void	load_textures(t_cube *cube)
 {
-	cube->card = (t_cardinals *)malloc(sizeof(t_cardinals));
 	cube->card->north_wall.img = mlx_xpm_file_to_image(cube->mlx,
 			"./textures/magma.xpm",
 			&cube->card->north_wall.width, &cube->card->north_wall.height);
@@ -290,16 +289,11 @@ void	init_draw_vars(t_cube *cube)
 	offset = 0;
 	while ((cube->mini->x + offset) < (mapWidth - 1) && offset < distWidth)
 		offset++;
-	// printf("offset = %d\n", offset);
 	cube->mini->drawEndWidth = cube->mini->x + offset;
 	offset = 0;
 	while (cube->mini->x - offset > 0 && offset < distWidth)
 		offset++;
 	cube->mini->drawStartWidth = cube->mini->x - offset;
-
-	// printf("Pre adjustment : \n");
-	// printf("posX = %d, posY = %d, drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->x, cube->mini->y, cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
-	// printf("Post adjustment : \n");
 
 	if (!fixY && cube->mini->drawEndHeight - cube->mini->y < distHeight)
 	{
@@ -350,60 +344,36 @@ void	draw_square(int startX, int startY, t_cube *cube, int color)
 	{
 		x = -1;
 		while (++x < scale)
-			my_mlx_pixel_put(&cube->mini->imgmini, x + startX, y + startY, color);
+			my_mlx_pixel_put(cube->img, x + startX, y + startY, color);
 	}
 }
 
 void	render_minimap(t_cube *cube)
 {
-	//draw squares of widht and height size of the scale and then draw the player where its width and height is 1/2 of the scale
 	int	x;
 	int	y;
+	double miniX;
+	double miniY;
 
 	cube->mini->x = (int)cube->player->posX;
 	cube->mini->y = (int)cube->player->posY;
 	init_draw_vars(cube);
-	// printf("drawStartHeight = %d, drawEndHeight = %d, drawStartWidth = %d, drawEndWidth = %d\n", cube->mini->drawStartHeight, cube->mini->drawEndHeight, cube->mini->drawStartWidth, cube->mini->drawEndWidth);
-	x = cube->mini->drawStartWidth;
 	y = cube->mini->drawStartHeight;
 	while (y <= cube->mini->drawEndHeight)
 	{
 		x = cube->mini->drawStartWidth;
 		while (x <= cube->mini->drawEndWidth)
 		{
-			// if (cube->mini->drawStartHeight == 9)
-				// printf("x = %d, y = %d\n", x, y);
 			if (worldMap[x][y] == 1)
-			{
-				// printf("y = %d\n", y);
-				// if (y == 23)
-					// draw_square(144, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
-				// else
-					// printf("PixelX = %d, PixelY = %d\n", (x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale);
-					// printf("PixelX = %d, PixelY = %d\n", (x - cube->mini->drawStartWidth), (y - cube->mini->drawStartHeight));
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
-			}
 			else if (worldMap[x][y] == 0)
-			{
-				// printf("y = %d\n", y);
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x00000000);
-			}
 			x++;
 		}
 		y++;
 	}
-	// double scaleX = (cube->mini->drawEndWidth - cube->mini->drawStartWidth + 1) / (double)mapWidth;
-	// double scaleY = (cube->mini->drawEndHeight - cube->mini->drawStartHeight + 1) / (double)mapHeight;
-
-	// printf("%f, %f\n", scaleX, scaleY);
-
-	// double miniX = cube->player->posX * scaleX;
-	// double miniY = cube->player->posY * scaleY;
-	double miniX = cube->player->posX - cube->mini->drawStartWidth;
-	double miniY = cube->player->posY - cube->mini->drawStartHeight;
-
-	// printf("pixelX = %f * %d, pixelY = %f + %d\n", miniX, cube->mini->scale, miniY, cube->mini->scale);
-	// my_mlx_pixel_put(&cube->mini->imgmini, miniX * cube->mini->scale, miniY * cube->mini->scale - 2, 0x00FF0000);
+	miniX = cube->player->posX - cube->mini->drawStartWidth;
+	miniY = cube->player->posY - cube->mini->drawStartHeight;
 	draw_square(miniX * cube->mini->scale, miniY * cube->mini->scale, cube, 0x00FF0000);
 }
 
@@ -436,8 +406,8 @@ int	close_window(t_cube *cube)
 	free(cube->img);
 	free(cube->colors);
 	free(cube->mini);
-	// free_struct(cube);
 	free(cube->mlx);
+	// free_struct(cube);
 	free(cube);
 	exit (1);
 }
@@ -473,7 +443,6 @@ int	key_hook_release(int key, t_cube *cube)
 		cube->player->cam_dir = 0;
 	return (0);	return (0);
 }
-
 
 void	mlx_hooks(t_cube *cube)
 {
@@ -590,7 +559,7 @@ int	game_loop(t_cube *cube)
 {
 	render_map(cube);
 	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->img->img, 0, 0);
-	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->mini->imgmini.img, 0, 0);
+	// mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->mini->imgmini.img, 0, 0);
 	calculate_fps(cube);
 	update_movement(cube);
 	update_rotation(cube);
@@ -607,16 +576,16 @@ void	load_imgs(t_cube *game)
 	game->mini = ft_calloc(1, sizeof(t_mini));
 	game->mini->scale = screenWidth / 150;
 	//da calcolare maxwidht e maxheight, per ora si utilizza una costante
-	game->mini->height = 17 * game->mini->scale;
-	game->mini->width = 30 * game->mini->scale;
-	if (mapHeight < 17)
-		game->mini->height = (mapHeight + 1) * game->mini->scale;
-	if (mapWidth < 30)
-		game->mini->width = mapWidth * game->mini->scale;
-	game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->width, game->mini->height);
-	game->mini->imgmini.addr = mlx_get_data_addr(game->mini->imgmini.img,
-		&game->mini->imgmini.bits_per_pixel, &game->mini->imgmini.line_length,
-		&game->mini->imgmini.endian);
+	// game->mini->height = 17 * game->mini->scale;
+	// game->mini->width = 30 * game->mini->scale;
+	// if (mapHeight < 17)
+	// 	game->mini->height = (mapHeight + 1) * game->mini->scale;
+	// if (mapWidth < 30)
+	// 	game->mini->width = mapWidth * game->mini->scale;
+	// game->mini->imgmini.img = mlx_new_image(game->mlx, game->mini->width, game->mini->height);
+	// game->mini->imgmini.addr = mlx_get_data_addr(game->mini->imgmini.img,
+	// 	&game->mini->imgmini.bits_per_pixel, &game->mini->imgmini.line_length,
+	// 	&game->mini->imgmini.endian);
 }
 
 int main(int argc, char **argv)

@@ -3,43 +3,49 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manuele <manuele@student.42.fr>            +#+  +:+       +#+         #
+#    By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/04 19:18:35 by mlongo            #+#    #+#              #
-#    Updated: 2023/11/24 18:01:55 by manuele          ###   ########.fr        #
+#    Created: 2023/01/19 21:15:17 by lnicoter          #+#    #+#              #
+#    Updated: 2023/11/23 18:01:23 by lnicoter         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := libft.a
-SRCS_DIR := ./
-OBJS := ft_strlcpy.o ft_calloc.o ft_putnbr_fd.o ft_strdup.o ft_tolower.o \
-	ft_strlcat.o ft_isprint.o ft_isdigit.o ft_memchr.o ft_substr.o \
-	ft_putendl_fd.o ft_memcmp.o ft_strncmp.o ft_strcmp.o ft_striteri.o ft_memset.o \
-	ft_putchar_fd.o ft_split.o ft_strnstr.o ft_bzero.o ft_atoi.o ft_isalpha.o \
-	ft_strjoin.o ft_memmove.o ft_isascii.o ft_strlen.o ft_strrchr.o \
-	ft_toupper.o ft_isalnum.o ft_strmapi.o ft_strtrim.o ft_itoa.o ft_strchr.o \
-	ft_memcpy.o ft_putstr_fd.o ft_realloc.o ft_strcpy.o ft_strncpy.o ft_strcmp_env.o ft_strcat.o ft_strcasecmp.o\
-	get_next_line_utils.o get_next_line.o
+NAME = libft.a
 
-FLAGS := -Wall -Werror -Wextra
+SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c \
+ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_strchr.c ft_strlcat.c ft_strlcpy.c ft_strlen.c \
+ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_tolower.c ft_toupper.c ft_substr.c ft_calloc.c ft_strdup.c\
+ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c \
+ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c get_next_line_utils.c get_next_line.c ft_atoi_base.c ft_isspace.c \
+ft_checkbase.c ft_realloc.c \
 
-B_OBJS = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o
+BONUS = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
+ft_lstiter.c ft_lstlast.c ft_lstnew.c ft_lstsize.c \
 
-all: $(NAME)
+OBJS = ${SRCS:.c=.o}
 
-%.o : %.c
-	@gcc $(FLAGS) -o $@ -c $<
+OBJSBONUS = ${BONUS:.c=.o}
 
-$(NAME): $(OBJS)
-	@ar crs libft.a $(OBJS)
+CC		= gcc
+RM		= rm -f
 
-bonus : ${B_OBJS}
-	@ar crs libft.a $(B_OBJS)
+FLAGS = -Wall -Wextra -Werror
+
+.c.o:
+	${CC} ${FLAGS} -g -c $< -o ${<:.c=.o}
+
+$(NAME): ${OBJS}
+	ar rcs ${NAME} ${OBJS}
+
+bonus:	${OBJSBONUS}
+		ar rcs ${NAME} ${OBJSBONUS}
+
+all: ${NAME}
 
 clean:
-	@rm -f $(OBJS) ${B_OBJS}
+	${RM} ${OBJS} ${OBJSBONUS}
 
 fclean: clean
-	@rm -f $(NAME)
+	${RM} ${NAME}
 
 re: fclean all

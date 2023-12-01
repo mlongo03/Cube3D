@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/24 18:40:22 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 15:55:26 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	read_and_build(t_cube *game, char **av)
 	is_map_last(game);
 	if (!check_cardinals(game))
 		ft_error("There are not enough cardinal point", game);
+	save_cardinals_path(game);
 	take_real_map(game);
 	take_colors(game);
 	main_check(game);

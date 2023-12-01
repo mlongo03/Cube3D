@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 19:18:22 by mlongo            #+#    #+#             */
-/*   Updated: 2023/04/04 19:18:24 by mlongo           ###   ########.fr       */
+/*   Created: 2023/01/16 19:11:38 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/01/16 20:16:49 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_islower(int c)
-{
-	return (c >= 'a' && c <= 'z');
-}
+#include "libft.h"
 
 int	ft_toupper(int c)
 {
-	if (ft_islower(c))
-		return (c - 32);
+	if (c >= 97 && c <= 122)
+	{
+		c -= 32;
+		return (c);
+	}
 	return (c);
 }

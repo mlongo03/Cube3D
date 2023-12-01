@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/24 17:43:36 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 15:55:54 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ int	ismap(char c)
 	return (0);
 }
 
-int	fix_lenght_rows(char **map, int **map_len)
+int	fix_lenght_rows(char **map, int **map_len, t_cube *game)
 {
 	int	i;
 	int	j;
 
 	i = -1;
+	//qui legge il \t e giustamente da errore
 	while (map[++i])
 	{
 		j = -1;
@@ -48,6 +49,8 @@ int	fix_lenght_rows(char **map, int **map_len)
 				return (0);
 		}
 		(*map_len)[i] = j;
+		if (game->map_max_width < j)
+			game->map_max_width = j;
 	}
 	return (1);
 }

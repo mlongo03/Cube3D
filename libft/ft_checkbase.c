@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_check_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 20:15:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/01/20 23:37:12 by lnicoter         ###   ########.fr       */
+/*   Created: 2023/11/17 10:26:38 by lnicoter          #+#    #+#             */
+/*   Updated: 2023/11/17 10:26:45 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_checkbase(char *base)
 {
-	char	*s2;
-	int		i;
-	int		k;
+	int i;
 
-	i = 0;
-	k = ft_strlen(s1);
-	s2 = ((char *)malloc(sizeof(char) * k + 1));
-	if (!s2)
+	if (base == NULL || *base == 0 || !base[1])
+		return (0);
+	i = 1;
+	while ((base[i]))
 	{
-		return (s2);
-	}
-	while (s1[i] != '\0')
-	{
-		s2[i] = s1[i];
+		if (base[i] == '+' || base[i] == '-')
+			return (0);
+		if (base[i] - base[i - 1] != 1)
+			if (!(ft_isdigit(base[i - 1])
+				&& (base[i] == 'a' || base[i] == 'A')))
+				return (0);
 		i++;
 	}
-	s2[i] = '\0';
-	return (s2);
+	if (base[i])
+		return (0);
+	return (i);
 }

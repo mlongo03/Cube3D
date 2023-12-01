@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/24 17:43:51 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 16:05:34 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,41 +36,6 @@ static int	player_existence(t_cube *game)
 	return (0);
 }
 
-static int	check_walls(t_cube *game)
-{
-	int	i;
-	int	is_zero;
-
-	is_zero = 0;
-	i = -1;
-
-	if (!ft_strncmp(game->real_map[0], "0",
-		ft_strlen(game->real_map[0])))
-		return (0);
-	if (ft_strchr(game->real_map[count_rows(game->real_map) - 1], '0'))
-		return (0);
-	while (game->real_map[++i])
-		if (ft_strchr(game->real_map[i], '0'))
-			is_zero = 1;
-	if (!is_zero)
-		return (0);
-	return (1);
-}
-
-static int	check_columns(t_cube *game)
-{
-	int	i;
-
-	i = -1;
-	while (game->real_map[++i])
-	{
-		if (game->real_map[i][0] != '1'
-			|| game->real_map[i][ft_strlen(game->real_map[i]) - 1] != '1')
-			return (0);
-	}
-	return (1);
-}
-
 int	final_map_check(t_cube *game, int *map_len)
 {
 	int	i;
@@ -83,12 +48,12 @@ int	final_map_check(t_cube *game, int *map_len)
 		while (game->real_map[i][++j])
 		{
 			if (inmap(game->real_map[i][j]) && !(j && ismap(game->real_map[i][j - 1])
-			&& game->real_map[i][j + 1] && ismap(game->real_map[i][j + 1])
-			&& i && map_len[i - 1] >= j + 1 && ismap(game->real_map[i - 1][j - 1])
-			&& ismap(game->real_map[i - 1][j]) && ismap(game->real_map[i - 1][j + 1])
-			&& game->real_map[i + 1] && map_len[i + 1] >= j
-			&& ismap(game->real_map[i + 1][j - 1])
-			&& ismap(game->real_map[i + 1][j]) && ismap(game->real_map[i + 1][j + 1])))
+				&& game->real_map[i][j + 1] && ismap(game->real_map[i][j + 1])
+				&& i && map_len[i - 1] >= j + 1 && ismap(game->real_map[i - 1][j - 1])
+				&& ismap(game->real_map[i - 1][j]) && ismap(game->real_map[i - 1][j + 1])
+				&& game->real_map[i + 1] && map_len[i + 1] >= j
+				&& ismap(game->real_map[i + 1][j - 1])
+				&& ismap(game->real_map[i + 1][j]) && ismap(game->real_map[i + 1][j + 1])))
 				return (0);
 			// if (isplayer(game->real_map[i][j]))
 			// 	return (0);
@@ -99,14 +64,15 @@ int	final_map_check(t_cube *game, int *map_len)
 
 void	main_check(t_cube *game)
 {
-	if (!fix_lenght_rows(game->real_map, &game->map_len))
+	print_mat(game->real_map);
+	printf("\n\n");
+	save_player_pos(game);
+	if (!fix_lenght_rows(game->real_map, &game->map_len, game))
 		ft_error("Error the map has an unknown tile\n",game);
 	if (!player_existence(game))
 		ft_error("Error player not found\n", game);
-	if (!check_walls(game))
-		ft_error("Error the map is not valid\n", game);
-	if (!check_columns(game))
-		ft_error("Error the map is not valid 2\n", game);
 	if (!final_map_check(game, game->map_len))
 		ft_error("Error the map is not closed\n", game);
+	game->map_max_height = count_rows(game->real_map);
+	printf("MaxHeight %d, MaxWidth %d\n", game->map_max_height, game->map_max_width);
 }

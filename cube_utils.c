@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/30 16:11:26 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 16:13:42 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	struct_init(t_cube *game)
 	game->colors = ft_calloc(1, sizeof(t_colors));
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->img = ft_calloc(1, sizeof(t_img));
+	game->card = ft_calloc(1, sizeof(t_cardinals));
 	game->player->posX = 10;
 	game->player->posY = 10;
 	game->player->dirX = -1;
@@ -30,6 +31,8 @@ void	struct_init(t_cube *game)
 	game->oldTime = 0;
 	game->colors->c_color_num = 0;
 	game->colors->f_color_num = 0;
+	game->map_max_width = 0;
+	game->map_max_height = 0;
 }
 
 void	print_mat(char **mat)
@@ -39,7 +42,7 @@ void	print_mat(char **mat)
 	i = 0;
 	while (mat[i])
 	{
-		printf("mat value %s\n\n", mat[i]);
+		printf("%s\n", mat[i]);
 		i++;
 	}
 
@@ -61,6 +64,9 @@ void	free_struct(t_cube *game)
 		free(game->colors->c_hex_color);
 	if (game->map_len)
 		free(game->map_len);
+	if (game->card)
+		free_cardinals(game);
+		//ognuno di loro ha bisgno di un check per il proprio free
 	free(game->colors);
 	free(game->player);
 	free(game);
