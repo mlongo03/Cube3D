@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:13:57 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 16:39:45 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:26:39 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,58 @@ void	save_player_pos(t_cube *game)
 			}
 		}
 	}
+}
+
+int		countTabs(char *str)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '\t')
+			count += 4;
+		else
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+char	*replaceTabs(char *str, int count)
+{
+	char	*result;
+	int		j;
+	int		i;
+
+	result = (char *)malloc(count + 1);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\t')
+		{
+			result[j++] = ' ';
+			result[j++] = ' ';
+			result[j++] = ' ';
+			result[j++] = ' ';
+		}
+		else
+			result[j++] = str[i];
+		i++;
+	}
+	result[j] = '\0';
+	free(str);
+	return (result);
+}
+
+char	*replaceTabWithSpaces(char *str)
+{
+	int		count;
+
+	count = countTabs(str);
+	str = replaceTabs(str, count);
+	return (str);
 }

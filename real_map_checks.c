@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/29 11:44:01 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:29:06 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ int	final_map_check(t_cube *game, int *map_len)
 
 void	main_check(t_cube *game)
 {
-	print_mat(game->real_map);
-	printf("\n\n");
+	int	i;
+
+	i = -1;
+	while (game->real_map[++i])
+		game->real_map[i] = replaceTabWithSpaces(game->real_map[i]);
 	save_player_pos(game);
 	if (!fix_lenght_rows(game->real_map, &game->map_len, game))
 		ft_error("Error the map has an unknown tile\n",game);

@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 22:55:48 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/29 11:32:30 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:17:13 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,7 @@ void	is_cub(char **av, t_cube *game);
 void	save_cardinals_path(t_cube *game);
 void	save_player_pos(t_cube *game);
 void	free_cardinals(t_cube *game);
+char	*replaceTabWithSpaces(char *str);
+char	*replaceTabs(char *str, int count);
+int		countTabs(char *str);
 #endif
