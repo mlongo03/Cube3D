@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/29 11:28:28 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:58:46 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	struct_init(t_cube *game)
 	game->map_max_height = 0;
 }
 
-void	print_mat(char **mat)
+void	 print_mat(char **mat)
 {
 	int	i;
 
@@ -59,6 +59,7 @@ void	free_struct(t_cube *game)
 		//ognuno di loro ha bisgno di un check per il proprio free
 	free(game->colors);
 	free(game->player);
+	free(game->card);
 	free(game);
 	exit(0);
 }
