@@ -6,15 +6,15 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/11/30 17:26:04 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/01 14:47:21 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-# define screenWidth 1500
-# define screenHeight 1200
+# define screenWidth 640
+# define screenHeight 480
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 # include <math.h>
