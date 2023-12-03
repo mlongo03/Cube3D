@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/01 16:13:42 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/03 12:59:59 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	struct_init(t_cube *game)
 	game->player->mov_dirX = 0;
 	game->player->mov_dirY = 0;
 	game->player->cam_dir = 0;
+	game->player->rot_angle = 360;
 	game->time = 0;
 	game->oldTime = 0;
 	game->colors->c_color_num = 0;

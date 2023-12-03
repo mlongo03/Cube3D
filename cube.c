@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/01 16:27:41 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/03 14:19:33 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,12 +444,51 @@ int	key_hook_release(int key, t_cube *cube)
 	return (0);	return (0);
 }
 
+void rotateCamera(float angle, t_cube *cube) {
+	double	newDirX;
+	double	newDirY;
+	double	newPlaneX;
+	double	newPlaneY;
+
+	angle = angle * M_PI / 180.0f;
+
+	newDirX = cube->player->dirX * cos(angle) - cube->player->dirY * sin(angle);
+	newDirY = cube->player->dirX * sin(angle) + cube->player->dirY * cos(angle);
+	newPlaneX = cube->player->planeX * cos(angle) - cube->player->planeY * sin(angle);
+	newPlaneY = cube->player->planeX * sin(angle) + cube->player->planeY * cos(angle);
+
+	cube->player->dirX = newDirX;
+	cube->player->dirY = newDirY;
+	cube->player->planeX = newPlaneX;
+	cube->player->planeY = newPlaneY;
+}
+
+int	handle_mouse(int x, int y, void	*cube)
+{
+	double normalizedX;
+	double maxRotationAngle;
+	double rotationAngle;
+	double newRotationAngle;
+
+	(void)y;
+	mlx_mouse_hide(((t_cube *)cube)->mlx, ((t_cube *)cube)->mlx_win);
+	normalizedX = (2.0f * x) / screenWidth - 1.0f;
+	maxRotationAngle = 180.0f;
+	rotationAngle = maxRotationAngle * normalizedX;
+	newRotationAngle = rotationAngle;
+	if (((t_cube *)cube)->player->rot_angle != 360)
+		newRotationAngle = ((t_cube *)cube)->player->rot_angle - rotationAngle;
+	((t_cube *)cube)->player->rot_angle = rotationAngle;
+	rotateCamera(newRotationAngle, (t_cube *)cube);
+	return (0);
+}
+
 void	mlx_hooks(t_cube *cube)
 {
 	mlx_hook(cube->mlx_win, 17, 0, close_window, cube);
 	mlx_hook(cube->mlx_win, 2, 1L << 0, key_hook_press, (void *)cube);
 	mlx_hook(cube->mlx_win, 3, 1L << 1, key_hook_release, (void *)cube);
-	// mlx_hook(cube->mlx_win, 6, 1L << 6, ft_mouse, (void *)cube);
+	mlx_hook(cube->mlx_win, 6, 1L << 6, handle_mouse, (void *)cube);
 }
 
 void	ft_sleep(u_int64_t time)

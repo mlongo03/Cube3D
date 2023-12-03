@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/01 16:04:47 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/03 12:59:09 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef	struct s_player
 	double	mov_dirX;
 	double	mov_dirY;
 	double	cam_dir;
+	double	rot_angle;
 }	t_player;
 
 typedef	struct s_colors
