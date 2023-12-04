@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/04 17:50:49 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/04 21:37:11 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int	perform_dda_doors(t_render_data *data)
 				if (worldMap[(int)data->mapX][(int)data->mapY + 1] == 1 && worldMap[(int)data->mapX][(int)data->mapY - 1] == 1)
 				{
 					//porta verticale
-					if (data->sideDistX - prevSideDistX <= 1.12)
+					if (data->sideDistX - prevSideDistX < 1.118)
 					{
 						printf("value = %f\n", data->sideDistX - prevSideDistX);
 						data->hit = 2;
@@ -194,7 +194,7 @@ int	perform_dda_doors(t_render_data *data)
 				if (worldMap[(int)data->mapX + 1][(int)data->mapY] == 1 && worldMap[(int)data->mapX - 1][(int)data->mapY] == 1)
 				{
 					//porta orizzontale
-					if (data->sideDistY - prevSideDistY <= 1.12)
+					if (data->sideDistY - prevSideDistY < 1.118)
 					{
 						// printf("value = %f\n", data->sideDistX - prevSideDistX);
 						data->hit = 2;
