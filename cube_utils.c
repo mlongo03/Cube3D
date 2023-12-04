@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/03 12:59:59 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/04 11:09:07 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	struct_init(t_cube *game)
 	game->player = ft_calloc(1, sizeof(t_player));
 	game->img = ft_calloc(1, sizeof(t_img));
 	game->card = ft_calloc(1, sizeof(t_cardinals));
+	game->door = ft_calloc(1, sizeof(t_xpm_img));
 	game->player->posX = 10;
 	game->player->posY = 10;
 	game->player->dirX = -1;

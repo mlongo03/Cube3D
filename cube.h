@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/03 12:59:09 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/04 16:55:11 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-# define screenWidth 640
-# define screenHeight 480
+# define screenWidth 1940
+# define screenHeight 1080
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 # include <math.h>
@@ -78,10 +78,10 @@ typedef struct s_xpm_img
 
 typedef struct s_render_data
 {
-	int					mapX;
-	int					mapY;
-	int					stepX;
-	int					stepY;
+	double				mapX;
+	double				mapY;
+	double				stepX;
+	double				stepY;
 	int					hit;
 	int					side;
 	int					lineHeight;
@@ -134,19 +134,20 @@ typedef	struct s_cube
 	void		*mlx_win;
 	char		**all_map;
 	char		**real_map;
+	int			check_card[4];
+	int			*map_len;
+	int			fps;
+	int			map_max_width;
+	int			map_max_height;
+	double		time;
+	double		oldTime;
+	double		frameTime;
 	t_cardinals	*card;
 	t_colors	*colors;
 	t_mini		*mini;
-	int			check_card[4];
 	t_player	*player;
-	int			*map_len;
-	double		time;
-	double		oldTime;
-	int			fps;
-	double		frameTime;
 	t_img		*img;
-	int			map_max_width;
-	int			map_max_height;
+	t_xpm_img	*door;
 }	t_cube;
 
 int		close_window(t_cube *cube);
