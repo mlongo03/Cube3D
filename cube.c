@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/05 18:03:10 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:14:24 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -526,7 +526,6 @@ void	render_minimap(t_cube *cube)
 
 void	update_door(int x, int y, t_cube *cube)
 {
-	// printf("door status = %d\n", mapDoorsStatus[x][y]);
 	if (mapDoorsTimer[x][y] >= 1 && mapDoorsStatus[x][y] == Closing)
 		mapDoorsStatus[x][y] = Closed;
 	else if (mapDoorsTimer[x][y] <= 0 && mapDoorsStatus[x][y] == Opening)
@@ -608,11 +607,13 @@ int	close_window(t_cube *cube)
 	mlx_destroy_image(cube->mlx, cube->card->west_wall.img);
 	mlx_destroy_image(cube->mlx, cube->card->north_wall.img);
 	mlx_destroy_image(cube->mlx, cube->card->south_wall.img);
+	mlx_destroy_image(cube->mlx, cube->door->img);
 	free(cube->card);
 	free(cube->player);
 	free(cube->img);
 	free(cube->colors);
 	free(cube->mini);
+	free(cube->door);
 	free(cube->mlx);
 	// free_struct(cube);
 	free(cube);
