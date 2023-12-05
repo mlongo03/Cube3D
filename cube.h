@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/04 20:18:16 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/05 17:58:14 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 #define CUBE_H
 
-// # define screenWidth 1940
-// # define screenHeight 1080
-# define screenWidth 1000
-# define screenHeight 700
+# define screenWidth 1920
+# define screenHeight 1080
+// # define screenWidth 1000
+// # define screenHeight 700
+# define Closed 0
+# define Open 3
+# define Opening 1
+# define Closing 2
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 # include <math.h>
@@ -150,6 +154,7 @@ typedef	struct s_cube
 	t_player	*player;
 	t_img		*img;
 	t_xpm_img	*door;
+	int			frame_door;
 }	t_cube;
 
 int		close_window(t_cube *cube);

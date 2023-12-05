@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/04 11:09:07 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/05 17:27:32 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	struct_init(t_cube *game)
 	game->img = ft_calloc(1, sizeof(t_img));
 	game->card = ft_calloc(1, sizeof(t_cardinals));
 	game->door = ft_calloc(1, sizeof(t_xpm_img));
+	game->frame_door = 0;
 	game->player->posX = 10;
 	game->player->posY = 10;
 	game->player->dirX = -1;
