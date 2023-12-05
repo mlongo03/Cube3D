@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/04 19:16:30 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:06:42 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	inmap(char c)
 
 int	ismap(char c)
 {
-	if (c == '1' || isplayer(c) || inmap(c))
+	if (c == '1' || isplayer(c) || inmap(c) || c == '2')
 		return (1);
 	return (0);
 }

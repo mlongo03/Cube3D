@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/04 17:50:49 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/04 22:24:20 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,8 +419,6 @@ void	init_draw_vars(t_cube *cube)
 		if (!isHeightEven)
 			cube->mini->drawStartHeight++;
 	}
-
-
 	if (!fixY && cube->mini->y - cube->mini->drawStartHeight < distHeight)
 	{
 		fixY++;
@@ -428,8 +426,6 @@ void	init_draw_vars(t_cube *cube)
 		if (!isHeightEven)
 			cube->mini->drawEndHeight--;
 	}
-
-
 	if (!fixX && cube->mini->drawEndWidth - cube->mini->x < distWidth)
 	{
 		fixX++;
@@ -437,7 +433,6 @@ void	init_draw_vars(t_cube *cube)
 		if (!isWidthEven)
 			cube->mini->drawStartWidth++;
 	}
-
 	if (!fixX && cube->mini->x - cube->mini->drawStartWidth < distWidth)
 	{
 		fixX++;
@@ -748,6 +743,7 @@ void	load_imgs(t_cube *game)
 {
 	game->mlx_win = mlx_new_window(game->mlx, screenWidth, screenHeight, "Hello world!");
 	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
+	//cosa farà mai mlx_get_data_addr?
 	game->img->addr = mlx_get_data_addr(game->img->img,
 		&game->img->bits_per_pixel, &game->img->line_length,
 		&game->img->endian);
