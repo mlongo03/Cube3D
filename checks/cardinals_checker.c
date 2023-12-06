@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:44:09 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/04 19:16:11 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:24:58 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,12 @@ void	save_cardinals_path(t_cube *game)
 	printf("path %s\n",game->card->south_path);
 	printf("path %s\n",game->card->east_path);
 	printf("path %s\n",game->card->west_path);
+	if (!check_file_type(game->card->north_path))
+		ft_error("The path of the cardinal is not valid\n", game);
+	if (!check_file_type(game->card->south_path))
+		ft_error("The path of the cardinal is not valid\n", game);
+	if (!check_file_type(game->card->east_path))
+		ft_error("The path of the cardinal is not valid\n", game);
+	if (!check_file_type(game->card->west_path))
+		ft_error("The path of the cardinal is not valid\n", game);
 }
