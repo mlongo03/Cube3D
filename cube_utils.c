@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/05 17:27:32 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/04 19:15:42 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	struct_init(t_cube *game)
 	game->img = ft_calloc(1, sizeof(t_img));
 	game->card = ft_calloc(1, sizeof(t_cardinals));
 	game->door = ft_calloc(1, sizeof(t_xpm_img));
-	game->frame_door = 0;
-	game->player->posX = 10;
+	game->player->posX = 10; //a merge completato init a 0
 	game->player->posY = 10;
 	game->player->dirX = -1;
 	game->player->dirY = 0;

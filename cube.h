@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/05 17:58:14 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 12:06:25 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ typedef	struct s_cube
 	t_player	*player;
 	t_img		*img;
 	t_xpm_img	*door;
-	int			frame_door;
 }	t_cube;
 
 int		close_window(t_cube *cube);
@@ -185,5 +184,9 @@ void	is_cub(char **av, t_cube *game);
 void	save_cardinals_path(t_cube *game);
 void	save_player_pos(t_cube *game);
 void	free_cardinals(t_cube *game);
+void	save_player_pos(t_cube *game);
+int		countTabs(char *str);
+char	*replaceTabs(char *str, int count);
+char	*replaceTabWithSpaces(char *str);
 
 #endif
