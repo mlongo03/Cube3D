@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/05 18:14:24 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 11:52:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,12 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 					data->wallX = cube->player->posY + data->perpWallDist * data->rayDirY;
 					data->wallX = data->wallX - (int)(data->mapY);
 					if (data->wallX >= 0 && data->wallX <= 1)
-						data->hit = 2;
+					{
+						if (data->wallX <= mapDoorsTimer[(int)data->mapX][(int)data->mapY])
+							data->hit = 2;
+						else
+							data->sideDistX -= (data->deltaDistX / 2);
+					}
 					else
 						data->sideDistX -= (data->deltaDistX / 2);
 				}
@@ -562,13 +567,7 @@ void	render_doors(t_cube *cube)
 	int				x;
 
 	x = 0;
-	// if (cube->frame_door >= 3)
-	// {
-		update_doors(cube);
-	// 	cube->frame_door = 0;
-	// }
-	// else
-	// 	cube->frame_door++;
+	update_doors(cube);
 	while (x < screenWidth)
 	{
 		init_render_data(&data, cube, x);
@@ -767,13 +766,13 @@ void	calculate_fps(t_cube *cube)
 	cube->time = get_time();
 	cube->frameTime = (cube->time - cube->oldTime) / 1000.0;
 	cube->fps = (int)(1.0 / cube->frameTime);
-	if (cube->fps > 60)
-	{
-		ft_sleep(((1.0 / 60) - cube->frameTime) * 1000);
-		cube->time = get_time();
-		cube->frameTime = (cube->time - cube->oldTime) / 1000.0;
-		cube->fps = (int)(1.0 / cube->frameTime);
-	}
+	// if (cube->fps > 60)
+	// {
+	// 	ft_sleep(((1.0 / 60) - cube->frameTime) * 1000);
+	// 	cube->time = get_time();
+	// 	cube->frameTime = (cube->time - cube->oldTime) / 1000.0;
+	// 	cube->fps = (int)(1.0 / cube->frameTime);
+	// }
 	number = ft_itoa(cube->fps);
 	mlx_string_put(cube->mlx, cube->mlx_win,
 		screenWidth - 50, 20, -1, number);
