@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 11:52:28 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 11:54:44 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,6 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 			}
 			else
 				data->sideDistX += data->deltaDistX;
-
 		}
 		else
 		{
@@ -215,7 +214,12 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 					data->wallX = cube->player->posX + data->perpWallDist * data->rayDirX;
 					data->wallX = data->wallX - (int)(data->mapX);
 					if (data->wallX >= 0 && data->wallX <= 1)
-						data->hit = 2;
+					{
+						if (data->wallX <= mapDoorsTimer[(int)data->mapX][(int)data->mapY])
+							data->hit = 2;
+						else
+							data->sideDistY -= (data->deltaDistY / 2);
+					}
 					else
 						data->sideDistY -= (data->deltaDistY / 2);
 				}
