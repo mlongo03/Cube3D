@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/04 19:16:14 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:48:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,56 @@ void	take_colors(t_cube *game)
 	color_convertion_int(game);
 	save_colors_in_str(game);
 }
-/*
-qui salverai con mlx_xpm_file_to_image appena
-avrai gli sprite però prima finisci i check mappa
-void	save_cardinals(t_cube *game)
-{
-	int	i;
 
-	i = -1;
-	while (game->all_map[++i])
+void	create_doors_maps(t_cube *game)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	game->map_door_status = (int **)ft_calloc(game->map_max_height + 1, sizeof(int *));
+	game->map_door_timer = (double **)ft_calloc(game->map_max_height + 1, sizeof(double *));
+	while (y < game->map_max_height)
 	{
-		if(!ft_strncmp(game->all_map[i], "NO", 2))
-			game->card->north_wall = mlx_xpm_file_to_image()
-		if(!ft_strncmp(game->all_map[i], "SO", 2))
-			game->south_wall = mlx_xpm_file_to_image()
-		if(!ft_strncmp(game->all_map[i], "EA", 2))
-			game->east_wall = mlx_xpm_file_to_image()
-		if(!ft_strncmp(game->all_map[i], "WE", 2))
-			game->west_wall = mlx_xpm_file_to_image()
+		game->map_door_status[y] = (int *)ft_calloc(game->map_max_width + 1, sizeof(int));
+		game->map_door_timer[y] = (double *)ft_calloc(game->map_max_width + 1, sizeof(double));
+		x = 0;
+		while (x < game->map_max_width)
+		{
+			// printf("block = %c\n", game->real_map[y][x]);
+			if (game->real_map[y][x] == '2')
+				game->map_door_timer[y][x] = 1;
+			else
+				game->map_door_timer[y][x] = 0;
+			game->map_door_status[y][x] = Closed;
+			x++;
+		}
+		y++;
+	}
+
+}
+
+void	fix_real_map(t_cube *cube)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (cube->real_map[y])
+	{
+		if (ft_strlen(cube->real_map[y]) < cube->map_max_width)
+		{
+			cube->real_map[y] = (char *)ft_realloc(cube->real_map[y], sizeof(char), ft_strlen(cube->real_map[y]), cube->map_max_width + 1);
+			x = 0;
+			while (cube->real_map[y][x])
+				x++;
+			while (x < cube->map_max_width)
+				cube->real_map[y][x++] = '0';
+			cube->real_map[y][x] = 0;
+		}
+		y++;
 	}
 }
-*/
 
 void	read_and_build(t_cube *game, char **av)
 {
@@ -89,4 +118,6 @@ void	read_and_build(t_cube *game, char **av)
 	take_real_map(game);
 	take_colors(game);
 	main_check(game);
+	fix_real_map(game);
+	create_doors_maps(game);
 }

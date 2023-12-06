@@ -6,94 +6,11 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 11:56:24 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 19:19:35 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-#define mapWidth 24
-#define mapHeight 24
-
-int worldMap[mapWidth][mapHeight] =
-	{
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-
-int mapDoorsStatus[mapWidth][mapHeight] =
-	{
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-
-double mapDoorsTimer[mapWidth][mapHeight] =
-	{
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 u_int64_t	get_time(void)
 {
@@ -146,7 +63,7 @@ void	init_render_data(t_render_data *data, t_cube *cube, int x)
 	init_step_direction(data, cube);
 }
 
-void	perform_dda(t_render_data *data)
+void	perform_dda(t_render_data *data, t_cube *cube)
 {
 	while (data->hit == 0)
 	{
@@ -162,7 +79,7 @@ void	perform_dda(t_render_data *data)
 			data->mapY += data->stepY;
 			data->side = 1;
 		}
-		if (worldMap[(int)data->mapX][(int)data->mapY] == 1)
+		if (cube->real_map[(int)data->mapY][(int)data->mapX] == '1')
 			data->hit = 1;
 	}
 }
@@ -176,9 +93,9 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 			data->mapX += data->stepX;
 			data->side = 0;
 
-			if (worldMap[(int)data->mapX][(int)data->mapY] == 2)
+			if (cube->real_map[(int)data->mapY][(int)data->mapX] == '2')
 			{
-				if (worldMap[(int)data->mapX][(int)data->mapY + 1] == 1 && worldMap[(int)data->mapX][(int)data->mapY - 1] == 1)
+				if (cube->real_map[(int)data->mapY + 1][(int)data->mapX] == '1' && cube->real_map[(int)data->mapY - 1][(int)data->mapX] == '1')
 				{
 					data->sideDistX += data->deltaDistX + (data->deltaDistX / 2);
 					data->perpWallDist = (data->sideDistX - data->deltaDistX);
@@ -186,7 +103,7 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 					data->wallX = data->wallX - (int)(data->mapY);
 					if (data->wallX >= 0 && data->wallX <= 1)
 					{
-						if (data->wallX <= mapDoorsTimer[(int)data->mapX][(int)data->mapY])
+						if (data->wallX <= cube->map_door_timer[(int)data->mapY][(int)data->mapX])
 							data->hit = 2;
 						else
 							data->sideDistX -= (data->deltaDistX / 2);
@@ -203,9 +120,9 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 			data->mapY += data->stepY;
 			data->side = 1;
 
-			if (worldMap[(int)data->mapX][(int)data->mapY] == 2)
+			if (cube->real_map[(int)data->mapY][(int)data->mapX] == '2')
 			{
-				if (worldMap[(int)data->mapX + 1][(int)data->mapY] == 1 && worldMap[(int)data->mapX - 1][(int)data->mapY] == 1)
+				if (cube->real_map[(int)data->mapY][(int)data->mapX + 1] == '1' && cube->real_map[(int)data->mapY][(int)data->mapX - 1] == '1')
 				{
 					data->sideDistY += data->deltaDistY + (data->deltaDistY / 2);
 					data->perpWallDist = (data->sideDistY - data->deltaDistY);
@@ -213,7 +130,7 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 					data->wallX = data->wallX - (int)(data->mapX);
 					if (data->wallX >= 0 && data->wallX <= 1)
 					{
-						if (data->wallX <= mapDoorsTimer[(int)data->mapX][(int)data->mapY])
+						if (data->wallX <= cube->map_door_timer[(int)data->mapY][(int)data->mapX])
 							data->hit = 2;
 						else
 							data->sideDistY -= (data->deltaDistY / 2);
@@ -225,7 +142,7 @@ int	perform_dda_doors(t_render_data *data, t_cube *cube)
 			else
 				data->sideDistY += data->deltaDistY;
 		}
-		if (worldMap[(int)data->mapX][(int)data->mapY] == 1)
+		if (cube->real_map[(int)data->mapY][(int)data->mapX] == '1')
 			return (1);
 	}
 	return (0);
@@ -334,9 +251,9 @@ int	wallPos_rayPosOnWall(t_render_data *data, t_cube *cube)
 	data->wallX -= (int)(data->wallX);
 	if (data->hit == 2)
 	{
-		if (data->wallX > mapDoorsTimer[(int)data->mapX][(int)data->mapY])
+		if (data->wallX > cube->map_door_timer[(int)data->mapY][(int)data->mapX])
 			return (1);
-		data->wallX = 1 - (mapDoorsTimer[(int)data->mapX][(int)data->mapY] - data->wallX);
+		data->wallX = 1 - (cube->map_door_timer[(int)data->mapY][(int)data->mapX] - data->wallX);
 	}
 	set_tex_width_height(data, cube);
 	data->texX = (int)(data->wallX * (double)data->texWidth);
@@ -355,11 +272,11 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 	if (wallPos_rayPosOnWall(data, cube))
 		return ;
 	while (i < data->drawStart)
-		my_mlx_pixel_put(cube->img, x, i++, 0x000000FF);
+		my_mlx_pixel_put(cube->img, x, i++, cube->colors->f_color_num);
 	draw_tex_wall(data, cube, x);
 	i = data->drawEnd;
 	while (i < screenHeight)
-		my_mlx_pixel_put(cube->img, x, i++, 0xFFFFFFFF);
+		my_mlx_pixel_put(cube->img, x, i++, cube->colors->c_color_num);
 }
 
 void	load_door(t_cube *cube)
@@ -375,25 +292,25 @@ void	load_door(t_cube *cube)
 void	load_textures(t_cube *cube)
 {
 	cube->card->north_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"./textures/magma.xpm",
+			cube->card->north_path,
 			&cube->card->north_wall.width, &cube->card->north_wall.height);
 	cube->card->north_wall.addr = mlx_get_data_addr(cube->card->north_wall.img,
 		&cube->card->north_wall.bits_per_pixel, &cube->card->north_wall.line_length,
 		&cube->card->north_wall.endian);
 	cube->card->south_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"./textures/wood.xpm",
+			cube->card->south_path,
 			&cube->card->south_wall.width, &cube->card->south_wall.height);
 	cube->card->south_wall.addr = mlx_get_data_addr(cube->card->south_wall.img,
 		&cube->card->south_wall.bits_per_pixel, &cube->card->south_wall.line_length,
 		&cube->card->south_wall.endian);
 	cube->card->east_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"./textures/magma.xpm",
+			cube->card->east_path,
 			&cube->card->east_wall.width, &cube->card->east_wall.height);
 	cube->card->east_wall.addr = mlx_get_data_addr(cube->card->east_wall.img,
 		&cube->card->east_wall.bits_per_pixel, &cube->card->east_wall.line_length,
 		&cube->card->east_wall.endian);
 	cube->card->west_wall.img = mlx_xpm_file_to_image(cube->mlx,
-			"./textures/wood.xpm",
+			cube->card->west_path,
 			&cube->card->west_wall.width, &cube->card->west_wall.height);
 	cube->card->west_wall.addr = mlx_get_data_addr(cube->card->west_wall.img,
 		&cube->card->west_wall.bits_per_pixel, &cube->card->west_wall.line_length,
@@ -419,19 +336,19 @@ void	init_draw_vars(t_cube *cube)
 	distHeight = 8;
 	isWidthEven = 0;
 	isHeightEven = 1;
-	if (mapWidth < 30)
+	if (cube->map_max_width < 30)
 	{
-		if (mapWidth % 2 != 0)
+		if (cube->map_max_width % 2 != 0)
 			isWidthEven++;
-		distWidth = mapWidth / 2;
+		distWidth = cube->map_max_width / 2;
 	}
-	if (mapHeight < 17)
+	if (cube->map_max_height < 17)
 	{
-		if (mapHeight % 2 == 0)
+		if (cube->map_max_height % 2 == 0)
 			isHeightEven--;
-		distHeight = mapHeight / 2;
+		distHeight = cube->map_max_height / 2;
 	}
-	while ((cube->mini->y + offset) < (mapHeight - 1) && offset < distHeight)
+	while ((cube->mini->y + offset) < (cube->map_max_height - 1) && offset < distHeight)
 		offset++;
 	cube->mini->drawEndHeight = cube->mini->y + offset;
 	offset = 0;
@@ -439,7 +356,7 @@ void	init_draw_vars(t_cube *cube)
 		offset++;
 	cube->mini->drawStartHeight = cube->mini->y - offset;
 	offset = 0;
-	while ((cube->mini->x + offset) < (mapWidth - 1) && offset < distWidth)
+	while ((cube->mini->x + offset) < (cube->map_max_width - 1) && offset < distWidth)
 		offset++;
 	cube->mini->drawEndWidth = cube->mini->x + offset;
 	offset = 0;
@@ -516,12 +433,12 @@ void	render_minimap(t_cube *cube)
 		x = cube->mini->drawStartWidth;
 		while (x <= cube->mini->drawEndWidth)
 		{
-			if (worldMap[x][y] == 1)
+			if (cube->real_map[y][x] == '1')
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0xFFFFFFFF);
-			else if (worldMap[x][y] == 0)
-				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x00000000);
-			else if (worldMap[x][y] == 2)
+			else if (cube->real_map[y][x] == '2')
 				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x000000FF);
+			else
+				draw_square((x - cube->mini->drawStartWidth) * cube->mini->scale, (y - cube->mini->drawStartHeight) * cube->mini->scale, cube, 0x00000000);
 			x++;
 		}
 		y++;
@@ -533,14 +450,14 @@ void	render_minimap(t_cube *cube)
 
 void	update_door(int x, int y, t_cube *cube)
 {
-	if (mapDoorsTimer[x][y] >= 1 && mapDoorsStatus[x][y] == Closing)
-		mapDoorsStatus[x][y] = Closed;
-	else if (mapDoorsTimer[x][y] <= 0 && mapDoorsStatus[x][y] == Opening)
-		mapDoorsStatus[x][y] = Open;
-	else if (mapDoorsStatus[x][y] == Opening)
-		mapDoorsTimer[x][y] -= 0.01;
-	else if (mapDoorsStatus[x][y] == Closing)
-		mapDoorsTimer[x][y] += 0.01;
+	if (cube->map_door_timer[y][x] >= 1 && cube->map_door_status[y][x] == Closing)
+		cube->map_door_status[y][x] = Closed;
+	else if (cube->map_door_timer[y][x] <= 0 && cube->map_door_status[y][x] == Opening)
+		cube->map_door_status[y][x] = Open;
+	else if (cube->map_door_status[y][x] == Opening)
+		cube->map_door_timer[y][x] -= 0.01;
+	else if (cube->map_door_status[y][x] == Closing)
+		cube->map_door_timer[y][x] += 0.01;
 }
 
 void	update_doors(t_cube *cube)
@@ -550,12 +467,13 @@ void	update_doors(t_cube *cube)
 
 	x = 0;
 	y = 0;
-	while (y < mapHeight)
+	while (y < cube->map_max_height)
 	{
 		x = 0;
-		while (x < mapWidth)
+		while (x < cube->map_max_width)
 		{
-			if(worldMap[x][y] == 2)
+			// printf("[%d][%d]\n", x, y);
+			if(cube->real_map[y][x] == '2')
 				update_door(x, y, cube);
 			x++;
 		}
@@ -592,7 +510,7 @@ void	render_map(t_cube *cube)
 	while (x < screenWidth)
 	{
 		init_render_data(&data, cube, x);
-		perform_dda(&data);
+		perform_dda(&data, cube);
 		draw_vertical_line(&data, cube, x);
 		x++;
 	}
@@ -634,36 +552,36 @@ void	handle_door(t_cube *cube)
 	posYtoWatch = cube->player->posY;
 	if (cube->player->dirX > 0)
 	{
-		positionstoWatch[i++] = cube->player->posX + 1;
 		positionstoWatch[i++] = cube->player->posY;
+		positionstoWatch[i++] = cube->player->posX + 1;
 	}
 	if (cube->player->dirX < 0)
 	{
-		positionstoWatch[i++] = cube->player->posX - 1;
 		positionstoWatch[i++] = cube->player->posY;
+		positionstoWatch[i++] = cube->player->posX - 1;
 	}
 	if (cube->player->dirY > 0)
 	{
-		positionstoWatch[i++] = cube->player->posX;
 		positionstoWatch[i++] = cube->player->posY + 1;
+		positionstoWatch[i++] = cube->player->posX;
 	}
 	if (cube->player->dirY < 0)
 	{
-		positionstoWatch[i++] = cube->player->posX;
 		positionstoWatch[i++] = cube->player->posY - 1;
+		positionstoWatch[i++] = cube->player->posX;
 	}
 	positionstoWatch[i] = 0;
-	// printf("worldMap[%d][%d] = %d\n", posXtoWatch, posYtoWatch, worldMap[posXtoWatch][posYtoWatch]);
+	// printf("cube->real_map[%d][%d] = %d\n", posXtoWatch, posYtoWatch, cube->real_map[posXtoWatch][posYtoWatch]);
 	i = 0;
 	while (positionstoWatch[i] && positionstoWatch[i + 1])
 	{
-		if (worldMap[positionstoWatch[i]][positionstoWatch[i + 1]] == 2)
+		if (cube->real_map[positionstoWatch[i]][positionstoWatch[i + 1]] == '2')
 		{
-			// printf("map status[%d][%d] = %d\n", positionstoWatch[i], positionstoWatch[i + 1], mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]]);
-			if (mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] == Closed || mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] == Closing)
-				mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] = Opening;
-			else if (mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] == Open || mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] == Opening)
-				mapDoorsStatus[positionstoWatch[i]][positionstoWatch[i + 1]] = Closing;
+			// printf("map status[%d][%d] = %d\n", positionstoWatch[i], positionstoWatch[i + 1], cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]]);
+			if (cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Closed || cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Closing)
+				cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] = Opening;
+			else if (cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Open || cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Opening)
+				cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] = Closing;
 		}
 		i += 2;
 	}
@@ -785,20 +703,20 @@ void	forward_backward(t_cube *cube, double moveSpeed)
 {
 	if (cube->player->mov_dirY == 1)
 	{
-		if (worldMap[(int)(cube->player->posX + cube->player->dirX * moveSpeed)][(int)cube->player->posY] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX + cube->player->dirX * moveSpeed)][(int)cube->player->posY] == Open)
+		if (cube->real_map[(int)cube->player->posY][(int)(cube->player->posX + cube->player->dirX * moveSpeed)] == '0'
+			|| cube->map_door_status [(int)cube->player->posY][(int)(cube->player->posX + cube->player->dirX * moveSpeed)] == Open)
 			cube->player->posX += cube->player->dirX * moveSpeed;
-		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirY * moveSpeed)] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirY * moveSpeed)] == Open)
+		if (cube->real_map[(int)(cube->player->posY + cube->player->dirY * moveSpeed)][(int)(cube->player->posX)] == '0'
+			|| cube->map_door_status[(int)(cube->player->posY + cube->player->dirY * moveSpeed)][(int)(cube->player->posX)] == Open)
 			cube->player->posY += cube->player->dirY * moveSpeed;
 	}
 	if (cube->player->mov_dirY == -1)
 	{
-		if (worldMap[(int)(cube->player->posX - cube->player->dirX * moveSpeed)][(int)cube->player->posY] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX - cube->player->dirX * moveSpeed)][(int)cube->player->posY] == Open)
+		if (cube->real_map[(int)cube->player->posY][(int)(cube->player->posX - cube->player->dirX * moveSpeed)] == '0'
+			|| cube->map_door_status[(int)cube->player->posY][(int)(cube->player->posX - cube->player->dirX * moveSpeed)] == Open)
 			cube->player->posX -= cube->player->dirX * moveSpeed;
-		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirY * moveSpeed)] == 0
-			|| mapDoorsStatus[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirY * moveSpeed)] == Open)
+		if (cube->real_map[(int)(cube->player->posY - cube->player->dirY * moveSpeed)][(int)cube->player->posX] == '0'
+			|| cube->map_door_status[(int)(cube->player->posY - cube->player->dirY * moveSpeed)][(int)cube->player->posX] == Open)
 			cube->player->posY -= cube->player->dirY * moveSpeed;
 	}
 }
@@ -807,20 +725,20 @@ void	left_right(t_cube *cube, double moveSpeed)
 {
 	if (cube->player->mov_dirX == -1)
 	{
-		if (worldMap[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX - cube->player->dirY * moveSpeed)][(int)cube->player->posY] == Open)
+		if (cube->real_map[(int)cube->player->posY][(int)(cube->player->posX - cube->player->dirY * moveSpeed)] == '0'
+			|| cube->map_door_status[(int)cube->player->posY][(int)(cube->player->posX - cube->player->dirY * moveSpeed)] == Open)
 			cube->player->posX -= cube->player->dirY * moveSpeed;
-		if (worldMap[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX)][(int)(cube->player->posY + cube->player->dirX * moveSpeed)] == Open)
+		if (cube->real_map[(int)(cube->player->posY + cube->player->dirX * moveSpeed)][(int)(cube->player->posX)] == '0'
+			|| cube->map_door_status[(int)(cube->player->posY + cube->player->dirX * moveSpeed)][(int)(cube->player->posX)] == Open)
 			cube->player->posY += (cube->player->dirX) * moveSpeed;
 	}
 	if (cube->player->mov_dirX == 1)
 	{
-		if (worldMap[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posY] == 0
-			|| mapDoorsStatus[(int)(cube->player->posX + cube->player->dirY * moveSpeed)][(int)cube->player->posY] == Open)
+		if (cube->real_map[(int)cube->player->posY][(int)(cube->player->posX + cube->player->dirY * moveSpeed)] == '0'
+			|| cube->map_door_status[(int)cube->player->posY][(int)(cube->player->posX + cube->player->dirY * moveSpeed)] == Open)
 			cube->player->posX += cube->player->dirY * moveSpeed;
-		if (worldMap[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == 0
-			|| mapDoorsStatus[(int)cube->player->posX][(int)(cube->player->posY - cube->player->dirX * moveSpeed)] == Open)
+		if (cube->real_map[(int)(cube->player->posY - cube->player->dirX * moveSpeed)][(int)cube->player->posX] == '0'
+			|| cube->map_door_status[(int)(cube->player->posY - cube->player->dirX * moveSpeed)][(int)cube->player->posX] == Open)
 			cube->player->posY -= (cube->player->dirX) * moveSpeed;
 	}
 }
@@ -893,12 +811,35 @@ int main(int argc, char **argv)
 	}
 	game = ft_calloc(1, sizeof(t_cube));
 	struct_init(game);
-	// is_cub(argv, game);
-	// read_and_build(game, argv);
+	is_cub(argv, game);
+	read_and_build(game, argv);
 	game->mlx = mlx_init();
 	load_imgs(game);
 	load_textures(game);
 	mlx_hooks(game);
+	// print_mat(game->real_map);
+	// printf("\nmap Status\n");
+	// for (int y = 0; y < game->map_max_height; y++)
+	// {
+	// 	int x = 0;
+	// 	while (x < game->map_max_width)
+	// 	{
+	// 		printf("%d", game->map_door_status[y][x]);
+	// 		x++;
+	// 	}
+	// 	printf("\n");
+	// }
+	// printf("\nmap Timer\n");
+	// for (int y = 0; y < game->map_max_height; y++)
+	// {
+	// 	int x = 0;
+	// 	while (x < game->map_max_width)
+	// 	{
+	// 		printf("%f    ", game->map_door_timer[y][x]);
+	// 		x++;
+	// 	}
+	// 	printf("\n");
+	// }
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 12:06:25 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 18:19:24 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ typedef	struct s_cube
 	void		*mlx_win;
 	char		**all_map;
 	char		**real_map;
+	int			**map_door_status;
+	double		**map_door_timer;
 	int			check_card[4];
 	int			*map_len;
 	int			fps;

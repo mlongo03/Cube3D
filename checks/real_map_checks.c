@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   real_map_checks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/05 14:29:29 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:04:49 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ static int	player_existence(t_cube *game)
 				|| game->real_map[i][j] == 'E'
 				|| game->real_map[i][j] == 'W')
 			{
-				game->player->posX= i;
-				game->player->posY = j;
+				game->player->posY= i + 0.5;
+				game->player->posX = j + 0.5;
+				printf("player X = %f, player Y = %f\n", game->player->posX, game->player->posY);
+				game->real_map[i][j] = '0';
 				return (1);
 			}
 		}
