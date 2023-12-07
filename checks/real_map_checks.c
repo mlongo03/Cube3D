@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 09:46:23 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 10:30:34 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ static int	player_existence(t_cube *game)
 				|| game->real_map[i][j] == 'E'
 				|| game->real_map[i][j] == 'W')
 			{
-				game->player->posY= i + 0.5;
-				game->player->posX = j + 0.5;
+				game->player->posy= i + 0.5;
+				game->player->posx = j + 0.5;
 				game->real_map[i][j] = '0';
 				return (1);
 			}

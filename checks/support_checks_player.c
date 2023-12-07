@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support_checks_player.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:13:57 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/04 19:20:17 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:30:34 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	save_player_pos(t_cube *game)
 		{
 			if (isplayer(game->real_map[i][j]))
 			{
-				game->player->posX = i; //ad essere onesto non saprei dire quale fa più comodo
-				game->player->posY = j;
+				game->player->posx = i; //ad essere onesto non saprei dire quale fa più comodo
+				game->player->posy = j;
 				break ;
 			}
 		}

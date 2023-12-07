@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 19:29:21 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 12:30:32 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@
 
 typedef	struct s_player
 {
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-	double	mov_dirX;
+	double	posx;
+	double	posy;
+	double	dirx;
+	double	diry;
+	double	planex;
+	double	planey;
+	double	mov_dirx;
 	double	mov_dirY;
 	double	cam_dir;
 	double	rot_angle;
@@ -66,7 +66,7 @@ typedef struct s_img
 {
 	void	*img;
 	void	*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_length;
 	int		endian;
 }	t_img;
@@ -75,7 +75,7 @@ typedef struct s_xpm_img
 {
 	void	*img;
 	void	*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_length;
 	int		endian;
 	int		width;
@@ -84,31 +84,31 @@ typedef struct s_xpm_img
 
 typedef struct s_render_data
 {
-	double				mapX;
-	double				mapY;
-	double				stepX;
-	double				stepY;
+	double				map_x;
+	double				map_y;
+	double				step_x;
+	double				step_y;
 	int					hit;
 	int					side;
-	int					lineHeight;
-	int					drawStart;
-	int					drawEnd;
-	int					texWidth;
-	int					texHeight;
-	int					texX;
-	int					texY;
+	int					line_height;
+	int					draw_start;
+	int					draw_end;
+	int					tex_width;
+	int					tex_height;
+	int					tex_x;
+	int					tex_y;
 	unsigned int		color;
-	double				cameraX;
-	double				rayDirX;
-	double				rayDirY;
-	double				sideDistX;
-	double				sideDistY;
-	double				deltaDistX;
-	double				deltaDistY;
-	double				perpWallDist;
-	double				wallX;
+	double				camera_x;
+	double				ray_dir_x;
+	double				ray_dir_y;
+	double				side_dist_x;
+	double				side_dist_y;
+	double				delta_dist_x;
+	double				delta_dist_y;
+	double				perp_wall_dist;
+	double				wall_x;
 	double				step;
-	double				texPos;
+	double				tex_pos;
 }	t_render_data;
 
 typedef	struct s_cardinals
@@ -123,12 +123,23 @@ typedef	struct s_cardinals
 	char	*west_path;
 }	t_cardinals;
 
+typedef struct s_mini_draw_vars
+{
+	int	offset;
+	int	dist_width;
+	int	dist_height;
+	int	fix_y;
+	int	fix_x;
+	int	is_width_even;
+	int	is_height_even;
+}	t_mini_draw_vars;
+
 typedef struct s_mini
 {
-	int		drawStartHeight;
-	int		drawStartWidth;
-	int		drawEndHeight;
-	int		drawEndWidth;
+	int		draw_start_height;
+	int		draw_start_width;
+	int		draw_end_height;
+	int		draw_end_width;
 	int		x;
 	int		y;
 	int		scale; //square sensibility
@@ -148,8 +159,8 @@ typedef	struct s_cube
 	int			map_max_width;
 	int			map_max_height;
 	double		time;
-	double		oldTime;
-	double		frameTime;
+	double		old_time;
+	double		frame_time;
 	t_cardinals	*card;
 	t_colors	*colors;
 	t_mini		*mini;
