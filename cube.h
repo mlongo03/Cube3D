@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 12:30:32 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:51:39 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,5 +203,57 @@ void	save_player_pos(t_cube *game);
 int		countTabs(char *str);
 char	*replaceTabs(char *str, int count);
 char	*replaceTabWithSpaces(char *str);
-
+void	rotate_left(t_cube *cube, double rot_speed);
+void	rotate_right(t_cube *cube, double rot_speed);
+void	update_rotation(t_cube *cube);
+void	move_forward(t_cube *cube, double moveSpeed);
+void	move_backward(t_cube *cube, double moveSpeed);
+void	move_left(t_cube *cube, double moveSpeed);
+void	move_right(t_cube *cube, double moveSpeed);
+void	update_movement(t_cube *cube);
+int		handle_mouse(int x, int y, void	*cube);
+void	mlx_hooks(t_cube *cube);
+void	ft_sleep(u_int64_t time);
+void	calculate_fps(t_cube *cube);
+int		game_loop(t_cube *cube);
+void	handle_door(t_cube *cube);
+int		key_hook_press(int key, t_cube *cube);
+int		key_hook_release(int key, t_cube *cube);
+void	rotate_camera(float angle, t_cube *cube);
+void	load_imgs(t_cube *game);
+void	render_doors(t_cube *cube);
+int		close_window(t_cube *cube);
+void	set_positions_to_watch(t_cube *cube, int *pos);
+void	render_map(t_cube *cube);
+void	destroy_all(t_cube *cube);
+void	draw_squares(t_cube *cube, int x, int y);
+void	render_minimap(t_cube *cube);
+void	update_door(int x, int y, t_cube *cube);
+void	update_doors(t_cube *cube);
+void	draw_square(int startX, int startY, t_cube *cube, int color);
+void	player_close_to_so_limit(t_mini_draw_vars *mp, t_cube *cube);
+void	player_close_to_ea_limit(t_mini_draw_vars *mp, t_cube *cube);
+void	player_close_to_we_limit(t_mini_draw_vars *mp, t_cube *cube);
+void	adjust_start_end(t_mini_draw_vars *mp, t_cube *cube);
+void	init_draw_vars(t_cube *cube);
+void	load_textures(t_cube *cube);
+void	init_mp(t_mini_draw_vars *mp, t_cube *cube);
+void	calculate_start_end_mini(t_mini_draw_vars *mp, t_cube *cube);
+void	player_close_to_no_limit(t_mini_draw_vars *mp, t_cube *cube);
+void	draw_tex_wall(t_render_data *data, t_cube *cube, int x);
+int		set_wall_x(t_render_data *data, t_cube *cube);
+int		wall_pos_ray_pos_on_wall(t_render_data *data, t_cube *cube);
+void	draw_vertical_line(t_render_data *data, t_cube *cube, int x);
+void	load_door(t_cube *cube);
+int		perform_dda_doors(t_render_data *data, t_cube *cube);
+void	set_color(t_render_data *data, t_cube *cube, int shift);
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	door_tex_init(t_render_data *data, t_cube *cube);
+void	set_tex_width_height(t_render_data *data, t_cube *cube);
+void	init_step_direction(t_render_data *data, t_cube *cube);
+void	init_render_data(t_render_data *data, t_cube *cube, int x);
+void	perform_dda(t_render_data *data, t_cube *cube);
+void	detect_vertical_door(t_render_data *data, t_cube *cube);
+void	detect_horizontal_door(t_render_data *data, t_cube *cube);
+u_int64_t	get_time(void);
 #endif
