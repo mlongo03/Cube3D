@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:15:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 10:30:24 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:48 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ static int	get_value(char c)
 	return (c - 'A' + 10);
 }
 
-int			ft_atoi_base(const char *str, char *base)
+int	ft_atoi_base(const char *str, char *base)
 {
-	int sum;
-	int i;
-	int sign;
-	int baselen;
+	int	sum;
+	int	i;
+	int	sign;
+	int	baselen;
 
-	if (str == NULL || !*str || (baselen = ft_checkbase(base)) == 0)
+	baselen = ft_checkbase(base);
+	if (str == NULL || !*str || baselen == 0)
 		return (0);
 	i = 0;
 	sign = 1;

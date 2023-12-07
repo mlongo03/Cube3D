@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_base.c                                    :+:      :+:    :+:   */
+/*   ft_checkbase.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:26:38 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 10:26:45 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:47:13 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_checkbase(char *base)
 {
-	int i;
+	int	i;
 
 	if (base == NULL || *base == 0 || !base[1])
 		return (0);
@@ -25,7 +25,7 @@ int	ft_checkbase(char *base)
 			return (0);
 		if (base[i] - base[i - 1] != 1)
 			if (!(ft_isdigit(base[i - 1])
-				&& (base[i] == 'a' || base[i] == 'A')))
+					&& (base[i] == 'a' || base[i] == 'A')))
 				return (0);
 		i++;
 	}

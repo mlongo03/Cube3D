@@ -6,12 +6,11 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:01:17 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:23:51 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:50:10 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
-
 
 void	set_positions_to_watch(t_cube *cube, int *pos)
 {

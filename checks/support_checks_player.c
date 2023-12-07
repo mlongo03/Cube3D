@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:13:57 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 10:30:34 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:36:45 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	save_player_pos(t_cube *game)
 		{
 			if (isplayer(game->real_map[i][j]))
 			{
-				game->player->posx = i; //ad essere onesto non saprei dire quale fa più comodo
+				game->player->posx = i;
 				game->player->posy = j;
 				break ;
 			}
@@ -33,7 +33,7 @@ void	save_player_pos(t_cube *game)
 	}
 }
 
-int		countTabs(char *str)
+int	count_tabs(char *str)
 {
 	int		i;
 	int		count;
@@ -51,7 +51,7 @@ int		countTabs(char *str)
 	return (count);
 }
 
-char	*replaceTabs(char *str, int count)
+char	*replace_tabs(char *str, int count)
 {
 	char	*result;
 	int		j;
@@ -78,11 +78,11 @@ char	*replaceTabs(char *str, int count)
 	return (result);
 }
 
-char	*replaceTabWithSpaces(char *str)
+char	*replace_tab_with_spaces(char *str)
 {
 	int		count;
 
-	count = countTabs(str);
-	str = replaceTabs(str, count);
+	count = count_tabs(str);
+	str = replace_tabs(str, count);
 	return (str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 15:05:58 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:36:45 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,9 +201,9 @@ void	save_cardinals_path(t_cube *game);
 void	save_player_pos(t_cube *game);
 void	free_cardinals(t_cube *game);
 void	save_player_pos(t_cube *game);
-int		countTabs(char *str);
-char	*replaceTabs(char *str, int count);
-char	*replaceTabWithSpaces(char *str);
+int		count_tabs(char *str);
+char	*replace_tabs(char *str, int count);
+char	*replace_tab_with_spaces(char *str);
 void	rotate_left(t_cube *cube, double rot_speed);
 void	rotate_right(t_cube *cube, double rot_speed);
 void	update_rotation(t_cube *cube);

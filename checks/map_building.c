@@ -6,13 +6,13 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 15:59:26 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:42:39 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-int		check_cardinals(t_cube *game)
+int	check_cardinals(t_cube *game)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ int		check_cardinals(t_cube *game)
 	while (++i < 4)
 		game->check_card[i] = 0;
 	i = -1;
-	while(game->all_map[++i])
+	while (game->all_map[++i])
 		check_existence(game, i);
 	if (game->check_card[0] && game->check_card[1]
 		&& game->check_card[2] && game->check_card[3])
@@ -55,12 +55,15 @@ void	create_doors_maps(t_cube *game)
 	int	x;
 
 	y = 0;
-	game->map_door_status = (int **)ft_calloc(game->map_max_height + 1, sizeof(int *));
-	game->map_door_timer = (double **)ft_calloc(game->map_max_height + 1, sizeof(double *));
+	game->map_door_status = ft_calloc(game->map_max_height + 1, sizeof(int *));
+	game->map_door_timer = ft_calloc(game->map_max_height + 1,
+			sizeof(double *));
 	while (y < game->map_max_height)
 	{
-		game->map_door_status[y] = (int *)ft_calloc(game->map_max_width + 1, sizeof(int));
-		game->map_door_timer[y] = (double *)ft_calloc(game->map_max_width + 1, sizeof(double));
+		game->map_door_status[y] = ft_calloc(game->map_max_width + 1,
+				sizeof(int));
+		game->map_door_timer[y] = ft_calloc(game->map_max_width + 1,
+				sizeof(double));
 		x = 0;
 		while (x < game->map_max_width)
 		{
@@ -73,7 +76,6 @@ void	create_doors_maps(t_cube *game)
 		}
 		y++;
 	}
-
 }
 
 void	fix_real_map(t_cube *cube)
@@ -86,7 +88,9 @@ void	fix_real_map(t_cube *cube)
 	{
 		if ((int)ft_strlen(cube->real_map[y]) < cube->map_max_width)
 		{
-			cube->real_map[y] = (char *)ft_realloc(cube->real_map[y], sizeof(char), ft_strlen(cube->real_map[y]), cube->map_max_width + 1);
+			cube->real_map[y] = (char *)ft_realloc(cube->real_map[y],
+					sizeof(char), ft_strlen(cube->real_map[y]),
+					cube->map_max_width + 1);
 			x = 0;
 			while (cube->real_map[y][x])
 				x++;

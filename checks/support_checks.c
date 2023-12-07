@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support_checks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/05 14:06:42 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:38:24 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	fix_lenght_rows(char **map, int **map_len, t_cube *game)
 	int	j;
 
 	i = -1;
-	//qui legge il \t e giustamente da errore
 	while (map[++i])
 	{
 		j = -1;
@@ -72,11 +71,11 @@ void	is_map_last(t_cube *game)
 			|| !ft_strncmp(game->all_map[i], "WE", 2))
 			card++;
 		else if (!ft_strncmp(game->all_map[i], "F", 1)
-				|| !ft_strncmp(game->all_map[i], "C", 1))
+			|| !ft_strncmp(game->all_map[i], "C", 1))
 			flo_cei++;
 		else if (card == 4 && flo_cei == 2)
 			break ;
 		else
-			ft_error("The map should be the last argument\n",game);
+			ft_error("The map should be the last argument\n", game);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:13:39 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:22:20 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:49:56 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ void	player_close_to_no_limit(t_mini_draw_vars *mp, t_cube *cube)
 	if (!mp->is_height_even)
 		cube->mini->draw_start_height++;
 }
-

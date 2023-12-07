@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:43:06 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:24:59 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:29:59 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static char	*convert_to_hex(int decimal)
 {
-	int	i;
-	int	temp;
-	char	*hexa_Number;
+	int		i;
+	int		temp;
+	char	*hexa_number;
 
 	i = 7;
-	hexa_Number = malloc(8 * sizeof(char) + 1);
+	hexa_number = malloc(8 * sizeof(char) + 1);
 	while (decimal != 0)
 	{
 		temp = decimal % 16;
@@ -27,13 +27,13 @@ static char	*convert_to_hex(int decimal)
 			temp = temp + 48;
 		else
 			temp = temp + 55;
-		hexa_Number[i--] = temp;
+		hexa_number[i--] = temp;
 		decimal = decimal / 16;
 	}
-	hexa_Number[0] = '0';
-	hexa_Number[1] = 'x';
-	hexa_Number[7] = '\0';
-	return (hexa_Number);
+	hexa_number[0] = '0';
+	hexa_number[1] = 'x';
+	hexa_number[7] = '\0';
+	return (hexa_number);
 }
 
 void	save_colors_in_str(t_cube *game)
