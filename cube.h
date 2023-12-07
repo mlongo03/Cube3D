@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 17:10:29 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:49:19 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define CLOSING 2
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
+# include "ft_printf/ft_printf.h"
 # include <math.h>
 # include <error.h>
 # include <fcntl.h>

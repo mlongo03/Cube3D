@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 17:07:28 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:50:28 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_mat(char **mat)
 	i = 0;
 	while (mat[i])
 	{
-		printf("%s\n", mat[i]);
+		ft_printf("%s\n", mat[i]);
 		i++;
 	}
 }
@@ -81,7 +81,7 @@ void	free_struct(t_cube *game)
 
 void	ft_error(char *str_err, t_cube *game)
 {
-	printf("%s\n", str_err);
+	ft_printf("%s\n", str_err);
 	free_struct(game);
 }
 
