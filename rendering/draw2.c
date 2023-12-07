@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:45:20 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:23:14 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:57:46 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	wall_pos_ray_pos_on_wall(t_render_data *data, t_cube *cube)
 		data->perp_wall_dist = (data->side_dist_x - data->delta_dist_x);
 	else
 		data->perp_wall_dist = (data->side_dist_y - data->delta_dist_y);
-	data->line_height = (int)(screenHeight / data->perp_wall_dist);
-	data->draw_start = -data->line_height / 2 + screenHeight / 2;
+	data->line_height = (int)(SCREENHEIGHT / data->perp_wall_dist);
+	data->draw_start = -data->line_height / 2 + SCREENHEIGHT / 2;
 	if (data->draw_start < 0)
 		data->draw_start = 0;
-	data->draw_end = data->line_height / 2 + screenHeight / 2;
-	if (data->draw_end >= screenHeight)
-		data->draw_end = screenHeight - 1;
+	data->draw_end = data->line_height / 2 + SCREENHEIGHT / 2;
+	if (data->draw_end >= SCREENHEIGHT)
+		data->draw_end = SCREENHEIGHT - 1;
 	if (set_wall_x(data, cube))
 		return (1);
 	set_tex_width_height(data, cube);

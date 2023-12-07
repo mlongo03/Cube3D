@@ -6,11 +6,16 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:50:52 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:07:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+// void	init_direction(t_cube *cube)
+// {
+// 	if (cube->player->direction == )
+// }
 
 void	struct_init(t_cube *game)
 {
@@ -19,14 +24,15 @@ void	struct_init(t_cube *game)
 	game->img = ft_calloc(1, sizeof(t_img));
 	game->card = ft_calloc(1, sizeof(t_cardinals));
 	game->door = ft_calloc(1, sizeof(t_xpm_img));
-	game->player->posx = 10;
-	game->player->posy = 10;
+	game->player->posx = 0;
+	game->player->posy = 0;
+	// init_direction(game);
 	game->player->dirx = -1;
 	game->player->diry = 0;
 	game->player->planex = 0;
 	game->player->planey = 0.66;
 	game->player->mov_dirx = 0;
-	game->player->mov_dirY = 0;
+	game->player->mov_diry = 0;
 	game->player->cam_dir = 0;
 	game->player->rot_angle = 360;
 	game->time = 0;

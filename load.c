@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:11:23 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:18:46 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:04:05 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	load_imgs(t_cube *game)
 {
-	game->mlx_win = mlx_new_window(game->mlx, screenWidth,
-			screenHeight, "Cube3D");
-	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
+	game->mlx_win = mlx_new_window(game->mlx, SCREENWIDTH,
+			SCREENHEIGHT, "Cube3D");
+	game->img->img = mlx_new_image(game->mlx, SCREENWIDTH, SCREENHEIGHT);
 	game->img->addr = mlx_get_data_addr(game->img->img,
 			&game->img->bpp, &game->img->line_length,
 			&game->img->endian);
 	game->mini = ft_calloc(1, sizeof(t_mini));
-	game->mini->scale = screenWidth / 150;
+	game->mini->scale = SCREENWIDTH / 150;
 }
 
 void	load_door(t_cube *cube)

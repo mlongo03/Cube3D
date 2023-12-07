@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:42:39 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:58:35 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	create_doors_maps(t_cube *game)
 				game->map_door_timer[y][x] = 1;
 			else
 				game->map_door_timer[y][x] = 0;
-			game->map_door_status[y][x] = Closed;
+			game->map_door_status[y][x] = CLOSED;
 			x++;
 		}
 		y++;

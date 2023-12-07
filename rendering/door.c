@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:01:17 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:50:10 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:06:17 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	handle_door(t_cube *cube)
 	{
 		if (cube->real_map[pos[i]][pos[i + 1]] == '2')
 		{
-			if (cube->map_door_status[pos[i]][pos[i + 1]] == Closed
-				|| cube->map_door_status[pos[i]][pos[i + 1]] == Closing)
-				cube->map_door_status[pos[i]][pos[i + 1]] = Opening;
-			else if (cube->map_door_status[pos[i]][pos[i + 1]] == Open
-				|| cube->map_door_status[pos[i]][pos[i + 1]] == Opening)
-				cube->map_door_status[pos[i]][pos[i + 1]] = Closing;
+			if (cube->map_door_status[pos[i]][pos[i + 1]] == CLOSED
+				|| cube->map_door_status[pos[i]][pos[i + 1]] == CLOSING)
+				cube->map_door_status[pos[i]][pos[i + 1]] = OPENING;
+			else if (cube->map_door_status[pos[i]][pos[i + 1]] == OPEN
+				|| cube->map_door_status[pos[i]][pos[i + 1]] == OPENING)
+				cube->map_door_status[pos[i]][pos[i + 1]] = CLOSING;
 		}
 		i += 2;
 	}
@@ -67,14 +67,14 @@ void	handle_door(t_cube *cube)
 void	update_door(int x, int y, t_cube *cube)
 {
 	if (cube->map_door_timer[y][x] >= 1
-			&& cube->map_door_status[y][x] == Closing)
-		cube->map_door_status[y][x] = Closed;
+			&& cube->map_door_status[y][x] == CLOSING)
+		cube->map_door_status[y][x] = CLOSED;
 	else if (cube->map_door_timer[y][x] <= 0
-			&& cube->map_door_status[y][x] == Opening)
-		cube->map_door_status[y][x] = Open;
-	else if (cube->map_door_status[y][x] == Opening)
+			&& cube->map_door_status[y][x] == OPENING)
+		cube->map_door_status[y][x] = OPEN;
+	else if (cube->map_door_status[y][x] == OPENING)
 		cube->map_door_timer[y][x] -= 0.01;
-	else if (cube->map_door_status[y][x] == Closing)
+	else if (cube->map_door_status[y][x] == CLOSING)
 		cube->map_door_timer[y][x] += 0.01;
 }
 
@@ -105,7 +105,7 @@ void	render_doors(t_cube *cube)
 
 	x = 0;
 	update_doors(cube);
-	while (x < screenWidth)
+	while (x < SCREENWIDTH)
 	{
 		init_render_data(&data, cube, x);
 		if (perform_dda_doors(&data, cube))

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:51:01 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:21:14 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:07:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	key_hook_press(int key, t_cube *cube)
 	if (key == 0 || key == 'a')
 		cube->player->mov_dirx = -1;
 	else if (key == 1 || key == 's')
-		cube->player->mov_dirY = -1;
+		cube->player->mov_diry = -1;
 	else if (key == 2 || key == 'd')
 		cube->player->mov_dirx = 1;
 	else if (key == 13 || key == 'w')
-		cube->player->mov_dirY = 1;
+		cube->player->mov_diry = 1;
 	else if (key == 65361)
 		cube->player->cam_dir = -1;
 	else if (key == 65363)
@@ -58,7 +58,7 @@ int	key_hook_press(int key, t_cube *cube)
 int	key_hook_release(int key, t_cube *cube)
 {
 	if (key == 'w' || key == 's')
-		cube->player->mov_dirY = 0;
+		cube->player->mov_diry = 0;
 	else if (key == 'a' || key == 'd')
 		cube->player->mov_dirx = 0;
 	else if (key == 65363 || key == 65361)
@@ -75,7 +75,7 @@ int	handle_mouse(int x, int y, void	*cube)
 
 	(void)y;
 	mlx_mouse_hide(((t_cube *)cube)->mlx, ((t_cube *)cube)->mlx_win);
-	normalized_x = (2.0f * x) / screenWidth - 1.0f;
+	normalized_x = (2.0f * x) / SCREENWIDTH - 1.0f;
 	max_rotation_angle = 180.0f;
 	rotation_angle = max_rotation_angle * normalized_x;
 	new_rotation_angle = rotation_angle;

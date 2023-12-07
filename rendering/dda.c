@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:53:51 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:23:06 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:04:05 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_step_direction(t_render_data *data, t_cube *cube)
 
 void	init_render_data(t_render_data *data, t_cube *cube, int x)
 {
-	data->camera_x = 2 * x / (double)screenWidth - 1;
+	data->camera_x = 2 * x / (double)SCREENWIDTH - 1;
 	data->ray_dir_x = cube->player->dirx + cube->player->planex
 		* data->camera_x;
 	data->ray_dir_y = cube->player->diry + cube->player->planey

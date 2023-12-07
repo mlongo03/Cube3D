@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:16:07 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:23:19 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 17:04:05 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	calculate_fps(t_cube *cube)
 	}
 	number = ft_itoa(cube->fps);
 	mlx_string_put(cube->mlx, cube->mlx_win,
-		screenWidth - 50, 20, -1, number);
+		SCREENWIDTH - 50, 20, -1, number);
 	free(number);
 }
 
@@ -39,7 +39,7 @@ void	render_map(t_cube *cube)
 	int				x;
 
 	x = 0;
-	while (x < screenWidth)
+	while (x < SCREENWIDTH)
 	{
 		init_render_data(&data, cube, x);
 		perform_dda(&data, cube);
