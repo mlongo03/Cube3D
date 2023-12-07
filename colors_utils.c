@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/02 16:44:59 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:10:32 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	save_floor_colors(t_cube *game, char *f_color_str)
 {
-	int		i;
 	char	*test_str;
 
 	while (*f_color_str == 'F' || *f_color_str == ' ')
@@ -28,7 +27,6 @@ void	save_floor_colors(t_cube *game, char *f_color_str)
 
 void	save_ceiling_colors(t_cube *game, char *c_color_str)
 {
-	int		i;
 	char	*test_str;
 
 	while (*c_color_str == 'C' || *c_color_str == ' ')
@@ -60,7 +58,7 @@ void	set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag)
 
 void	ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game)
 {
-	if (rgb[i] < 0)
+	if (rgb[i])
 		ft_error("The color number should not be under 0\n", game);
 	if (rgb[i] > 255)
 		ft_error("The color number should not be over 255\n", game);
@@ -83,8 +81,8 @@ void	color_convertion_int(t_cube *game)
 	i = -1;
 	while (++i < 3)
 	{
-		if (rgb_f[i] == -1 || rgb_c[i] == -1)
-			ft_error("Error the colors are not setted correctly\n", game);
+		// if (rgb_f[i] == -1 || rgb_c[i] == -1)
+		// 	ft_error("Error the colors are not setted correctly\n", game);
 		ft_rgb(&game->colors->c_color_num, rgb_c, i, game);
 		ft_rgb(&game->colors->f_color_num, rgb_f, i, game);
 	}

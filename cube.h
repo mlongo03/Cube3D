@@ -6,7 +6,7 @@
 /*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 14:51:39 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:05:58 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef	struct s_player
 	double	mov_dirY;
 	double	cam_dir;
 	double	rot_angle;
+	char	direction;
 }	t_player;
 
 typedef	struct s_colors
@@ -256,4 +257,5 @@ void	perform_dda(t_render_data *data, t_cube *cube);
 void	detect_vertical_door(t_render_data *data, t_cube *cube);
 void	detect_horizontal_door(t_render_data *data, t_cube *cube);
 u_int64_t	get_time(void);
+
 #endif

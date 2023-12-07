@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cardinals_checker.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:44:09 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 09:46:11 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:10:42 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void	save_cardinals_path_east_west(t_cube *game, int i)
 void	save_cardinals_path(t_cube *game)
 {
 	int	i;
-	int	j;
 
 	i = -1;
 	while (game->all_map[++i])

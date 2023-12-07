@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 09:46:14 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:11:37 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	fix_real_map(t_cube *cube)
 	y = 0;
 	while (cube->real_map[y])
 	{
-		if (ft_strlen(cube->real_map[y]) < cube->map_max_width)
+		if ((int)ft_strlen(cube->real_map[y]) < cube->map_max_width)
 		{
 			cube->real_map[y] = (char *)ft_realloc(cube->real_map[y], sizeof(char), ft_strlen(cube->real_map[y]), cube->map_max_width + 1);
 			x = 0;

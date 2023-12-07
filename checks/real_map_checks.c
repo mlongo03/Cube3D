@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   real_map_checks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 10:30:34 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:11:52 by lnicoter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	check_doors_walls(t_cube *game)
 				|| i == count_rows(game->real_map)))
 				return (0);
 			if (game->real_map[i][j] == '2' && (j == 0
-				|| j == ft_strlen(game->real_map[i])))
+				|| j == (int)ft_strlen(game->real_map[i])))
 				return (0);
 			if (game->real_map[i][j] == '2')
 			{
@@ -92,6 +92,7 @@ static int	player_existence(t_cube *game)
 			{
 				game->player->posy= i + 0.5;
 				game->player->posx = j + 0.5;
+				game->player->direction = game->real_map[i][j];
 				game->real_map[i][j] = '0';
 				return (1);
 			}
