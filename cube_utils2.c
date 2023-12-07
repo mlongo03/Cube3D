@@ -3,16 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:08:12 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/27 16:50:26 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:28:24 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
 void	free_matrix(char **mat)
+{
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+}
+
+void	free_matrix_int(int **mat)
+{
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+}
+
+void	free_matrix_double(double **mat)
 {
 	int	i;
 

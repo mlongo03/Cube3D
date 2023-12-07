@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/06 18:04:49 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 09:46:23 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static int	player_existence(t_cube *game)
 			{
 				game->player->posY= i + 0.5;
 				game->player->posX = j + 0.5;
-				printf("player X = %f, player Y = %f\n", game->player->posX, game->player->posY);
 				game->real_map[i][j] = '0';
 				return (1);
 			}
@@ -144,5 +143,4 @@ void	main_check(t_cube *game)
 	if (!check_doors_walls(game))
 		ft_error("Error the doors of the map aren't setted correctly\n", game);
 	game->map_max_height = count_rows(game->real_map);
-	printf("MaxHeight %d, MaxWidth %d\n", game->map_max_height, game->map_max_width);
 }

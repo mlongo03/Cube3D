@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/06 18:48:28 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 09:46:14 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	create_doors_maps(t_cube *game)
 		x = 0;
 		while (x < game->map_max_width)
 		{
-			// printf("block = %c\n", game->real_map[y][x]);
 			if (game->real_map[y][x] == '2')
 				game->map_door_timer[y][x] = 1;
 			else

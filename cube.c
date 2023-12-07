@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:47 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 19:19:35 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 10:16:59 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ int	wallPos_rayPosOnWall(t_render_data *data, t_cube *cube)
 	}
 	set_tex_width_height(data, cube);
 	data->texX = (int)(data->wallX * (double)data->texWidth);
-	if(data->side == 0 && data->rayDirX > 0)
+	if(data->hit != 2 && data->side == 0 && data->rayDirX > 0)
 		data->texX = data->texWidth - data->texX - 1;
 	if(data->side == 1 && data->rayDirY < 0)
 		data->texX = data->texWidth - data->texX - 1;
@@ -472,7 +472,6 @@ void	update_doors(t_cube *cube)
 		x = 0;
 		while (x < cube->map_max_width)
 		{
-			// printf("[%d][%d]\n", x, y);
 			if(cube->real_map[y][x] == '2')
 				update_door(x, y, cube);
 			x++;
@@ -527,6 +526,14 @@ int	close_window(t_cube *cube)
 	mlx_destroy_image(cube->mlx, cube->card->north_wall.img);
 	mlx_destroy_image(cube->mlx, cube->card->south_wall.img);
 	mlx_destroy_image(cube->mlx, cube->door->img);
+	free(cube->card->north_path);
+	free(cube->card->south_path);
+	free(cube->card->east_path);
+	free(cube->card->west_path);
+	free(cube->colors->f_hex_color);
+	free(cube->colors->c_hex_color);
+	free_matrix(cube->colors->ceiling_colors);
+	free_matrix(cube->colors->floor_colors);
 	free(cube->card);
 	free(cube->player);
 	free(cube->img);
@@ -534,7 +541,11 @@ int	close_window(t_cube *cube)
 	free(cube->mini);
 	free(cube->door);
 	free(cube->mlx);
-	// free_struct(cube);
+	free(cube->map_len);
+	free_matrix(cube->all_map);
+	free_matrix(cube->real_map);
+	free_matrix_int(cube->map_door_status);
+	free_matrix_double(cube->map_door_timer);
 	free(cube);
 	exit (1);
 }
@@ -571,13 +582,11 @@ void	handle_door(t_cube *cube)
 		positionstoWatch[i++] = cube->player->posX;
 	}
 	positionstoWatch[i] = 0;
-	// printf("cube->real_map[%d][%d] = %d\n", posXtoWatch, posYtoWatch, cube->real_map[posXtoWatch][posYtoWatch]);
 	i = 0;
 	while (positionstoWatch[i] && positionstoWatch[i + 1])
 	{
 		if (cube->real_map[positionstoWatch[i]][positionstoWatch[i + 1]] == '2')
 		{
-			// printf("map status[%d][%d] = %d\n", positionstoWatch[i], positionstoWatch[i + 1], cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]]);
 			if (cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Closed || cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Closing)
 				cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] = Opening;
 			else if (cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Open || cube->map_door_status[positionstoWatch[i]][positionstoWatch[i + 1]] == Opening)
@@ -817,29 +826,6 @@ int main(int argc, char **argv)
 	load_imgs(game);
 	load_textures(game);
 	mlx_hooks(game);
-	// print_mat(game->real_map);
-	// printf("\nmap Status\n");
-	// for (int y = 0; y < game->map_max_height; y++)
-	// {
-	// 	int x = 0;
-	// 	while (x < game->map_max_width)
-	// 	{
-	// 		printf("%d", game->map_door_status[y][x]);
-	// 		x++;
-	// 	}
-	// 	printf("\n");
-	// }
-	// printf("\nmap Timer\n");
-	// for (int y = 0; y < game->map_max_height; y++)
-	// {
-	// 	int x = 0;
-	// 	while (x < game->map_max_width)
-	// 	{
-	// 		printf("%f    ", game->map_door_timer[y][x]);
-	// 		x++;
-	// 	}
-	// 	printf("\n");
-	// }
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 }

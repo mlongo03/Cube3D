@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/06 18:19:24 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/06 19:29:21 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ void	ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game);
 void	color_convertion_int(t_cube *game);
 void	save_colors_in_str(t_cube *game);
 void	free_matrix(char **mat);
+void	free_matrix_double(double **mat);
+void	free_matrix_int(int **mat);
 void	check_existence(t_cube *game, int i);
 void	main_check(t_cube *game);
 int		count_rows(char **mat);
