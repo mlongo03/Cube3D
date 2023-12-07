@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_check_image_load.c                          :+:      :+:    :+:   */
+/*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 14:42:01 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 14:42:09 by lnicoter         ###   ########.fr       */
+/*   Created: 2023/12/07 16:11:23 by mlongo            #+#    #+#             */
+/*   Updated: 2023/12/07 16:18:46 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	load_imgs(t_cube *game)
+{
+	game->mlx_win = mlx_new_window(game->mlx, screenWidth,
+			screenHeight, "Cube3D");
+	game->img->img = mlx_new_image(game->mlx, screenWidth, screenHeight);
+	game->img->addr = mlx_get_data_addr(game->img->img,
+			&game->img->bpp, &game->img->line_length,
+			&game->img->endian);
+	game->mini = ft_calloc(1, sizeof(t_mini));
+	game->mini->scale = screenWidth / 150;
+}
+
+void	load_door(t_cube *cube)
+{
+	cube->door->img = mlx_xpm_file_to_image(cube->mlx,
+			"./textures/door.xpm",
+			&cube->door->width, &cube->door->height);
+	cube->door->addr = mlx_get_data_addr(cube->door->img,
+			&cube->door->bpp, &cube->door->line_length,
+			&cube->door->endian);
+}
 
 static void	load_north_south_text(t_cube *cube)
 {
@@ -52,57 +74,4 @@ void	load_textures(t_cube *cube)
 			&cube->card->west_wall.bpp, &cube->card->west_wall.line_length,
 			&cube->card->west_wall.endian);
 	load_door(cube);
-}
-
-void	init_mp(t_mini_draw_vars *mp, t_cube *cube)
-{
-	mp->fix_y = 0;
-	mp->fix_x = 0;
-	mp->offset = 0;
-	mp->dist_width = 15;
-	mp->dist_height = 8;
-	mp->is_width_even = 0;
-	mp->is_height_even = 1;
-	if (cube->map_max_width < 30)
-	{
-		if (cube->map_max_width % 2 != 0)
-			mp->is_width_even++;
-		mp->dist_width = cube->map_max_width / 2;
-	}
-	if (cube->map_max_height < 17)
-	{
-		if (cube->map_max_height % 2 == 0)
-			mp->is_height_even--;
-		mp->dist_height = cube->map_max_height / 2;
-	}
-}
-
-void	calculate_start_end_mini(t_mini_draw_vars *mp, t_cube *cube)
-{
-	while ((cube->mini->y + mp->offset) < (cube->map_max_height - 1)
-		&& mp->offset < mp->dist_height)
-		mp->offset++;
-	cube->mini->draw_end_height = cube->mini->y + mp->offset;
-	mp->offset = 0;
-	while ((cube->mini->y - mp->offset) > 0 && mp->offset < mp->dist_height)
-		mp->offset++;
-	cube->mini->draw_start_height = cube->mini->y - mp->offset;
-	mp->offset = 0;
-	while ((cube->mini->x + mp->offset) < (cube->map_max_width - 1)
-		&& mp->offset < mp->dist_width)
-		mp->offset++;
-	cube->mini->draw_end_width = cube->mini->x + mp->offset;
-	mp->offset = 0;
-	while (cube->mini->x - mp->offset > 0 && mp->offset < mp->dist_width)
-		mp->offset++;
-	cube->mini->draw_start_width = cube->mini->x - mp->offset;
-}
-
-void	player_close_to_no_limit(t_mini_draw_vars *mp, t_cube *cube)
-{
-	mp->fix_y++;
-	cube->mini->draw_start_height -= (mp->dist_height
-			- (cube->mini->draw_end_height - cube->mini->y));
-	if (!mp->is_height_even)
-		cube->mini->draw_start_height++;
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doors_minimap_squares.c                            :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 14:32:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 14:34:53 by lnicoter         ###   ########.fr       */
+/*   Created: 2023/12/07 16:04:26 by mlongo            #+#    #+#             */
+/*   Updated: 2023/12/07 16:22:11 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 void	draw_square(int startX, int startY, t_cube *cube, int color)
 {
@@ -46,6 +46,15 @@ void	draw_squares(t_cube *cube, int x, int y)
 			* cube->mini->scale, cube, 0x00000000);
 }
 
+void	init_draw_vars(t_cube *cube)
+{
+	t_mini_draw_vars	mp;
+
+	init_mp(&mp, cube);
+	calculate_start_end_mini(&mp, cube);
+	adjust_start_end(&mp, cube);
+}
+
 void	render_minimap(t_cube *cube)
 {
 	int		x;
@@ -71,38 +80,4 @@ void	render_minimap(t_cube *cube)
 	mini_y = cube->player->posy - cube->mini->draw_start_height;
 	draw_square(mini_x * cube->mini->scale, mini_y
 		* cube->mini->scale, cube, 0x00FF0000);
-}
-
-void	update_door(int x, int y, t_cube *cube)
-{
-	if (cube->map_door_timer[y][x] >= 1
-			&& cube->map_door_status[y][x] == Closing)
-		cube->map_door_status[y][x] = Closed;
-	else if (cube->map_door_timer[y][x] <= 0
-			&& cube->map_door_status[y][x] == Opening)
-		cube->map_door_status[y][x] = Open;
-	else if (cube->map_door_status[y][x] == Opening)
-		cube->map_door_timer[y][x] -= 0.01;
-	else if (cube->map_door_status[y][x] == Closing)
-		cube->map_door_timer[y][x] += 0.01;
-}
-
-void	update_doors(t_cube *cube)
-{
-	int	y;
-	int	x;
-
-	x = 0;
-	y = 0;
-	while (y < cube->map_max_height)
-	{
-		x = 0;
-		while (x < cube->map_max_width)
-		{
-			if (cube->real_map[y][x] == '2')
-				update_door(x, y, cube);
-			x++;
-		}
-		y++;
-	}
 }

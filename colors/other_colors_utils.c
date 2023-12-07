@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   other_colors_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:43:06 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/11/17 15:30:45 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:24:59 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 static char	*convert_to_hex(int decimal)
 {

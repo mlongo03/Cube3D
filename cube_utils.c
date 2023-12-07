@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 10:46:39 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:50:09 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,14 @@ void	ft_error(char *str_err, t_cube *game)
 {
 	printf("%s\n", str_err);
 	free_struct(game);
+}
+
+void	ft_sleep(u_int64_t time)
+{
+	u_int64_t	start;
+
+	start = 0;
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
 }

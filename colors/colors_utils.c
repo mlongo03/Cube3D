@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   colors_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 15:10:32 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:24:55 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 void	save_floor_colors(t_cube *game, char *f_color_str)
 {

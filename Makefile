@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+         #
+#    By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/01 14:36:32 by fcarlucc          #+#    #+#              #
-#    Updated: 2023/12/07 15:08:18 by lnicoter         ###   ########.fr        #
+#    Updated: 2023/12/07 16:26:31 by mlongo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,9 @@ NAME = cube3d
 
 SRC = $(wildcard *.c) \
 		$(wildcard checks/*.c) \
+		$(wildcard colors/*.c) \
+		$(wildcard rendering/*.c) \
+		$(wildcard minimap/*.c) \
 
 OBJS = $(SRC:.c=.o)
 

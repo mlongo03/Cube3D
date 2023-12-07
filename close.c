@@ -1,53 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doorsmap_render_destroy_all.c                      :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 14:23:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 14:23:44 by lnicoter         ###   ########.fr       */
+/*   Created: 2023/12/07 16:16:54 by mlongo            #+#    #+#             */
+/*   Updated: 2023/12/07 16:17:19 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-void	render_doors(t_cube *cube)
-{
-	t_render_data	data;
-	int				x;
-
-	x = 0;
-	update_doors(cube);
-	while (x < screenWidth)
-	{
-		init_render_data(&data, cube, x);
-		if (perform_dda_doors(&data, cube))
-		{
-			x++;
-			continue ;
-		}
-		draw_vertical_line(&data, cube, x);
-		x++;
-	}
-}
-
-void	render_map(t_cube *cube)
-{
-	t_render_data	data;
-	int				x;
-
-	x = 0;
-	while (x < screenWidth)
-	{
-		init_render_data(&data, cube, x);
-		perform_dda(&data, cube);
-		draw_vertical_line(&data, cube, x);
-		x++;
-	}
-	render_doors(cube);
-	render_minimap(cube);
-}
 
 void	destroy_all(t_cube *cube)
 {
@@ -85,32 +48,4 @@ int	close_window(t_cube *cube)
 	free_matrix_double(cube->map_door_timer);
 	free(cube);
 	exit (1);
-}
-
-void	set_positions_to_watch(t_cube *cube, int *pos)
-{
-	int	i;
-
-	i = 0;
-	if (cube->player->dirx > 0)
-	{
-		pos[i++] = cube->player->posy;
-		pos[i++] = cube->player->posx + 1;
-	}
-	if (cube->player->dirx < 0)
-	{
-		pos[i++] = cube->player->posy;
-		pos[i++] = cube->player->posx - 1;
-	}
-	if (cube->player->diry > 0)
-	{
-		pos[i++] = cube->player->posy + 1;
-		pos[i++] = cube->player->posx;
-	}
-	if (cube->player->diry < 0)
-	{
-		pos[i++] = cube->player->posy - 1;
-		pos[i++] = cube->player->posx;
-	}
-	pos[i] = 0;
 }
