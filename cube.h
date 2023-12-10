@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 17:49:19 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:56:24 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
 
-# define SCREENWIDTH 1920
-# define SCREENHEIGHT 1080
+# define SCREENWIDTH 1000
+# define SCREENHEIGHT 700
 # define CLOSED 0
 # define OPEN 3
 # define OPENING 1

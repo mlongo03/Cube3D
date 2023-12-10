@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cube_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnicoter <lnicoter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 17:50:28 by lnicoter         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:14:44 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-// void	init_direction(t_cube *cube)
-// {
-// 	if (cube->player->direction == )
-// }
+
 
 void	struct_init(t_cube *game)
 {
@@ -26,11 +23,10 @@ void	struct_init(t_cube *game)
 	game->door = ft_calloc(1, sizeof(t_xpm_img));
 	game->player->posx = 0;
 	game->player->posy = 0;
-	// init_direction(game);
-	game->player->dirx = -1;
+	game->player->dirx = 0;
 	game->player->diry = 0;
 	game->player->planex = 0;
-	game->player->planey = 0.66;
+	game->player->planey = 0;
 	game->player->mov_dirx = 0;
 	game->player->mov_diry = 0;
 	game->player->cam_dir = 0;
