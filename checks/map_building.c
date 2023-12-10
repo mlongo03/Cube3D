@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:58:35 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/10 16:19:54 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,28 @@ void	take_colors(t_cube *game)
 		set_colors(game, i, floor_flag, ceiling_flag);
 	color_convertion_int(game);
 	save_colors_in_str(game);
+}
+
+void	create_doors_start_time_map(t_cube *game)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	game->map_door_start_t = ft_calloc(game->map_max_height + 1,
+			sizeof(double *));
+	while (y < game->map_max_height)
+	{
+		game->map_door_start_t[y] = ft_calloc(game->map_max_width + 1,
+				sizeof(double));
+		x = 0;
+		while (x < game->map_max_width)
+		{
+			game->map_door_start_t[y][x] = 0;
+			x++;
+		}
+		y++;
+	}
 }
 
 void	create_doors_maps(t_cube *game)
@@ -123,4 +145,5 @@ void	read_and_build(t_cube *game, char **av)
 	main_check(game);
 	fix_real_map(game);
 	create_doors_maps(game);
+	create_doors_start_time_map(game);
 }

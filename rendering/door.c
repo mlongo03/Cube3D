@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:01:17 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 17:06:17 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/10 17:17:01 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	handle_door(t_cube *cube)
 		{
 			if (cube->map_door_status[pos[i]][pos[i + 1]] == CLOSED
 				|| cube->map_door_status[pos[i]][pos[i + 1]] == CLOSING)
+			{
+				cube->map_door_start_t[pos[i]][pos[i + 1]] = get_time();
 				cube->map_door_status[pos[i]][pos[i + 1]] = OPENING;
+			}
 			else if (cube->map_door_status[pos[i]][pos[i + 1]] == OPEN
 				|| cube->map_door_status[pos[i]][pos[i + 1]] == OPENING)
+			{
+				cube->map_door_start_t[pos[i]][pos[i + 1]] = get_time();
 				cube->map_door_status[pos[i]][pos[i + 1]] = CLOSING;
+			}
 		}
 		i += 2;
 	}
@@ -66,16 +72,33 @@ void	handle_door(t_cube *cube)
 
 void	update_door(int x, int y, t_cube *cube)
 {
+	double elapsed_time;
+	double decrease_amount;
+
+	if (cube->map_door_status[y][x] == OPENING
+			|| cube->map_door_status[y][x] == CLOSING)
+	{
+		elapsed_time = difftime(cube->time, cube->map_door_start_t[y][x]);
+		decrease_amount = (elapsed_time / 1000) / cube->fps;
+	}
 	if (cube->map_door_timer[y][x] >= 1
 			&& cube->map_door_status[y][x] == CLOSING)
+	{
+		if (cube->map_door_timer[y][x] > 1)
+			cube->map_door_timer[y][x] = 1;
 		cube->map_door_status[y][x] = CLOSED;
-	else if (cube->map_door_timer[y][x] <= 0
+	}
+	else if (cube->map_door_timer[y][x] <= 0.00001
 			&& cube->map_door_status[y][x] == OPENING)
+	{
+		if (cube->map_door_timer[y][x] < 0)
+			cube->map_door_timer[y][x] = 0;
 		cube->map_door_status[y][x] = OPEN;
+	}
 	else if (cube->map_door_status[y][x] == OPENING)
-		cube->map_door_timer[y][x] -= 0.01;
+		cube->map_door_timer[y][x] -= decrease_amount;
 	else if (cube->map_door_status[y][x] == CLOSING)
-		cube->map_door_timer[y][x] += 0.01;
+		cube->map_door_timer[y][x] += decrease_amount;
 }
 
 void	update_doors(t_cube *cube)

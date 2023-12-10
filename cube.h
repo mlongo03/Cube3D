@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/10 13:56:24 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/10 16:20:17 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ typedef struct s_cube
 	char		**real_map;
 	int			**map_door_status;
 	double		**map_door_timer;
+	double		**map_door_start_t;
 	int			check_card[4];
 	int			*map_len;
 	int			fps;

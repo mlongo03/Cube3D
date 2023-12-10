@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:45:20 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:57:46 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/10 17:16:54 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	set_wall_x(t_render_data *data, t_cube *cube)
 		data->wall_x = 1
 			- (cube->map_door_timer[(int)data->map_y][(int)data->map_x]
 				- data->wall_x);
+		if (data->wall_x < 0)
+			data->wall_x = 0;
 	}
 	return (0);
 }
