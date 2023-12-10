@@ -6,7 +6,7 @@
 /*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:01:17 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/10 17:17:01 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/10 19:51:53 by manuele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ void	handle_door(t_cube *cube)
 				cube->map_door_start_t[pos[i]][pos[i + 1]] = get_time();
 				cube->map_door_status[pos[i]][pos[i + 1]] = OPENING;
 			}
-			else if (cube->map_door_status[pos[i]][pos[i + 1]] == OPEN
-				|| cube->map_door_status[pos[i]][pos[i + 1]] == OPENING)
+			else
 			{
 				cube->map_door_start_t[pos[i]][pos[i + 1]] = get_time();
 				cube->map_door_status[pos[i]][pos[i + 1]] = CLOSING;
@@ -73,13 +72,15 @@ void	handle_door(t_cube *cube)
 void	update_door(int x, int y, t_cube *cube)
 {
 	double elapsed_time;
-	double decrease_amount;
 
 	if (cube->map_door_status[y][x] == OPENING
 			|| cube->map_door_status[y][x] == CLOSING)
 	{
 		elapsed_time = difftime(cube->time, cube->map_door_start_t[y][x]);
-		decrease_amount = (elapsed_time / 1000) / cube->fps;
+		if (cube->map_door_status[y][x] == OPENING)
+			cube->map_door_timer[y][x] = 1 - elapsed_time / 1000;
+		if (cube->map_door_status[y][x] == CLOSING)
+			cube->map_door_timer[y][x] = elapsed_time / 1000;
 	}
 	if (cube->map_door_timer[y][x] >= 1
 			&& cube->map_door_status[y][x] == CLOSING)
@@ -95,10 +96,6 @@ void	update_door(int x, int y, t_cube *cube)
 			cube->map_door_timer[y][x] = 0;
 		cube->map_door_status[y][x] = OPEN;
 	}
-	else if (cube->map_door_status[y][x] == OPENING)
-		cube->map_door_timer[y][x] -= decrease_amount;
-	else if (cube->map_door_status[y][x] == CLOSING)
-		cube->map_door_timer[y][x] += decrease_amount;
 }
 
 void	update_doors(t_cube *cube)
