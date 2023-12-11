@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:48:58 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:48:31 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,21 @@ void	save_ceiling_colors(t_cube *game, char *c_color_str)
 		ft_error ("Error dome problem with the colors numbers occurred", game);
 }
 
-void	set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag)
+void	set_colors(t_cube *game, int i, int *floor_flag, int *ceiling_flag)
 {
 	if (!ft_strncmp(game->all_map[i], "F", 1))
 	{
-		if (floor_flag == 1)
+		if (*floor_flag == 1)
 			ft_error("Error you put another floor color", game);
 		save_floor_colors(game, game->all_map[i]);
-		floor_flag = 1;
+		*floor_flag = 1;
 	}
 	if (!ft_strncmp(game->all_map[i], "C", 1))
 	{
-		if (ceiling_flag == 1)
+		if (*ceiling_flag == 1)
 			ft_error("Error you put another ceiling color", game);
 		save_ceiling_colors(game, game->all_map[i]);
-		ceiling_flag = 1;
+		*ceiling_flag = 1;
 	}
 }
 

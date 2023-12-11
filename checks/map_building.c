@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/11 11:45:04 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:49:28 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	take_colors(t_cube *game)
 	ceiling_flag = 0;
 	i = -1;
 	while (game->all_map[++i])
-		set_colors(game, i, floor_flag, ceiling_flag);
+		set_colors(game, i, &floor_flag, &ceiling_flag);
 	color_convertion_int(game);
 	save_colors_in_str(game);
 }

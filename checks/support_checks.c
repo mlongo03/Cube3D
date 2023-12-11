@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:47:53 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:38:24 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:50:50 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ void	is_map_last(t_cube *game)
 		else if (card == 4 && flo_cei == 2)
 			break ;
 		else
-			ft_error("The map should be the last argument\n", game);
+			ft_error("Wrong Map", game);
 	}
 }

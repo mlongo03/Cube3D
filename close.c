@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:16:54 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:17:19 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:17:13 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	free_matrix_door(t_door **mat)
+{
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+}
 
 void	destroy_all(t_cube *cube)
 {
@@ -46,6 +56,7 @@ int	close_window(t_cube *cube)
 	free_matrix(cube->real_map);
 	free_matrix_int(cube->map_door_status);
 	free_matrix_double(cube->map_door_timer);
+	free_matrix_door(cube->map_door_start_t);
 	free(cube);
 	exit (1);
 }

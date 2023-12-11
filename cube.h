@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/11 12:49:36 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:18:04 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_door
 	double	start_t;
 	double	start_v;
 }	t_door;
-
 
 typedef struct s_player
 {
@@ -186,7 +185,7 @@ void		take_real_map(t_cube *game);
 void		ft_error(char *str_err, t_cube *game);
 void		save_floor_colors(t_cube *game, char *f_color_str);
 void		save_ceiling_colors(t_cube *game, char *c_color_str);
-void		set_colors(t_cube *game, int i, int floor_flag, int ceiling_flag);
+void		set_colors(t_cube *game, int i, int *floor_flag, int *ceiling_flag);
 void		ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game);
 void		color_convertion_int(t_cube *game);
 void		save_colors_in_str(t_cube *game);
@@ -266,5 +265,9 @@ u_int64_t	get_time(void);
 void		create_doors_maps(t_cube *game);
 void		inc_dec_door(t_cube *cube, int y, int x);
 void		init_pos(t_cube *cube, int y, int x, int type_door);
+void		free_matrix_door(t_door **mat);
+void		set_cardinals_path(t_cube *game);
+void		are_files_xpm(char *path, t_cube *game);
+int			check_file_type(char *buffer);
 
 #endif

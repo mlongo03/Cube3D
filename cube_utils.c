@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:08:03 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/11 10:44:52 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:57:08 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	free_struct(t_cube *game)
 		free_cardinals(game);
 	free(game->colors);
 	free(game->player);
+	free(game->img);
+	free(game->door);
+	free(game->card);
 	free(game);
 	exit(0);
 }
