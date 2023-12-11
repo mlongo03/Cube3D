@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:06:56 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/10 16:20:17 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/11 12:49:36 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <stdint.h>
+
+typedef struct s_door
+{
+	double	start_t;
+	double	start_v;
+}	t_door;
+
 
 typedef struct s_player
 {
@@ -152,7 +159,7 @@ typedef struct s_cube
 	char		**real_map;
 	int			**map_door_status;
 	double		**map_door_timer;
-	double		**map_door_start_t;
+	t_door		**map_door_start_t;
 	int			check_card[4];
 	int			*map_len;
 	int			fps;
@@ -256,5 +263,8 @@ void		perform_dda(t_render_data *data, t_cube *cube);
 void		detect_vertical_door(t_render_data *data, t_cube *cube);
 void		detect_horizontal_door(t_render_data *data, t_cube *cube);
 u_int64_t	get_time(void);
+void		create_doors_maps(t_cube *game);
+void		inc_dec_door(t_cube *cube, int y, int x);
+void		init_pos(t_cube *cube, int y, int x, int type_door);
 
 #endif

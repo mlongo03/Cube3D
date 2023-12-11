@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 11:08:12 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/06 19:28:24 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 11:43:31 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ void	free_matrix_int(int **mat)
 }
 
 void	free_matrix_double(double **mat)
+{
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+}
+
+void	free_matrix_door(t_door **mat)
 {
 	int	i;
 
