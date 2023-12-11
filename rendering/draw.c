@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:56:48 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/07 16:57:46 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:41:56 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	draw_vertical_line(t_render_data *data, t_cube *cube, int x)
 	if (wall_pos_ray_pos_on_wall(data, cube))
 		return ;
 	while (i < data->draw_start)
-		my_mlx_pixel_put(cube->img, x, i++, cube->colors->f_color_num);
+		my_mlx_pixel_put(cube->img, x, i++, cube->colors->c_color_num);
 	draw_tex_wall(data, cube, x);
 	i = data->draw_end;
 	while (i < SCREENHEIGHT)
-		my_mlx_pixel_put(cube->img, x, i++, cube->colors->c_color_num);
+		my_mlx_pixel_put(cube->img, x, i++, cube->colors->f_color_num);
 }
