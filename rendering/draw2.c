@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   draw2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manuele <manuele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:45:20 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/10 17:16:54 by manuele          ###   ########.fr       */
+/*   Updated: 2023/12/11 16:32:47 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+
+void	set_wall_x_door(t_render_data *data, t_cube *cube)
+{
+	if (data->side == 1)
+	{
+		if (data->ray_dir_y < 0)
+			data->wall_x =
+				(cube->map_door_timer[(int)data->map_y][(int)data->map_x]
+					- data->wall_x);
+		else
+			data->wall_x = 1
+				- (cube->map_door_timer[(int)data->map_y][(int)data->map_x]
+					- data->wall_x);
+	}
+	else
+		data->wall_x = 1
+			- (cube->map_door_timer[(int)data->map_y][(int)data->map_x]
+				- data->wall_x);
+}
 
 int	set_wall_x(t_render_data *data, t_cube *cube)
 {
@@ -26,9 +45,7 @@ int	set_wall_x(t_render_data *data, t_cube *cube)
 		if (data->wall_x
 			> cube->map_door_timer[(int)data->map_y][(int)data->map_x])
 			return (1);
-		data->wall_x = 1
-			- (cube->map_door_timer[(int)data->map_y][(int)data->map_x]
-				- data->wall_x);
+		set_wall_x_door(data, cube);
 		if (data->wall_x < 0)
 			data->wall_x = 0;
 	}
