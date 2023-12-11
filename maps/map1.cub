@@ -1,10 +1,10 @@
-NO ./textures/wood.xpm
 SO ./textures/brick.xpm
-WE ./textures/magma.xpm
-EA ./textures/water.xpm
+NO ./textures/brick.xpm
+WE ./textures/brick.xpm
+EA ./textures/brick.xpm
 
-C 255,0,0
-F 0,0,255
+C 0,35,255
+F 100,100,100
 
 1111111111111111111111111
 1001000000110000000000001
