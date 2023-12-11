@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:52:37 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/07 16:38:00 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:57 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,12 @@ void	main_check(t_cube *game)
 		game->real_map[i] = replace_tab_with_spaces(game->real_map[i]);
 	save_player_pos(game);
 	if (!fix_lenght_rows(game->real_map, &game->map_len, game))
-		ft_error("Error the map has an unknown tile\n", game);
+		ft_error("Error the map has an unknown tile", game);
 	if (!player_existence(game))
-		ft_error("Error player not found\n", game);
+		ft_error("Error player not found", game);
 	if (!final_map_check(game, game->map_len))
-		ft_error("Error the map is not closed\n", game);
+		ft_error("Error the map is not closed", game);
 	if (!check_doors_walls(game))
-		ft_error("Error the doors of the map aren't setted correctly\n", game);
+		ft_error("Error the doors of the map aren't setted correctly", game);
 	game->map_max_height = count_rows(game->real_map);
 }

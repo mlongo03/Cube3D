@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:08:04 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/11 15:10:21 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:29 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	are_files_xpm(char *path, t_cube *game)
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		ft_error("Error the read went wrong\n", game);
+		ft_error("Error the read went wrong", game);
 	check = read(fd, file, 25);
 	if (check <= 0)
-		ft_error("Error there's nothing in the file\n", game);
+		ft_error("Error there's nothing in the file", game);
 	file[check] = '\0';
 	close(fd);
 }

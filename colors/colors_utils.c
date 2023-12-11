@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:10:18 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/11 14:48:31 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:30:07 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	save_floor_colors(t_cube *game, char *f_color_str)
 	game->colors->floor_colors = ft_split(test_str, ',');
 	free(test_str);
 	if (count_rows(game->colors->floor_colors) < 3)
-		ft_error ("Error dome problem with the colors numbers occurred", game);
+		ft_error ("Error some problem with the colors numbers occurred", game);
 }
 
 void	save_ceiling_colors(t_cube *game, char *c_color_str)
@@ -35,7 +35,7 @@ void	save_ceiling_colors(t_cube *game, char *c_color_str)
 	game->colors->ceiling_colors = ft_split(test_str, ',');
 	free(test_str);
 	if (count_rows(game->colors->ceiling_colors) < 3)
-		ft_error ("Error dome problem with the colors numbers occurred", game);
+		ft_error ("Error some problem with the colors numbers occurred", game);
 }
 
 void	set_colors(t_cube *game, int i, int *floor_flag, int *ceiling_flag)
@@ -59,7 +59,7 @@ void	set_colors(t_cube *game, int i, int *floor_flag, int *ceiling_flag)
 void	ft_rgb(int	*color, unsigned int rgb[3], int i, t_cube *game)
 {
 	if (rgb[i] > 255)
-		ft_error("The color number should not be over 255 or 0\n", game);
+		ft_error("The color number should not be over 255 or 0", game);
 	*color += (rgb[i] << (((i + 2) - (i * 2)) * 8));
 }
 

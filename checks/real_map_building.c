@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:55:07 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/11 10:45:47 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:48 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ void	take_real_map(t_cube *game)
 	take_real_map_phase_2(game);
 	game->map_len = malloc(sizeof(int) * count_rows(game->real_map));
 	if (!game->map_len)
-		ft_error("Malloc Error\n", game);
+		ft_error("Malloc Error", game);
 }

@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:58:28 by lnicoter          #+#    #+#             */
-/*   Updated: 2023/12/11 14:49:28 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:38 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	read_and_build(t_cube *game, char **av)
 	fd = open(av[1], O_RDONLY);
 	line = get_next_line(fd);
 	if (line == NULL)
-		ft_error("The map is empty or doesn't exist\n", game);
+		ft_error("The map is empty or doesn't exist", game);
 	game->all_map = ft_split(line, '\n');
 	close(fd);
 	free(line);

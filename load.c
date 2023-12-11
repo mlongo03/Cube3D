@@ -6,7 +6,7 @@
 /*   By: mlongo <mlongo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:11:23 by mlongo            #+#    #+#             */
-/*   Updated: 2023/12/11 15:13:52 by mlongo           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:29:14 by mlongo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	load_north_south_text(t_cube *cube)
 			cube->card->north_path,
 			&cube->card->north_wall.width, &cube->card->north_wall.height);
 	if (!cube->card->north_wall.img)
-		ft_error("The image wasn't loaded correctly\n", cube);
+		ft_error("The image wasn't loaded correctly", cube);
 	cube->card->north_wall.addr = mlx_get_data_addr(cube->card->north_wall.img,
 			&cube->card->north_wall.bpp, &cube->card->north_wall.line_length,
 			&cube->card->north_wall.endian);
@@ -48,7 +48,7 @@ static void	load_north_south_text(t_cube *cube)
 			cube->card->south_path,
 			&cube->card->south_wall.width, &cube->card->south_wall.height);
 	if (!cube->card->north_wall.img)
-		ft_error("The image wasn't loaded correctly\n", cube);
+		ft_error("The image wasn't loaded correctly", cube);
 	cube->card->south_wall.addr = mlx_get_data_addr(cube->card->south_wall.img,
 			&cube->card->south_wall.bpp, &cube->card->south_wall.line_length,
 			&cube->card->south_wall.endian);
@@ -61,7 +61,7 @@ void	load_textures(t_cube *cube)
 			cube->card->east_path,
 			&cube->card->east_wall.width, &cube->card->east_wall.height);
 	if (!cube->card->north_wall.img)
-		ft_error("The image wasn't loaded correctly\n", cube);
+		ft_error("The image wasn't loaded correctly", cube);
 	cube->card->east_wall.addr = mlx_get_data_addr(cube->card->east_wall.img,
 			&cube->card->east_wall.bpp, &cube->card->east_wall.line_length,
 			&cube->card->east_wall.endian);
@@ -69,7 +69,7 @@ void	load_textures(t_cube *cube)
 			cube->card->west_path,
 			&cube->card->west_wall.width, &cube->card->west_wall.height);
 	if (!cube->card->north_wall.img)
-		ft_error("The image wasn't loaded correctly\n", cube);
+		ft_error("The image wasn't loaded correctly", cube);
 	cube->card->west_wall.addr = mlx_get_data_addr(cube->card->west_wall.img,
 			&cube->card->west_wall.bpp, &cube->card->west_wall.line_length,
 			&cube->card->west_wall.endian);
