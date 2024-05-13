@@ -31,8 +31,8 @@ The map configuration file initializes various aspects of the game environment:
 - **Map Layout**: Create the map layout using digits, where:
   - "1" represents a wall.
   - "0" represents the floor.
-  - "P" represents the player's position.
-  - "D" represents a door position, with doors defined by two adjacent walls.
+  - The player position is represented by cardinal points letters to detect also its direction: "S", "N", "W", "E".
+  - "2" represents a door position, with doors defined by two adjacent walls.
 
 Example map configuration file:
 ```
